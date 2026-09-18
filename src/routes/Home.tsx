@@ -5,6 +5,8 @@ import { IndexWall } from '../components/home/IndexWall';
 import { ResolverFilm } from '../components/home/ResolverFilm';
 import { WaysIn } from '../components/home/WaysIn';
 import { Timeline } from '../components/home/Timeline';
+import { ScrollCue, SectionRail } from '../components/home/SectionRail';
+import { HOME_SECTIONS } from '../content/sections';
 import { timelineSpan } from '../content/timeline';
 import { SITE_ROOT } from '../lib/undc/config';
 
@@ -27,7 +29,12 @@ export function Home() {
   return (
     <>
       {/* ---------- Hero ---------- */}
-      <section className="grid items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+      <SectionRail />
+
+      <section
+        id="top"
+        className="grid items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14"
+      >
         <div>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-volt">
             An unofficial guide to data.un.org
@@ -85,13 +92,17 @@ export function Home() {
             </Link>
             .
           </p>
+
+          {/* Nothing from the next section reaches above the fold on any
+              viewport, so the hero reads as the whole page without this. */}
+          <ScrollCue to={HOME_SECTIONS[1]!.id} label={`${HOME_SECTIONS[1]!.label} — 22 years of it`} />
         </div>
 
         <IndexWall />
       </section>
 
       {/* ---------- Where it came from ---------- */}
-      <section className="mt-24">
+      <section id="history" className="mt-24 scroll-mt-24">
         <Reveal>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
             {span.years} years in the making
@@ -111,7 +122,7 @@ export function Home() {
       </section>
 
       {/* ---------- The trap ---------- */}
-      <section className="mt-24">
+      <section id="trap" className="mt-24 scroll-mt-24">
         <Reveal>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
             Before you trust a chart
@@ -131,7 +142,7 @@ export function Home() {
       </section>
 
       {/* ---------- Three ways in ---------- */}
-      <section className="mt-24">
+      <section id="ways-in" className="mt-24 scroll-mt-24">
         <Reveal>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
             Three ways in
@@ -150,7 +161,7 @@ export function Home() {
       </section>
 
       {/* ---------- The guide ---------- */}
-      <section className="mt-24">
+      <section id="guide" className="mt-24 scroll-mt-24">
         <Reveal>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
             The guide
@@ -170,7 +181,10 @@ export function Home() {
       </section>
 
       {/* ---------- Closing ---------- */}
-      <section className="mt-24 rounded-xl border border-hairline bg-surface-1 p-8 sm:p-12">
+      <section
+        id="start"
+        className="mt-24 scroll-mt-24 rounded-xl border border-hairline bg-surface-1 p-8 sm:p-12"
+      >
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-xl">

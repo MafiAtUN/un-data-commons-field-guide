@@ -193,3 +193,11 @@ h1, h2, h3, .wordmark {
   [data-reveal] { opacity: 1; transform: none; }
   [data-draw] { stroke-dashoffset: 0; }
 }
+
+/* The scroll cue's arrow: a small, slow nudge that stops mattering once the
+   reader has scrolled past it. Suppressed under prefers-reduced-motion by the
+   `motion-reduce:animate-none` on the element itself. */
+@keyframes cue-nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.85; }
+  50%      { transform: translateY(3px); opacity: 1; }
+}
