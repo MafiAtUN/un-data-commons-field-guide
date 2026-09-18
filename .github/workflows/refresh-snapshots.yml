@@ -1,0 +1,46 @@
+name: Refresh data snapshots
+
+# The committed snapshots are the site's offline fallback. Re-recording them on a
+# schedule keeps the fallback close to current, and opens a pull request rather
+# than committing to main — so a change in the UN's published figures is
+# reviewed, not applied silently.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Re-record snapshots from data.un.org
+        run: npm run snapshots
+
+      - name: Verify the app still passes against the new data
+        run: npm run lint && npm run typecheck && npm test
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore(data): refresh UN System Data Commons snapshots'
+          branch: chore/refresh-snapshots
+          delete-branch: true
+          title: 'chore(data): refresh UN System Data Commons snapshots'
+          body: |
+            Automated re-recording of `src/data/snapshot-data.json` from data.un.org.
+
+            Review the diff before merging: a change here means the UN's published
+            figures have moved, which may also mean a caveat in the prose needs
+            updating.
