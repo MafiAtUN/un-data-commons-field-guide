@@ -2,24 +2,24 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 /**
- * Navigation is split into two tracks.
+ * Two menus and a logo.
  *
- * The practical track is for a colleague who needs a figure today and does not
- * write code; the developer track is the original field guide. Twelve flat links
- * would serve neither, so the developer track sits behind one menu and the
- * practical track stays in the open — that is the audience most likely to arrive
- * from a shared link and bounce if the first thing they see is an API.
+ * An earlier version put thirteen destinations in front of a reader who did not
+ * yet know which one was theirs, which is a choice a person in a hurry cannot
+ * make. The front page is now the tool itself, so the only navigation needed is
+ * "teach me" and "I write code" — and each entry says what it is for, because a
+ * label like "Toolkit" means nothing to someone who has not read the site.
  */
-const PRACTICAL = [
-  { to: '/start', label: 'Start here' },
-  { to: '/tutorials', label: 'Tutorials' },
-  { to: '/toolkit', label: 'Data Finder' },
-  { to: '/visualise', label: 'Visualise' },
-  { to: '/cite', label: 'Cite' },
-  { to: '/ai', label: 'AI tools' },
+const LEARN = [
+  { to: '/start', label: 'The basics', hint: 'Five words, three rules, four minutes' },
+  { to: '/tutorials', label: 'Tutorials', hint: 'Six walkthroughs, five minutes each' },
+  { to: '/visualise', label: 'Make a chart', hint: 'Free tools, and what makes a chart honest' },
+  { to: '/cite', label: 'Cite the data', hint: 'Credit the agency, not the website' },
+  { to: '/ai', label: 'Use AI on it', hint: 'Prompts that stop invented figures' },
+  { to: '/toolkit', label: 'Data Finder', hint: 'The tool on its own page' },
 ] as const;
 
-const TECHNICAL = [
+const DEVELOPERS = [
   { to: '/lab', label: 'Prompt Lab', hint: 'How the search box really works' },
   { to: '/cookbook', label: 'Query cookbook', hint: 'The REST API, with recipes' },
   { to: '/connect', label: 'Connect an agent', hint: 'MCP: six tools, no key' },
@@ -28,27 +28,84 @@ const TECHNICAL = [
   { to: '/development', label: 'Development case', hint: 'Worked end to end' },
 ] as const;
 
+interface MenuItem { to: string; label: string; hint: string }
+
+/** A labelled dropdown whose entries say what they are for. */
+function Menu({
+  label,
+  items,
+  open,
+  setOpen,
+  active,
+  menuRef,
+}: {
+  label: string;
+  items: readonly MenuItem[];
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  active: boolean;
+  menuRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={`rounded border px-3 py-1.5 text-[0.8rem] font-medium transition-colors ${
+          active || open
+            ? 'border-volt/50 bg-volt/10 text-ink-primary'
+            : 'border-hairline text-ink-secondary hover:text-ink-primary'
+        }`}
+      >
+        {label} <span aria-hidden="true">▾</span>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full z-40 mt-1.5 w-72 overflow-hidden rounded-lg border border-hairline bg-surface-1 shadow-xl">
+          {items.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className="block border-b border-hairline px-3.5 py-2.5 last:border-0 hover:bg-surface-2"
+            >
+              <span className="block text-[0.82rem] font-medium text-ink-primary">{item.label}</span>
+              <span className="block text-[0.72rem] text-ink-muted">{item.hint}</span>
+            </NavLink>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
+  const [learnOpen, setLearnOpen] = useState(false);
   const devRef = useRef<HTMLDivElement>(null);
+  const learnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setMenuOpen(false);
     setDevOpen(false);
+    setLearnOpen(false);
   }, [pathname]);
 
-  // Close the developer menu on an outside click or Escape, as a menu should.
+  // Close menus on an outside click or Escape, as menus should.
   useEffect(() => {
-    if (!devOpen) return;
+    if (!devOpen && !learnOpen) return;
 
     function onPointerDown(event: PointerEvent) {
-      if (devRef.current && !devRef.current.contains(event.target as Node)) setDevOpen(false);
+      const target = event.target as Node;
+      if (devRef.current && !devRef.current.contains(target)) setDevOpen(false);
+      if (learnRef.current && !learnRef.current.contains(target)) setLearnOpen(false);
     }
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setDevOpen(false);
+      if (event.key === 'Escape') { setDevOpen(false); setLearnOpen(false); }
     }
 
     document.addEventListener('pointerdown', onPointerDown);
@@ -57,9 +114,10 @@ export function Layout({ children }: { children: ReactNode }) {
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [devOpen]);
+  }, [devOpen, learnOpen]);
 
-  const isTechnical = TECHNICAL.some((item) => item.to === pathname);
+  const isDeveloper = DEVELOPERS.some((item) => item.to === pathname);
+  const isLearn = LEARN.some((item) => item.to === pathname);
 
   return (
     <div className="min-h-screen">
@@ -87,58 +145,41 @@ export function Layout({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-0.5 lg:flex">
-            {PRACTICAL.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `rounded px-2.5 py-1.5 text-[0.78rem] font-medium transition-colors ${
-                    isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary hover:text-ink-primary'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+          <nav aria-label="Main" className="hidden items-center gap-2 md:flex">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `rounded px-3 py-1.5 text-[0.8rem] font-medium transition-colors ${
+                  isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary hover:text-ink-primary'
+                }`
+              }
+            >
+              Find data
+            </NavLink>
 
-            <div className="relative ml-1" ref={devRef}>
-              <button
-                type="button"
-                onClick={() => setDevOpen((open) => !open)}
-                aria-expanded={devOpen}
-                aria-haspopup="true"
-                className={`rounded border px-2.5 py-1.5 text-[0.78rem] font-medium transition-colors ${
-                  isTechnical
-                    ? 'border-volt/50 bg-volt/10 text-ink-primary'
-                    : 'border-hairline text-ink-secondary hover:text-ink-primary'
-                }`}
-              >
-                Developers <span aria-hidden="true">▾</span>
-              </button>
+            <Menu
+              label="Learn"
+              items={LEARN}
+              open={learnOpen}
+              setOpen={(value) => { setLearnOpen(value); if (value) setDevOpen(false); }}
+              active={isLearn}
+              menuRef={learnRef}
+            />
 
-              {devOpen && (
-                <div className="absolute right-0 top-full z-40 mt-1.5 w-72 overflow-hidden rounded-lg border border-hairline bg-surface-1 shadow-xl">
-                  {TECHNICAL.map((item) => (
-                    <NavLink
-                      key={item.to}
-                      to={item.to}
-                      className="block border-b border-hairline px-3.5 py-2.5 last:border-0 hover:bg-surface-2"
-                    >
-                      <span className="block text-[0.82rem] font-medium text-ink-primary">
-                        {item.label}
-                      </span>
-                      <span className="block text-[0.72rem] text-ink-muted">{item.hint}</span>
-                    </NavLink>
-                  ))}
-                </div>
-              )}
-            </div>
+            <Menu
+              label="Developers"
+              items={DEVELOPERS}
+              open={devOpen}
+              setOpen={(value) => { setDevOpen(value); if (value) setLearnOpen(false); }}
+              active={isDeveloper}
+              menuRef={devRef}
+            />
           </nav>
 
           <button
             type="button"
-            className="rounded border border-hairline px-2.5 py-1.5 text-[0.75rem] text-ink-secondary lg:hidden"
+            className="rounded border border-hairline px-2.5 py-1.5 text-[0.75rem] text-ink-secondary md:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             onClick={() => setMenuOpen((open) => !open)}
@@ -148,11 +189,22 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
 
         {menuOpen && (
-          <nav id="mobile-nav" aria-label="Main" className="border-t border-hairline px-4 py-3 lg:hidden">
-            <p className="px-2 pb-1 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
-              Get started
+          <nav id="mobile-nav" aria-label="Main" className="border-t border-hairline px-4 py-3 md:hidden">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `block rounded px-2 py-2 text-[0.88rem] font-medium ${
+                  isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary'
+                }`
+              }
+            >
+              Find data
+            </NavLink>
+            <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
+              Learn
             </p>
-            {PRACTICAL.map((item) => (
+            {LEARN.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
@@ -168,7 +220,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
               For developers
             </p>
-            {TECHNICAL.map((item) => (
+            {DEVELOPERS.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}

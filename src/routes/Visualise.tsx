@@ -1,5 +1,6 @@
 import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
+import { Expander } from '../components/Expander';
 import { Link } from 'react-router-dom';
 
 interface Tool {
@@ -64,21 +65,12 @@ export function Visualise() {
   return (
     <>
       <PageHeader
-        eyebrow="Visualise"
-        title="Turning the numbers into something people will look at"
-        lead={
-          <>
-            You do not need a design team or a licence. These are the free tools that get a
-            UN colleague from a downloaded spreadsheet to a publishable, attributed chart in
-            under ten minutes — and the rules that keep the chart honest once it is made.
-          </>
-        }
+        eyebrow="Make a chart · 8 minutes"
+        title="From spreadsheet to publishable chart"
+        lead={<>Free tools only. No design team, no licence.</>}
       />
 
-      <Section
-        title="Pick a tool"
-        lead="Ordered by how fast a non-technical person gets a finished chart, not by how powerful the tool is."
-      >
+      <Section title="Pick a tool" lead="Ordered by speed to a finished chart.">
         <div className="space-y-3">
           {TOOLS.map((tool) => (
             <div key={tool.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
@@ -114,10 +106,7 @@ export function Visualise() {
         </div>
       </Section>
 
-      <Section
-        title="Choosing the right chart"
-        lead="Four questions, four answers. This covers nearly everything a report needs."
-      >
+      <Section title="Which chart?" lead="Four questions. This covers nearly every report.">
         <div className="grid gap-3 sm:grid-cols-2">
           {[
             {
@@ -153,17 +142,14 @@ export function Visualise() {
         </div>
       </Section>
 
-      <Section
-        title="Five rules that keep a chart honest"
-        lead="These are not style preferences. Each one is a way a chart can mislead without anybody intending it to."
-      >
+      <Section title="Five rules that keep a chart honest" lead="Not style preferences. Each is a way a chart misleads by accident.">
         <ol className="space-y-2.5">
           {[
-            ['Start bars at zero.', 'Truncating the axis makes a small difference look enormous. Lines may be truncated; bars may not, because the length of a bar is the message.'],
-            ['Never use two vertical axes.', 'Two measures on two scales in one plot invents a relationship. The alignment between the scales is arbitrary. Use two charts side by side instead.'],
-            ['Say which year every number is from.', 'Especially in a ranking, where "latest available" can span a decade.'],
-            ['Show the gaps.', 'If a country has no data for 2019, leave the gap. Joining the line across it, or writing zero, both state something untrue.'],
-            ['Put the source on the chart itself.', 'Not in the surrounding text. The image will be screenshotted out of your document within a week.'],
+            ['Start bars at zero.', 'A cut axis makes a small gap look huge. Lines may be cut; bars may not.'],
+            ['Never use two vertical axes.', 'It invents a relationship. Use two charts side by side.'],
+            ['Put the year on every number.', '"Latest available" can span a decade.'],
+            ['Show the gaps.', 'No data for 2019? Leave it blank. Never write zero.'],
+            ['Put the source on the chart itself.', 'Not in the text around it. The image gets screenshotted out within a week.'],
           ].map(([rule, why], index) => (
             <li key={rule} className="flex gap-4 rounded-lg border border-hairline bg-surface-1 p-4">
               <span className="tnum shrink-0 font-mono text-[0.8rem] font-semibold text-volt">
@@ -188,32 +174,21 @@ export function Visualise() {
 
       <Section
         title="Advanced: a chart that updates itself"
-        lead="For a recurring report. Requires a GitHub account, but no coding beyond copying this file."
+        lead="For a report you publish every quarter. Ask a technical colleague — fifteen minutes of their time, once."
       >
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="space-y-3 text-[0.86rem] leading-relaxed text-ink-secondary">
-            <p>
-              Datawrapper and Flourish can both link to a CSV at a public web address and
-              re-read it on a schedule. The UN platform does not publish CSV files, so the
-              missing piece is something that fetches the data and writes a CSV somewhere
-              public.
-            </p>
-            <p>
-              A free GitHub Action does exactly that. Put this file in a repository at{' '}
-              <code className="text-ink-primary">.github/workflows/refresh.yml</code>, change
-              the indicator and countries at the top, and enable GitHub Pages. You get a
-              stable CSV URL that refreshes every Monday.
-            </p>
-            <p>
-              Then in Datawrapper choose "Link to external dataset" and paste that URL. The
-              chart updates itself from then on.
-            </p>
-            <p className="text-ink-muted">
-              Ask a technical colleague if this is unfamiliar — it is fifteen minutes of
-              their time, once, and then the report maintains itself.
-            </p>
+            <ul className="space-y-2">
+              <li>Datawrapper and Flourish can read a CSV from a web address on a schedule.</li>
+              <li>The UN platform does not publish CSV files, so something has to write one.</li>
+              <li>A free GitHub Action does it. Copy the file opposite into a repository.</li>
+              <li>Change the indicator and countries at the top. Enable GitHub Pages.</li>
+              <li>In Datawrapper, choose "Link to external dataset" and paste the URL.</li>
+              <li>The chart now refreshes itself every Monday.</li>
+            </ul>
           </div>
 
+          <Expander question="Show the workflow file" time="copy and paste">
           <CodeBlock
             label=".github/workflows/refresh.yml"
             language="yaml"
@@ -272,6 +247,7 @@ jobs:
           git diff --staged --quiet || git commit -m "chore: refresh UN data"
           git push`}
           />
+          </Expander>
         </div>
       </Section>
     </>

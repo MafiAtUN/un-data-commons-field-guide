@@ -34,14 +34,12 @@ export function Cite() {
   return (
     <>
       <PageHeader
-        eyebrow="Citing the data"
+        eyebrow="Cite the data · 2 minutes"
         title="Credit the agency, not the website"
         lead={
           <>
-            This is the single most common mistake made with the platform, and it matters:
-            the UN System Data Commons <em>distributes</em> statistics, it does not produce
-            them. The body accountable for a number — WHO, UNICEF, UNHCR, UNODC, the Global
-            SDG Indicators Database — is who your citation must name.
+            data.un.org <em>distributes</em> the statistics. It does not produce them. Name the
+            agency that did.
           </>
         }
       />
@@ -55,11 +53,11 @@ export function Cite() {
             <p className="mt-2 text-[0.88rem] leading-relaxed text-ink-secondary">
               “Source: UN Data (data.un.org)”
             </p>
-            <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-muted">
-              A reader cannot check this. They do not know which agency measured it, under
-              what method, or which of several similar series you used. If challenged, you
-              cannot answer either.
-            </p>
+            <ul className="mt-3 space-y-1 text-[0.8rem] leading-relaxed text-ink-muted">
+              <li>No agency named, so nobody can check the method.</li>
+              <li>Several similar series exist. Which one did you use?</li>
+              <li>If challenged, you cannot answer either.</li>
+            </ul>
           </div>
           <div className="rounded-lg border border-status-good/30 bg-status-good/5 p-4">
             <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-status-good">
@@ -69,10 +67,11 @@ export function Cite() {
               “Source: Global SDG Indicators Database, SDG indicator 7.1.1, via the UN System
               Data Commons (data.un.org), accessed 18 September 2026.”
             </p>
-            <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-muted">
-              Producer, indicator, route, date. Anyone can now find exactly what you found,
-              including you in a year's time.
-            </p>
+            <ul className="mt-3 space-y-1 text-[0.8rem] leading-relaxed text-ink-muted">
+              <li>Producer, indicator, route, date.</li>
+              <li>Anyone can find exactly what you found.</li>
+              <li>Including you, in a year's time.</li>
+            </ul>
           </div>
         </div>
       </Section>
@@ -153,10 +152,7 @@ export function Cite() {
         </div>
       </Section>
 
-      <Section
-        title="What to include, and why each part earns its place"
-        lead="Drop any one of these and a reader loses the ability to verify you."
-      >
+      <Section title="What to include" lead="Drop any one and a reader cannot verify you.">
         <dl className="space-y-2.5">
           {[
             ['The producing agency', 'The body accountable for the measurement and its method. This is the citation\'s subject.'],
@@ -174,22 +170,17 @@ export function Cite() {
         </dl>
       </Section>
 
-      <Section
-        title="Terms of use"
-        lead="Openly available is not the same as unconditionally reusable."
-      >
+      <Section title="Terms of use" lead="Free to use is not the same as free to republish.">
         <div className="max-w-3xl space-y-3 rounded-lg border border-hairline bg-surface-1 p-5 text-[0.88rem] leading-relaxed text-ink-secondary">
-          <p>
-            The platform is free to query and needs no account. But each dataset carries the
-            terms of the agency that published it, and those terms travel with the data — not
-            with data.un.org and not with this guide. Most UN statistical data is reusable
-            with attribution; some carries additional conditions.
-          </p>
-          <p>
-            Before republishing anything externally, follow the source link shown under every
-            chart on this site and read that agency's terms. It takes a minute and it is the
-            difference between reuse and a correction notice.
-          </p>
+          <ul className="space-y-2">
+            <li>The platform is free to query and needs no account.</li>
+            <li>But each dataset carries the terms of the agency that published it.</li>
+            <li>Most UN data is reusable with attribution. Some has extra conditions.</li>
+            <li>
+              Publishing externally? Follow the source link under any chart and read that
+              agency's terms first.
+            </li>
+          </ul>
           <p className="text-ink-muted">
             The platform's own terms are at{' '}
             <a

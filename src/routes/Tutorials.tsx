@@ -6,22 +6,17 @@ export function Tutorials() {
   return (
     <>
       <PageHeader
-        eyebrow="Tutorials"
-        title="Six walkthroughs, each about five minutes"
+        eyebrow="Tutorials · 5 minutes each"
+        title="Six walkthroughs"
         lead={
           <>
-            Every one of these ends with something you could put in front of a manager: a
-            defensible figure, a chart, a citation, a drafted paragraph. They assume no
-            technical background and no tools beyond a browser. Open the first one and
-            follow along in a second tab.
+            Each ends with something you can put in front of a manager. No technical
+            background needed. Open one and follow along in a second tab.
           </>
         }
       />
 
-      <Section
-        title="Start with the first one"
-        lead="They build on each other, but each also works on its own if you already know what you need."
-      >
+      <Section title="Start with the first one" lead="Each also works on its own.">
         <div className="space-y-3">
           {TUTORIALS.map((spec, index) => (
             <Tutorial key={spec.id} spec={spec} defaultOpen={index === 0} />
@@ -29,10 +24,7 @@ export function Tutorials() {
         </div>
       </Section>
 
-      <Section
-        title="If something does not work"
-        lead="The three things that most often go wrong, and what they actually mean."
-      >
+      <Section title="If something does not work" lead="The three that most often go wrong.">
         <dl className="space-y-3">
           {[
             {

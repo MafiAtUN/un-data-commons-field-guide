@@ -43,7 +43,8 @@ function matchesBakedRequest(dcid: string, countries: readonly string[]): boolea
  * because the fastest way to stop needing a tool like this is to see what it is
  * doing on your behalf.
  */
-export function DataFinder() {
+export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
+  const [showId, setShowId] = useState(false);
   const [dcid, setDcid] = useState<string>(DEFAULT_INDICATOR);
   const [selected, setSelected] = useState<string[]>(DEFAULT_COUNTRIES);
   const [fromYear, setFromYear] = useState<number>(2000);
@@ -121,19 +122,26 @@ export function DataFinder() {
 
   return (
     <section className="rounded-lg border border-hairline bg-surface-1">
-      <div className="border-b border-hairline p-5">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-semibold text-ink-primary">Data Finder</h2>
-            <p className="mt-1 max-w-2xl text-[0.85rem] leading-relaxed text-ink-secondary">
-              Pick a topic and some countries. You get the chart, the table, a spreadsheet
-              you can open in Excel, a citation you can paste into a report, and a prompt
-              that hands it all to an AI assistant. No identifiers needed.
-            </p>
+      {showIntro && (
+        <div className="border-b border-hairline p-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold text-ink-primary">Data Finder</h2>
+              <p className="mt-1 max-w-2xl text-[0.85rem] leading-relaxed text-ink-secondary">
+                Pick a topic and some countries. You get a chart, a spreadsheet, a citation
+                and an AI prompt. No identifiers needed.
+              </p>
+            </div>
+            <OriginBadge origin={state.origin} retrievedAt={state.retrievedAt} liveError={state.liveError} />
           </div>
+        </div>
+      )}
+
+      {!showIntro && (
+        <div className="flex justify-end border-b border-hairline px-5 py-2.5">
           <OriginBadge origin={state.origin} retrievedAt={state.retrievedAt} liveError={state.liveError} />
         </div>
-      </div>
+      )}
 
       {/* ---------- Step 1 ---------- */}
       <Step number={1} title="What do you want to know?">
@@ -172,8 +180,21 @@ export function DataFinder() {
               </span>
             </p>
           )}
-          <p className="mt-3 font-mono text-[0.7rem] text-ink-muted">
-            Identifier: <span className="text-volt">{indicator.dcid}</span>
+          {/* The identifier matters for reproducibility, but it is jargon to a
+              reporting officer and was the loudest thing in this card. Kept, and
+              put one click away. */}
+          <p className="mt-3 text-[0.72rem] text-ink-muted">
+            <button
+              type="button"
+              onClick={() => setShowId((value) => !value)}
+              aria-expanded={showId}
+              className="underline decoration-hairline underline-offset-2 hover:text-ink-secondary hover:decoration-volt"
+            >
+              {showId ? 'Hide technical ID' : 'Technical ID (for citations and scripts)'}
+            </button>
+            {showId && (
+              <span className="ml-2 font-mono text-ink-secondary">{indicator.dcid}</span>
+            )}
           </p>
         </div>
       </Step>

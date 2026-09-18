@@ -1,6 +1,7 @@
 import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { CopyButton } from '../components/CopyButton';
+import { Expander } from '../components/Expander';
 import { Link } from 'react-router-dom';
 
 interface VibeTool {
@@ -138,22 +139,12 @@ export function AiTools() {
   return (
     <>
       <PageHeader
-        eyebrow="AI and vibe coding"
+        eyebrow="Use AI on it · 5 minutes"
         title="Let AI do the analysis, not the remembering"
-        lead={
-          <>
-            An AI assistant asked "what is Bangladesh's electricity access rate" will give you
-            a confident, plausible, and quite possibly wrong number. The same assistant handed
-            the actual table will do genuinely useful analysis. That one distinction is the
-            whole of this page.
-          </>
-        }
+        lead={<>One rule, four prompts. That is the whole page.</>}
       />
 
-      <Section
-        title="The rule that makes AI safe with statistics"
-        lead="Everything else here follows from this."
-      >
+      <Section title="The one rule" lead="Everything else follows from this.">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-status-critical/30 bg-status-critical/5 p-5">
             <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-status-critical">
@@ -162,12 +153,12 @@ export function AiTools() {
             <p className="mt-2 font-mono text-[0.85rem] leading-relaxed text-ink-primary">
               “What is the maternal mortality rate in South Sudan?”
             </p>
-            <p className="mt-3 text-[0.83rem] leading-relaxed text-ink-secondary">
-              The model answers from memory. It will produce a number that looks right, in the
-              right units, with the right shape — and no way for you to tell whether it is the
-              real figure, an outdated one, or invented. This is how wrong statistics end up in
-              real documents.
-            </p>
+            <ul className="mt-3 space-y-1.5 text-[0.83rem] leading-relaxed text-ink-secondary">
+              <li>The model answers from memory.</li>
+              <li>You get a number that looks right, in the right units.</li>
+              <li>You cannot tell if it is real, outdated or invented.</li>
+              <li>This is how wrong figures end up in real documents.</li>
+            </ul>
           </div>
           <div className="rounded-lg border border-status-good/30 bg-status-good/5 p-5">
             <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-status-good">
@@ -176,49 +167,51 @@ export function AiTools() {
             <p className="mt-2 font-mono text-[0.85rem] leading-relaxed text-ink-primary">
               “Here is the maternal mortality data for South Sudan [table]. What does it show?”
             </p>
-            <p className="mt-3 text-[0.83rem] leading-relaxed text-ink-secondary">
-              Now the model is reading, not recalling. You can check every figure it quotes
-              against the table you provided, in seconds. This is the difference between a
-              tool you can sign your name to and one you cannot.
-            </p>
+            <ul className="mt-3 space-y-1.5 text-[0.83rem] leading-relaxed text-ink-secondary">
+              <li>Now it is reading, not recalling.</li>
+              <li>You can check every figure against the table you sent.</li>
+              <li>That takes seconds.</li>
+              <li>This is the difference between work you can sign and work you cannot.</li>
+            </ul>
           </div>
         </div>
 
         <p className="mt-4 max-w-3xl text-[0.88rem] leading-relaxed text-ink-secondary">
           The{' '}
-          <Link to="/toolkit" className="text-volt underline decoration-volt/30 underline-offset-2">
-            Data Finder
+          <Link to="/" className="text-volt underline decoration-volt/30 underline-offset-2">
+            tool on the front page
           </Link>{' '}
-          has a “Copy AI prompt” button that does this for you: it packages the real table,
-          the unit, the source and the known limitation into one prompt, and instructs the
-          model not to go beyond it.
+          has a <strong className="text-ink-primary">Copy AI prompt</strong> button that does
+          this for you. It packages the real table, the unit, the source and the caveat.
         </p>
       </Section>
 
-      <Section
-        title="Four prompts worth keeping"
-        lead="Copy them, replace the bracketed parts. They are written to constrain the model, which is where most prompt advice stops short."
-      >
+      <Section title="Four prompts worth keeping" lead="Copy, then replace the bracketed parts.">
         <div className="space-y-4">
           {PROMPTS.map((item) => (
             <div key={item.title} className="rounded-lg border border-hairline bg-surface-1 p-5">
-              <h3 className="text-[0.95rem] font-semibold text-ink-primary">{item.title}</h3>
-              <p className="mt-1 text-[0.8rem] text-ink-muted">Use it when: {item.when}</p>
-              <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded border border-hairline bg-surface-0 p-3.5 font-mono text-[0.75rem] leading-relaxed text-ink-secondary">
-                {item.prompt}
-              </pre>
-              <div className="mt-3">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-[0.95rem] font-semibold text-ink-primary">{item.title}</h3>
+                  <p className="mt-1 text-[0.8rem] text-ink-muted">Use it when: {item.when}</p>
+                </div>
+                {/* Copy stays reachable without expanding — most people never need
+                    to read the prompt, only to use it. */}
                 <CopyButton label="Copy prompt" value={item.prompt} />
+              </div>
+              <div className="mt-3">
+                <Expander question="Show the prompt" time={`${item.prompt.split(/\s+/).length} words`}>
+                  <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[0.75rem] leading-relaxed text-ink-secondary">
+                    {item.prompt}
+                  </pre>
+                </Expander>
               </div>
             </div>
           ))}
         </div>
       </Section>
 
-      <Section
-        title="Which free tool for which job"
-        lead="Free tiers as of September 2026. They change — check before you rely on one for a deadline."
-      >
+      <Section title="Which free tool" lead="Free tiers as of September 2026. Check before a deadline.">
         <div className="space-y-3">
           {TOOLS.map((tool) => (
             <div key={tool.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
@@ -247,29 +240,27 @@ export function AiTools() {
 
       <Section
         title="Fetching data by describing it"
-        lead="If you can explain what you want, a coding assistant can write the request for you. You do not need to understand the code it produces — but you do need to check the result."
+        lead="Describe what you want; a coding assistant writes the request. You do not need to read the code — but you do need to check the result."
       >
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="space-y-3 text-[0.87rem] leading-relaxed text-ink-secondary">
-            <p>
-              The UN platform's data can be fetched by anything that can make a web request,
-              with no key and no account. That means a coding assistant can write you a
-              working script from a plain description — and the script is short enough that
-              you can sanity-check it without being a programmer.
-            </p>
-            <p>
-              The prompt on the right gives the assistant the three things it cannot guess:
-              the address, the shape of the request, and the shape of the answer. Without
-              them it will invent an API that does not exist, which is the single most common
-              failure here.
-            </p>
-            <p className="text-ink-muted">
-              Paste it into any assistant, change the indicator and countries, and ask it to
-              explain each line back to you.
-            </p>
+            <ul className="space-y-2">
+              <li>The UN data needs no key and no account.</li>
+              <li>So an assistant can write you a working script from a plain description.</li>
+              <li>
+                The prompt opposite gives it the three things it cannot guess: the address,
+                the request shape, and the answer shape.
+              </li>
+              <li>
+                Without those it invents an API that does not exist. That is the most common
+                failure here.
+              </li>
+              <li>Ask it to explain each line back to you.</li>
+            </ul>
           </div>
 
           <div>
+            <Expander question="Show the prompt to copy" time="reference">
             <CodeBlock
               label="prompt — copy this whole block"
               language="text"
@@ -309,14 +300,12 @@ WHAT I WANT
 
 Explain each step in plain language as a comment. I am not a programmer.`}
             />
+            </Expander>
           </div>
         </div>
       </Section>
 
-      <Section
-        title="The schema, in plain language"
-        lead="What an AI assistant needs to be told about this data, and what you need to know to check its work."
-      >
+      <Section title="The data, in plain language" lead="What to tell an assistant, and what to check in its answer.">
         <div className="grid gap-4 lg:grid-cols-5">
           <div className="lg:col-span-3 space-y-3">
             <dl className="space-y-2.5">

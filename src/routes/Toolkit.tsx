@@ -6,13 +6,12 @@ export function Toolkit() {
   return (
     <>
       <PageHeader
-        eyebrow="Data Finder"
+        eyebrow="Data Finder · 15 seconds"
         title="Get the data, the citation and the chart in one go"
         lead={
           <>
-            Three choices — what, where, how far back — and you leave with a spreadsheet, a
-            citation and a prompt you can hand to an AI assistant. Built for the afternoon
-            when someone needs a figure by five o'clock.
+            The same tool as the front page. Three choices, and you leave with a spreadsheet,
+            a citation and an AI prompt.
           </>
         }
       />
@@ -21,10 +20,7 @@ export function Toolkit() {
         <DataFinder />
       </div>
 
-      <Section
-        title="What just happened"
-        lead="Worth thirty seconds, because it explains why the result is trustworthy."
-      >
+      <Section title="What just happened" lead="Thirty seconds on why the result is trustworthy.">
         <div className="grid gap-4 md:grid-cols-3">
           {[
             {

@@ -7,9 +7,12 @@ A practical field guide and live query lab for the **[UN System Data Commons](ht
 the platform launched on 17 September 2026 that unifies public statistics from 26 UN
 System entities into a single knowledge graph.
 
-It runs on two tracks. The **practical track** is for reporting officers, analysts and
-programme staff who need a defensible figure before a meeting and do not write code. The
-**developer track** is the original field guide: the search resolver, the REST API and MCP.
+**The front page is the tool.** Pick a topic and some countries; you get the figure, a
+chart, a spreadsheet and a citation in about fifteen seconds, with no reading first.
+Explanations sit below it or behind the question a reader would actually ask.
+
+Everything else is depth: a **learn track** for reporting officers who want to get good at
+this, and a **developer track** covering the search resolver, the REST API and MCP.
 
 **→ [mafiatun.github.io/un-data-commons-field-guide](https://mafiatun.github.io/un-data-commons-field-guide/)**
 
@@ -22,16 +25,21 @@ actually needed. This site is that guide.
 
 ## What's in it
 
-### Practical track — no technical background assumed
+### Find data — the front page
+
+The Data Finder is the homepage. Three choices and you leave with a chart, a CSV carrying
+its own provenance, a citation in four styles, and a prompt that hands the real table to an
+AI assistant. No identifiers required, no reading required.
+
+### Learn — no technical background assumed
 
 | Section | What it does |
 |---|---|
-| **Start here** | The five words the system uses, the three rules that keep you out of trouble, and a real number on screen inside a minute. |
+| **The basics** | Five words, three rules, four minutes. Written to be scanned, with the reasoning behind each rule behind an expander. |
 | **Tutorials** | Six walkthroughs of about five minutes each. Find a defensible figure. Compare countries honestly. Make a chart. Draft a report section with AI. Every step states both the action and the expected result. |
-| **Data Finder** | Pick a topic and some countries; leave with a chart, a CSV that carries its own provenance, a citation in four styles, and a prompt that hands the real table to an AI assistant. No identifiers required. |
-| **Visualise** | Datawrapper, Flourish and the rest — which to use, how to get UN data in, five rules that keep a chart honest, and a GitHub Action recipe for a chart that refreshes itself. |
-| **Cite** | Credit the agency, not the website. A generator, and what each part of a citation is actually for. |
-| **AI tools** | Never ask a chatbot what a statistic is — give it the statistic and ask what it means. Four constrained prompts, free-tool comparison, and the schema in plain language. |
+| **Make a chart** | Datawrapper, Flourish and the rest — which to use, how to get UN data in, five rules that keep a chart honest, and a GitHub Action recipe for a chart that refreshes itself. |
+| **Cite the data** | Credit the agency, not the website. A generator, and what each part of a citation is actually for. |
+| **Use AI on it** | Never ask a chatbot what a statistic is — give it the statistic and ask what it means. Four constrained prompts, free-tool comparison, and the schema in plain language. |
 
 ### Developer track
 
@@ -103,6 +111,29 @@ optional overrides.
 
 React 19 · TypeScript (strict) · Vite · Tailwind CSS v4 · hand-built SVG charts · zero
 runtime dependencies beyond React and the router.
+
+### Designed for someone in a hurry
+
+The first version of this track was measured and found wanting: **6,246 words across seven
+pages — 28 minutes of reading before you could produce anything.** One page ran to 5.6
+screens with a single interactive element above the fold, and the navigation offered
+thirteen destinations to a reader who did not yet know which was theirs.
+
+It was rebuilt around the person it is for — a reporting officer who needs a defensible
+figure before a meeting, not a reader who would admire the prose:
+
+| | Before | After |
+|---|---|---|
+| Words across the track | 6,246 (~28 min) | **4,158 (~19 min)** |
+| Top-level navigation choices | 13 | **3** |
+| Time to a number on screen | 2 clicks + 4 min reading | **0.3s, zero clicks** |
+| Actions above the fold, homepage | 8 (below 2.9 screens of prose) | **17** |
+| Longest page | 5.6 screens, 1 action | 3.5 screens |
+
+Reference material — prompt bodies, workflow files, the reasoning behind each rule — is
+kept but placed behind the question a reader would ask, so the page is short for someone in
+a hurry and complete for someone who is not. Copy buttons stay outside the expanders:
+most people need to *use* a prompt, not read it.
 
 ### Brand
 
