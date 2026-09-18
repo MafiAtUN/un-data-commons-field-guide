@@ -1,6 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './routes/Home';
+import { Start } from './routes/Start';
+import { Tutorials } from './routes/Tutorials';
+import { Toolkit } from './routes/Toolkit';
+import { Visualise } from './routes/Visualise';
+import { Cite } from './routes/Cite';
+import { AiTools } from './routes/AiTools';
 import { Lab } from './routes/Lab';
 import { Peace } from './routes/Peace';
 import { Development } from './routes/Development';
@@ -20,12 +26,23 @@ export function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+
+          {/* Practical track — no technical background assumed. */}
+          <Route path="/start" element={<Start />} />
+          <Route path="/tutorials" element={<Tutorials />} />
+          <Route path="/toolkit" element={<Toolkit />} />
+          <Route path="/visualise" element={<Visualise />} />
+          <Route path="/cite" element={<Cite />} />
+          <Route path="/ai" element={<AiTools />} />
+
+          {/* Technical track. */}
           <Route path="/lab" element={<Lab />} />
           <Route path="/peace-and-security" element={<Peace />} />
           <Route path="/development" element={<Development />} />
           <Route path="/cookbook" element={<Cookbook />} />
           <Route path="/connect" element={<Connect />} />
           <Route path="/catalogue" element={<Catalogue />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

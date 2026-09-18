@@ -31,7 +31,7 @@ export function Connect() {
         title="The endpoint"
         lead="Streamable HTTP, no API key, no account. This is the address to give your client."
       >
-        <div className="rounded-lg border border-un-blue/30 bg-un-blue/5 p-5">
+        <div className="rounded-lg border border-volt/30 bg-volt/5 p-5">
           <code className="block break-all font-mono text-[0.9rem] text-ink-primary">
             {MCP_ENDPOINT}
           </code>
@@ -101,7 +101,7 @@ export function Connect() {
               ].map(([tool, description]) => (
                 <tr key={tool} className="even:bg-surface-1">
                   <th scope="row" className="p-3 text-left align-top">
-                    <code className="font-mono text-[0.76rem] text-un-blue">{tool}</code>
+                    <code className="font-mono text-[0.76rem] text-volt">{tool}</code>
                   </th>
                   <td className="p-3 align-top text-ink-secondary">{description}</td>
                 </tr>
@@ -114,10 +114,10 @@ export function Connect() {
           <h3 className="text-[0.92rem] font-semibold text-ink-primary">The playbooks</h3>
           <p className="mt-2 text-[0.85rem] leading-relaxed text-ink-secondary">
             The server also publishes three resources —{' '}
-            <code className="text-un-blue">skill://data-commons-researcher/SKILL.md</code>,{' '}
-            <code className="text-un-blue">skill://data-commons-child-places-researcher/SKILL.md</code>{' '}
+            <code className="text-volt">skill://data-commons-researcher/SKILL.md</code>,{' '}
+            <code className="text-volt">skill://data-commons-child-places-researcher/SKILL.md</code>{' '}
             and{' '}
-            <code className="text-un-blue">skill://data-commons-multi-entity-researcher/SKILL.md</code>{' '}
+            <code className="text-volt">skill://data-commons-multi-entity-researcher/SKILL.md</code>{' '}
             — and the tool descriptions instruct a client to read the relevant one before
             first use. They encode the same discipline this guide argues for: search before
             you fetch, qualify before you quote, and carry the provenance through.
@@ -172,7 +172,7 @@ export function Connect() {
             },
           ].map((item) => (
             <li key={item.use} className="rounded-lg border border-hairline bg-surface-1 p-4">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-un-blue">
+              <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-volt">
                 {item.use}
               </p>
               <p className="mt-2 font-mono text-[0.78rem] leading-relaxed text-ink-primary">

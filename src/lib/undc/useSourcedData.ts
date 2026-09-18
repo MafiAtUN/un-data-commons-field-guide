@@ -9,6 +9,10 @@
  *    collapses the layout.
  *  - **Fallback is never silent.** A snapshot result carries the live error, and
  *    the UI shows it on request.
+ *  - **A fallback must match what was asked for.** Pass `null` as the key when no
+ *    recording exists for the current request. The hook then reports the failure
+ *    honestly instead of rendering a recording of a *different* question under
+ *    the current question's labels, which would be worse than showing nothing.
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -30,7 +34,8 @@ export interface SourcedState<T> {
 }
 
 export function useSourcedData<T>(
-  snapshotKey: SnapshotKey,
+  /** The recording to fall back to, or `null` when none applies to this request. */
+  snapshotKey: SnapshotKey | null,
   fetcher: (signal: AbortSignal) => Promise<Traced<T>>,
   /** Extra values that should trigger a refetch, as with any effect dependency. */
   deps: readonly unknown[] = [],
@@ -77,7 +82,7 @@ export function useSourcedData<T>(
         settled = true;
 
         const message = error instanceof Error ? error.message : 'live request failed';
-        const snapshot = await readSnapshot<T>(snapshotKey);
+        const snapshot = snapshotKey ? await readSnapshot<T>(snapshotKey) : undefined;
         if (controller.signal.aborted) return;
 
         setState({

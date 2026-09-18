@@ -49,11 +49,11 @@ export function Peace() {
               tell you how they relate before you fetch anything:
             </p>
             <ul className="space-y-1.5 break-all font-mono text-[0.74rem] text-ink-muted">
-              <li><span className="text-un-blue">undata/sdg/VC_DTH_TOTN</span> — total</li>
-              <li><span className="text-un-blue">undata/sdg/VC_DTH_TOCVN</span> — civilians</li>
-              <li><span className="text-un-blue">undata/sdg/VC_DTH_TONCVN</span> — non-civilians</li>
-              <li><span className="text-un-blue">undata/sdg/VC_DTH_TOTN.AGE--Y0T17</span> — under 18</li>
-              <li><span className="text-un-blue">undata/sdg/VC_DTH_TOTN.AGE--Y_GE18</span> — 18 and over</li>
+              <li><span className="text-volt">undata/sdg/VC_DTH_TOTN</span> — total</li>
+              <li><span className="text-volt">undata/sdg/VC_DTH_TOCVN</span> — civilians</li>
+              <li><span className="text-volt">undata/sdg/VC_DTH_TONCVN</span> — non-civilians</li>
+              <li><span className="text-volt">undata/sdg/VC_DTH_TOTN.AGE--Y0T17</span> — under 18</li>
+              <li><span className="text-volt">undata/sdg/VC_DTH_TOTN.AGE--Y_GE18</span> — 18 and over</li>
             </ul>
             <p>
               The last two are the same series as the first, sliced. That is the grammar
@@ -79,7 +79,7 @@ export function Peace() {
               href={searchUrl('number of total conflict-related deaths in South Sudan')}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-block text-[0.8rem] text-un-blue underline decoration-un-blue/30 underline-offset-2 hover:decoration-un-blue"
+              className="inline-block text-[0.8rem] text-volt underline decoration-volt/30 underline-offset-2 hover:decoration-volt"
             >
               Run the equivalent search on data.un.org ↗
             </a>
@@ -164,9 +164,9 @@ export function Peace() {
             <div className="rounded-lg border border-hairline bg-surface-1 p-4 text-[0.82rem] leading-relaxed text-ink-secondary">
               <p className="font-semibold text-ink-primary">Reading the expression</p>
               <ul className="mt-2 space-y-1.5">
-                <li><code className="text-un-blue">&lt;-containedInPlace</code> walks containment edges <em>inward</em>: things inside Africa.</li>
-                <li><code className="text-un-blue">+</code> makes it recursive, so sub-regions are traversed too.</li>
-                <li><code className="text-un-blue">{'{typeOf:Country}'}</code> keeps provinces and cities out of the result.</li>
+                <li><code className="text-volt">&lt;-containedInPlace</code> walks containment edges <em>inward</em>: things inside Africa.</li>
+                <li><code className="text-volt">+</code> makes it recursive, so sub-regions are traversed too.</li>
+                <li><code className="text-volt">{'{typeOf:Country}'}</code> keeps provinces and cities out of the result.</li>
               </ul>
               <p className="mt-3 text-ink-muted">
                 Swap <code>africa</code> for <code>SouthernAsia</code>, <code>EasternAfrica</code>

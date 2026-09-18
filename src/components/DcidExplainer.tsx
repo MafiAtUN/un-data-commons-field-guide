@@ -38,7 +38,7 @@ export function DcidExplainer() {
             aria-pressed={input === example}
             className={`rounded border px-2.5 py-1 font-mono text-[0.7rem] transition-colors ${
               input === example
-                ? 'border-un-blue/60 bg-un-blue/10 text-ink-primary'
+                ? 'border-volt/60 bg-volt/10 text-ink-primary'
                 : 'border-hairline text-ink-muted hover:text-ink-secondary'
             }`}
           >
@@ -109,7 +109,7 @@ export function DcidExplainer() {
               No dimension filters, so this is the total series — <em>usually</em>. A handful of
               indicators are published only as a slice, and their bare code returns nothing:
               maternal mortality exists solely as{' '}
-              <code className="text-un-blue">undata/sdg/SH_STA_MORT.SEX--F</code>. Confirm before
+              <code className="text-volt">undata/sdg/SH_STA_MORT.SEX--F</code>. Confirm before
               you rely on it.
             </p>
           )}

@@ -72,7 +72,7 @@ export function Development() {
                 that with the{' '}
                 <a
                   href="/peace-and-security"
-                  className="text-un-blue underline decoration-un-blue/30 underline-offset-2"
+                  className="text-volt underline decoration-volt/30 underline-offset-2"
                 >
                   homicide ranking
                 </a>
@@ -210,11 +210,11 @@ curl -s -G \\
             </p>
             <p>
               The same traversal works from the agency side:{' '}
-              <code className="text-un-blue">undata/g/who</code>,{' '}
-              <code className="text-un-blue">undata/g/ilo</code>,{' '}
-              <code className="text-un-blue">undata/g/unicef</code> and the rest each open
+              <code className="text-volt">undata/g/who</code>,{' '}
+              <code className="text-volt">undata/g/ilo</code>,{' '}
+              <code className="text-volt">undata/g/unicef</code> and the rest each open
               into their own indicator trees. The{' '}
-              <a href="/catalogue" className="text-un-blue underline decoration-un-blue/30 underline-offset-2">
+              <a href="/catalogue" className="text-volt underline decoration-volt/30 underline-offset-2">
                 catalogue
               </a>{' '}
               lists all sixteen with their live counts.
@@ -223,7 +223,7 @@ curl -s -G \\
               href={searchUrl('human development index in Southern Asia')}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-block text-[0.8rem] text-un-blue underline decoration-un-blue/30 underline-offset-2 hover:decoration-un-blue"
+              className="inline-block text-[0.8rem] text-volt underline decoration-volt/30 underline-offset-2 hover:decoration-volt"
             >
               Compare with the platform's own search ↗
             </a>

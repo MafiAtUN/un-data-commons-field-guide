@@ -1,8 +1,15 @@
 # UN Data Commons Field Guide
 
+> A [**Nerd Lab**](https://nerd-factory.github.io/nerd-lab/) product.
+> *Unnecessarily clever. Occasionally useful.*
+
 A practical field guide and live query lab for the **[UN System Data Commons](https://data.un.org)** —
 the platform launched on 17 September 2026 that unifies public statistics from 26 UN
 System entities into a single knowledge graph.
+
+It runs on two tracks. The **practical track** is for reporting officers, analysts and
+programme staff who need a defensible figure before a meeting and do not write code. The
+**developer track** is the original field guide: the search resolver, the REST API and MCP.
 
 **→ [mafiatun.github.io/un-data-commons-field-guide](https://mafiatun.github.io/un-data-commons-field-guide/)**
 
@@ -14,6 +21,19 @@ actually needed. This site is that guide.
 ---
 
 ## What's in it
+
+### Practical track — no technical background assumed
+
+| Section | What it does |
+|---|---|
+| **Start here** | The five words the system uses, the three rules that keep you out of trouble, and a real number on screen inside a minute. |
+| **Tutorials** | Six walkthroughs of about five minutes each. Find a defensible figure. Compare countries honestly. Make a chart. Draft a report section with AI. Every step states both the action and the expected result. |
+| **Data Finder** | Pick a topic and some countries; leave with a chart, a CSV that carries its own provenance, a citation in four styles, and a prompt that hands the real table to an AI assistant. No identifiers required. |
+| **Visualise** | Datawrapper, Flourish and the rest — which to use, how to get UN data in, five rules that keep a chart honest, and a GitHub Action recipe for a chart that refreshes itself. |
+| **Cite** | Credit the agency, not the website. A generator, and what each part of a citation is actually for. |
+| **AI tools** | Never ask a chatbot what a statistic is — give it the statistic and ask what it means. Four constrained prompts, free-tool comparison, and the schema in plain language. |
+
+### Developer track
 
 | Section | What it does |
 |---|---|
@@ -73,6 +93,7 @@ npm install
 npm run dev        # http://localhost:5173/un-data-commons-field-guide/
 npm run verify     # lint + typecheck + test + build
 npm run snapshots  # re-record the offline fallback from data.un.org
+npm run countries  # re-bake the country picker list from the platform
 ```
 
 Node 20 or newer. No environment variables are needed; `.env.example` documents the two
@@ -82,6 +103,15 @@ optional overrides.
 
 React 19 · TypeScript (strict) · Vite · Tailwind CSS v4 · hand-built SVG charts · zero
 runtime dependencies beyond React and the router.
+
+### Brand
+
+Surfaces, ink and the accent are the [Nerd Lab](https://github.com/nerd-factory) identity:
+ink `#141419`, off-white `#F4F1EA`, and one accent — volt `#C8F531`. Volt is **chrome only**.
+At OKLCH L 0.907 it sits far outside the band a categorical palette needs, which the
+validator confirms, so it never becomes a series colour. Nerd Lab sets Futura throughout;
+here the geometric face carries headings and the wordmark while a humanist sans carries
+body copy, because this is a reading-heavy product rather than a landing page.
 
 ### Live data, with a disclosed fallback
 
@@ -99,6 +129,13 @@ fetch(UN_API) ──ok──▶ render + "Live from data.un.org · fetched 11:02
 A chart that might be stale and does not say so is worse than no chart. The snapshot is a
 lazily imported chunk, so a reader whose requests all succeed never downloads it —
 a contingency should not sit in the critical path.
+
+**A fallback must also match the question.** The Data Finder lets you choose any indicator
+and any countries, but only one combination has a recording. Falling back to it for a
+different selection would render electricity figures under a homicide heading — precisely
+the silent mislabelling this guide warns against — so the fallback is offered only when the
+selection still matches the recording, and otherwise the tool says it has nothing rather
+than showing you the wrong thing.
 
 Committing the data has a second benefit: every number on the site is reviewable, and the
 weekly [refresh workflow](.github/workflows/refresh-snapshots.yml) opens a **pull request**
@@ -152,7 +189,8 @@ src/
 ├── components/
 │   ├── charts/        scales, line chart, ranking, stat tile, table twins, frame
 │   └── panels/        a chart wired to one request
-├── content/           the editorial layer the API does not carry
+├── content/           the editorial layer the API does not carry —
+│                      curated indicators in plain language, tutorials, country presets
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
@@ -161,7 +199,7 @@ tests/                 63 unit tests, no network
 
 ## Tests
 
-63 tests, no network access, run against the committed payloads.
+100 tests, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping
@@ -169,6 +207,9 @@ tests/select.test.ts      response → chart shapes; empty ≠ zero; vintage spr
 tests/scales.test.ts      axis domains, tick rounding, entity-stable colour binding
 tests/resolution.test.ts  the resolver's inferred-place behaviour
 tests/snapshots.test.ts   the script ↔ app key contract, checked across runtimes
+tests/routes.test.ts      router ↔ navigation ↔ build manifest agree
+tests/content.test.ts     every curated indicator and preset country actually exists
+tests/export.test.ts      CSV quoting and provenance; citations name the agency first
 ```
 
 That last one matters: the recorder is plain Node and the app is TypeScript, so nothing at

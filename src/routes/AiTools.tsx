@@ -1,0 +1,395 @@
+import { PageHeader, Section } from '../components/Prose';
+import { CodeBlock } from '../components/CodeBlock';
+import { CopyButton } from '../components/CopyButton';
+import { Link } from 'react-router-dom';
+
+interface VibeTool {
+  name: string;
+  url: string;
+  free: string;
+  bestFor: string;
+  note: string;
+}
+
+/**
+ * Tools a colleague can reach without a purchase order.
+ *
+ * "Free" is stated as of September 2026 and deliberately specific — vague claims
+ * about free tiers age into inaccuracy within months.
+ */
+const TOOLS: readonly VibeTool[] = [
+  {
+    name: 'Google AI Studio',
+    url: 'https://aistudio.google.com/',
+    free: 'Genuinely free, with a generous daily request allowance. No card required.',
+    bestFor: 'Building a small data page or dashboard by describing it. The most forgiving starting point.',
+    note: 'Best free option if you have no budget at all and want to build something rather than just chat.',
+  },
+  {
+    name: 'Claude',
+    url: 'https://claude.ai/',
+    free: 'Free tier with daily limits; Artifacts included.',
+    bestFor: 'Analysis, drafting report sections, and generating a working chart page you can preview immediately.',
+    note: 'Ask for an "artifact" and you get a live, running page instead of a block of code to copy somewhere.',
+  },
+  {
+    name: 'ChatGPT',
+    url: 'https://chatgpt.com/',
+    free: 'Free tier with daily limits.',
+    bestFor: 'Drafting, summarising and reformatting a table you paste in.',
+    note: 'Paste the CSV into the message rather than describing it. Attached files and pasted tables both work; recalled statistics do not.',
+  },
+  {
+    name: 'Bolt / Lovable',
+    url: 'https://bolt.new/',
+    free: 'Limited free generations per month.',
+    bestFor: 'Turning a description into a deployed web page without touching an editor.',
+    note: 'Fast and impressive, but the free allowance runs out quickly. Plan the prompt before you spend a generation.',
+  },
+  {
+    name: 'Claude Code / Gemini CLI',
+    url: 'https://claude.com/claude-code',
+    free: 'Paid for Claude Code; Gemini CLI has a free tier.',
+    bestFor: 'Colleagues comfortable in a terminal who want repeatable scripts rather than one-off pages.',
+    note: 'This is also where the MCP connection becomes useful — the assistant queries the UN platform itself. See Connect.',
+  },
+];
+
+const PROMPTS = [
+  {
+    title: 'Draft a report section from data you already have',
+    when: 'You have the numbers and need a first draft.',
+    prompt: `I am a UN reporting officer drafting a section for an internal report.
+
+Below is real data from the UN System Data Commons. Use ONLY these numbers.
+
+[paste the table from the Data Finder here]
+
+Write three short paragraphs suitable for a UN report:
+1. What the data shows overall.
+2. The two or three most notable changes or differences, with the figures.
+3. What a reader should be careful about when interpreting this.
+
+Rules:
+- Quote only figures that appear above.
+- Do not estimate, interpolate or fill missing years.
+- If a country is missing for a year, say so explicitly.
+- Use neutral, factual language. No adjectives that the data does not support.`,
+  },
+  {
+    title: 'Check a draft for claims the data does not support',
+    when: 'Before you file anything that quotes statistics.',
+    prompt: `Here is a draft report section, and the data it is supposed to be based on.
+
+DRAFT:
+[paste your draft]
+
+DATA:
+[paste the table from the Data Finder]
+
+Go through the draft sentence by sentence. For each sentence that makes a factual
+claim, tell me:
+- whether the data above supports it, contradicts it, or is silent on it;
+- if supported, the exact figure and year it relies on;
+- if not supported, what would need to change.
+
+Be strict. Flag comparisons across different years, trends inferred from two data
+points, and any figure that does not appear in the data.`,
+  },
+  {
+    title: 'Ask an assistant to find the right indicator',
+    when: 'You know the question but not which statistic answers it.',
+    prompt: `I need a statistic from the UN System Data Commons (data.un.org) and I am not
+sure which indicator is the right one.
+
+My question: [describe what you need, e.g. "how many children in Chad are not in
+school"]
+
+Please:
+1. Suggest two or three candidate indicators, with the UN body that publishes each.
+2. Explain the difference between them in plain language — what each actually measures.
+3. Say which you would use for a UN report, and why.
+4. Warn me about anything commonly misread about the one you recommend.
+
+Do not give me figures. I will fetch those myself. I need to choose the indicator.`,
+  },
+  {
+    title: 'Build a small chart page you can share',
+    when: 'You want something interactive without a chart tool account.',
+    prompt: `Build me a single self-contained HTML page that displays this data as a line chart.
+
+DATA (CSV):
+[paste the table from the Data Finder]
+
+TITLE: [your title]
+SOURCE LINE (must appear under the chart): [paste the citation from the Data Finder]
+
+Requirements:
+- One HTML file, no build step, works when opened directly in a browser.
+- A clear legend, labelled axes, and the unit stated on the y-axis.
+- Bars or lines must start at zero unless I say otherwise.
+- Gaps in the data must render as gaps, not as zero or a straight line across.
+- Readable on a phone.
+- Include a small table of the same data underneath the chart, for accessibility.`,
+  },
+] as const;
+
+export function AiTools() {
+  return (
+    <>
+      <PageHeader
+        eyebrow="AI and vibe coding"
+        title="Let AI do the analysis, not the remembering"
+        lead={
+          <>
+            An AI assistant asked "what is Bangladesh's electricity access rate" will give you
+            a confident, plausible, and quite possibly wrong number. The same assistant handed
+            the actual table will do genuinely useful analysis. That one distinction is the
+            whole of this page.
+          </>
+        }
+      />
+
+      <Section
+        title="The rule that makes AI safe with statistics"
+        lead="Everything else here follows from this."
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-status-critical/30 bg-status-critical/5 p-5">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-status-critical">
+              Never
+            </p>
+            <p className="mt-2 font-mono text-[0.85rem] leading-relaxed text-ink-primary">
+              “What is the maternal mortality rate in South Sudan?”
+            </p>
+            <p className="mt-3 text-[0.83rem] leading-relaxed text-ink-secondary">
+              The model answers from memory. It will produce a number that looks right, in the
+              right units, with the right shape — and no way for you to tell whether it is the
+              real figure, an outdated one, or invented. This is how wrong statistics end up in
+              real documents.
+            </p>
+          </div>
+          <div className="rounded-lg border border-status-good/30 bg-status-good/5 p-5">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-status-good">
+              Always
+            </p>
+            <p className="mt-2 font-mono text-[0.85rem] leading-relaxed text-ink-primary">
+              “Here is the maternal mortality data for South Sudan [table]. What does it show?”
+            </p>
+            <p className="mt-3 text-[0.83rem] leading-relaxed text-ink-secondary">
+              Now the model is reading, not recalling. You can check every figure it quotes
+              against the table you provided, in seconds. This is the difference between a
+              tool you can sign your name to and one you cannot.
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-4 max-w-3xl text-[0.88rem] leading-relaxed text-ink-secondary">
+          The{' '}
+          <Link to="/toolkit" className="text-volt underline decoration-volt/30 underline-offset-2">
+            Data Finder
+          </Link>{' '}
+          has a “Copy AI prompt” button that does this for you: it packages the real table,
+          the unit, the source and the known limitation into one prompt, and instructs the
+          model not to go beyond it.
+        </p>
+      </Section>
+
+      <Section
+        title="Four prompts worth keeping"
+        lead="Copy them, replace the bracketed parts. They are written to constrain the model, which is where most prompt advice stops short."
+      >
+        <div className="space-y-4">
+          {PROMPTS.map((item) => (
+            <div key={item.title} className="rounded-lg border border-hairline bg-surface-1 p-5">
+              <h3 className="text-[0.95rem] font-semibold text-ink-primary">{item.title}</h3>
+              <p className="mt-1 text-[0.8rem] text-ink-muted">Use it when: {item.when}</p>
+              <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded border border-hairline bg-surface-0 p-3.5 font-mono text-[0.75rem] leading-relaxed text-ink-secondary">
+                {item.prompt}
+              </pre>
+              <div className="mt-3">
+                <CopyButton label="Copy prompt" value={item.prompt} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        title="Which free tool for which job"
+        lead="Free tiers as of September 2026. They change — check before you rely on one for a deadline."
+      >
+        <div className="space-y-3">
+          {TOOLS.map((tool) => (
+            <div key={tool.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-[0.92rem] font-semibold text-ink-primary">
+                  <a
+                    href={tool.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="underline decoration-hairline underline-offset-2 hover:decoration-volt"
+                  >
+                    {tool.name} ↗
+                  </a>
+                </h3>
+                <span className="text-[0.75rem] text-ink-muted">{tool.free}</span>
+              </div>
+              <p className="mt-2 text-[0.84rem] leading-relaxed text-ink-secondary">
+                <span className="text-ink-muted">Best for: </span>
+                {tool.bestFor}
+              </p>
+              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-ink-muted">{tool.note}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        title="Fetching data by describing it"
+        lead="If you can explain what you want, a coding assistant can write the request for you. You do not need to understand the code it produces — but you do need to check the result."
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="space-y-3 text-[0.87rem] leading-relaxed text-ink-secondary">
+            <p>
+              The UN platform's data can be fetched by anything that can make a web request,
+              with no key and no account. That means a coding assistant can write you a
+              working script from a plain description — and the script is short enough that
+              you can sanity-check it without being a programmer.
+            </p>
+            <p>
+              The prompt on the right gives the assistant the three things it cannot guess:
+              the address, the shape of the request, and the shape of the answer. Without
+              them it will invent an API that does not exist, which is the single most common
+              failure here.
+            </p>
+            <p className="text-ink-muted">
+              Paste it into any assistant, change the indicator and countries, and ask it to
+              explain each line back to you.
+            </p>
+          </div>
+
+          <div>
+            <CodeBlock
+              label="prompt — copy this whole block"
+              language="text"
+              code={`Write me a short script that fetches data from the UN System Data Commons.
+
+The API needs no key and allows cross-origin requests.
+
+ENDPOINT
+  POST https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series
+  Content-Type: application/json
+
+REQUEST BODY
+  {
+    "variables": ["undata/sdg/EG_ACS_ELEC"],
+    "entities":  ["country/BGD", "country/ETH"]
+  }
+
+RESPONSE SHAPE
+  {
+    "data": {
+      "<variable id>": {
+        "<country id>": {
+          "series": [ { "date": "2024", "value": 99.4 }, ... ],
+          "facet": "<id into the facets object>"
+        }
+      }
+    },
+    "facets": { "<id>": { "provenanceUrl": "...", "unitDisplayName": "..." } }
+  }
+
+WHAT I WANT
+  - Fetch the indicator above for the countries above.
+  - Print a table: country, year, value.
+  - If a country returns an empty series, print "no data reported" for it
+    rather than skipping it silently or printing zero.
+  - Print the source URL from the facets object at the end.
+
+Explain each step in plain language as a comment. I am not a programmer.`}
+            />
+          </div>
+        </div>
+      </Section>
+
+      <Section
+        title="The schema, in plain language"
+        lead="What an AI assistant needs to be told about this data, and what you need to know to check its work."
+      >
+        <div className="grid gap-4 lg:grid-cols-5">
+          <div className="lg:col-span-3 space-y-3">
+            <dl className="space-y-2.5">
+              {[
+                [
+                  'Variable (indicator)',
+                  'undata/sdg/EG_ACS_ELEC',
+                  'What is measured. The middle part names the publisher: sdg, who, unicef, unhcr, unodc.',
+                ],
+                [
+                  'Entity (place)',
+                  'country/BGD',
+                  'Who it is measured for. Countries use three-letter codes. Regions use names like SouthernAsia.',
+                ],
+                [
+                  'Observation',
+                  '{ "date": "2024", "value": 99.4 }',
+                  'One measurement: a year and a number. This is the atom of the whole system.',
+                ],
+                [
+                  'Facet (provenance)',
+                  '{ "provenanceUrl": "…", "unitDisplayName": "Percent" }',
+                  'Where the number came from and what it is measured in. Always carry this through to your report.',
+                ],
+                [
+                  'Dimension (breakdown)',
+                  '.SEX--F, .AGE--Y0T17',
+                  'A slice, added to the end of the indicator id. No suffix usually means the total — but not always, so check.',
+                ],
+              ].map(([term, code, meaning]) => (
+                <div key={term} className="rounded-lg border border-hairline bg-surface-1 p-4">
+                  <dt className="flex flex-wrap items-baseline gap-3">
+                    <span className="text-[0.88rem] font-semibold text-ink-primary">{term}</span>
+                    <code className="break-all font-mono text-[0.74rem] text-volt">{code}</code>
+                  </dt>
+                  <dd className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-secondary">{meaning}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="lg:col-span-2 rounded-lg border border-hairline bg-surface-1 p-5">
+            <h3 className="text-[0.88rem] font-semibold text-ink-primary">
+              Three things to check in any AI answer
+            </h3>
+            <ol className="mt-3 space-y-3 text-[0.82rem] leading-relaxed text-ink-secondary">
+              <li>
+                <span className="font-semibold text-ink-primary">Do the figures match your table?</span>{' '}
+                Pick three at random. If any differ, the model is paraphrasing rather than
+                reading.
+              </li>
+              <li>
+                <span className="font-semibold text-ink-primary">Did it invent a year?</span> Models
+                fill gaps helpfully. A year that is not in your data is the most common
+                fabrication, and the hardest to notice.
+              </li>
+              <li>
+                <span className="font-semibold text-ink-primary">Did it keep the unit?</span>{' '}
+                Percentages silently becoming counts, or rates per 100,000 becoming plain
+                numbers, changes the meaning entirely.
+              </li>
+            </ol>
+            <p className="mt-4 border-t border-hairline pt-3 text-[0.78rem] leading-relaxed text-ink-muted">
+              If you would rather the assistant fetch the data itself, rather than being
+              handed it, the platform has an MCP endpoint for exactly that — see{' '}
+              <Link to="/connect" className="text-volt underline decoration-volt/30 underline-offset-2">
+                Connect
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </Section>
+    </>
+  );
+}

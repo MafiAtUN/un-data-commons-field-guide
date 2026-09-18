@@ -107,7 +107,7 @@ export function PromptLab() {
               aria-pressed={selected.question === preset.question && !isCustom}
               className={`rounded-full border px-3 py-1.5 text-[0.75rem] font-medium transition-colors ${
                 selected.question === preset.question && !isCustom
-                  ? 'border-un-blue/60 bg-un-blue/10 text-ink-primary'
+                  ? 'border-volt/60 bg-volt/10 text-ink-primary'
                   : 'border-hairline text-ink-secondary hover:border-ink-muted hover:text-ink-primary'
               }`}
             >
@@ -134,7 +134,7 @@ export function PromptLab() {
           </label>
           <button
             type="submit"
-            className="rounded bg-un-blue px-4 py-2 text-[0.8rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
+            className="rounded bg-volt px-4 py-2 text-[0.8rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
           >
             Resolve
           </button>
@@ -244,7 +244,7 @@ function ResolutionReport({
         <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded border border-hairline">
           {summary.indicators.slice(0, 12).map((indicator) => (
             <li key={indicator.dcid} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 bg-surface-0 p-2.5">
-              <code className="font-mono text-[0.72rem] text-un-blue">{indicator.dcid}</code>
+              <code className="font-mono text-[0.72rem] text-volt">{indicator.dcid}</code>
               <span className="min-w-0 flex-1 text-[0.75rem] text-ink-secondary">
                 {indicator.name}
               </span>

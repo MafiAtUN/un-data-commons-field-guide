@@ -13,7 +13,7 @@ export function PageHeader({
   return (
     <header className="max-w-3xl">
       {eyebrow && (
-        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-un-blue">
+        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-volt">
           {eyebrow}
         </p>
       )}
@@ -53,8 +53,8 @@ export function Section({
 /** A short highlighted takeaway, used to close a worked example. */
 export function Takeaway({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-lg border-l-2 border-un-blue bg-surface-1 p-4">
-      <p className="text-[0.72rem] font-semibold uppercase tracking-wide text-un-blue">Takeaway</p>
+    <div className="rounded-lg border-l-2 border-volt bg-surface-1 p-4">
+      <p className="text-[0.72rem] font-semibold uppercase tracking-wide text-volt">Takeaway</p>
       <div className="mt-2 text-[0.88rem] leading-relaxed text-ink-secondary">{children}</div>
     </div>
   );

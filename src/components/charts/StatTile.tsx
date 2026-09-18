@@ -21,7 +21,7 @@ export function StatTile({ value, label, detail, accent = false }: StatTileProps
     <div className="rounded-lg border border-hairline bg-surface-1 p-4">
       <div
         className={`font-sans text-3xl font-semibold leading-none tracking-tight ${
-          accent ? 'text-un-blue' : 'text-ink-primary'
+          accent ? 'text-volt' : 'text-ink-primary'
         }`}
       >
         {value}

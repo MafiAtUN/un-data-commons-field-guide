@@ -23,7 +23,7 @@ export function Cookbook() {
           <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-ink-muted">
             Graph and observations (REST v2)
           </p>
-          <code className="mt-2 block break-all font-mono text-[0.76rem] text-un-blue">
+          <code className="mt-2 block break-all font-mono text-[0.76rem] text-volt">
             https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2
           </code>
           <p className="mt-2 text-[0.75rem] text-ink-muted">
@@ -34,7 +34,7 @@ export function Cookbook() {
           <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-ink-muted">
             Convenience endpoints (website API)
           </p>
-          <code className="mt-2 block break-all font-mono text-[0.76rem] text-un-blue">
+          <code className="mt-2 block break-all font-mono text-[0.76rem] text-volt">
             https://unsd-datacommons.gcp.un-icc.cloud/api
           </code>
           <p className="mt-2 text-[0.75rem] text-ink-muted">
@@ -237,7 +237,7 @@ function Recipe({
       <ul className="space-y-2.5 text-[0.84rem] leading-relaxed text-ink-secondary">
         {notes.map((note) => (
           <li key={note} className="flex gap-2.5">
-            <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-un-blue" />
+            <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
             <span>{note}</span>
           </li>
         ))}

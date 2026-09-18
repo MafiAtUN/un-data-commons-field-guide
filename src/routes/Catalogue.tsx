@@ -82,7 +82,7 @@ export function Catalogue() {
               aria-pressed={pillar === filter.id}
               className={`rounded-full border px-3 py-1.5 text-[0.75rem] font-medium transition-colors ${
                 pillar === filter.id
-                  ? 'border-un-blue/60 bg-un-blue/10 text-ink-primary'
+                  ? 'border-volt/60 bg-volt/10 text-ink-primary'
                   : 'border-hairline text-ink-secondary hover:border-ink-muted hover:text-ink-primary'
               }`}
             >
@@ -136,7 +136,7 @@ export function Catalogue() {
                 </td>
                 <td className="p-3 align-top text-ink-secondary">{collection.useFor}</td>
                 <td className="p-3 align-top">
-                  <code className="font-mono text-[0.72rem] text-un-blue">
+                  <code className="font-mono text-[0.72rem] text-volt">
                     undata/{collection.agencySegment}/
                   </code>
                 </td>
@@ -218,7 +218,7 @@ export function Catalogue() {
           ].map((item) => (
             <li key={item.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
               <h3 className="text-[0.88rem] font-semibold text-ink-primary">{item.name}</h3>
-              <code className="mt-1.5 block break-all font-mono text-[0.7rem] text-un-blue">
+              <code className="mt-1.5 block break-all font-mono text-[0.7rem] text-volt">
                 {item.root}
               </code>
               <p className="mt-2 text-[0.8rem] leading-relaxed text-ink-secondary">{item.body}</p>

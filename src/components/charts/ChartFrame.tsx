@@ -102,7 +102,7 @@ export function ChartFrame({
               href={facet.provenanceUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-un-blue"
+              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
             >
               Source: {facet.provenanceId ?? facet.provenanceUrl}
             </a>
@@ -115,7 +115,7 @@ export function ChartFrame({
             <button
               type="button"
               onClick={() => setShowRequest((open) => !open)}
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-un-blue"
+              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
               aria-expanded={showRequest}
             >
               {showRequest ? 'Hide request' : 'Show request'}

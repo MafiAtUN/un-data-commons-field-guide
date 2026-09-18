@@ -13,7 +13,7 @@ export function Home() {
   return (
     <>
       <section className="max-w-3xl">
-        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-un-blue">
+        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-volt">
           Launched 17 September 2026 · data.un.org
         </p>
         <h1 className="mt-3 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-5xl">
@@ -34,17 +34,83 @@ export function Home() {
 
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            to="/lab"
-            className="rounded bg-un-blue px-5 py-2.5 text-[0.85rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
+            to="/start"
+            className="rounded bg-volt px-5 py-2.5 text-[0.85rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
           >
-            Open the Prompt Lab
+            Start here — no coding needed
           </Link>
           <Link
-            to="/peace-and-security"
+            to="/toolkit"
             className="rounded border border-hairline px-5 py-2.5 text-[0.85rem] font-medium text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary"
           >
-            See a worked case →
+            Just get me the data →
           </Link>
+        </div>
+
+        <p className="mt-4 text-[0.82rem] leading-relaxed text-ink-muted">
+          Developer? The{' '}
+          <Link to="/lab" className="text-volt underline decoration-volt/30 underline-offset-2">
+            Prompt Lab
+          </Link>
+          ,{' '}
+          <Link to="/cookbook" className="text-volt underline decoration-volt/30 underline-offset-2">
+            REST cookbook
+          </Link>{' '}
+          and{' '}
+          <Link to="/connect" className="text-volt underline decoration-volt/30 underline-offset-2">
+            MCP setup
+          </Link>{' '}
+          are all still here, under Developers.
+        </p>
+      </section>
+
+      <section className="mt-14">
+        <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
+          If you write reports rather than code
+        </h2>
+        <p className="mt-2 max-w-3xl text-[0.9rem] leading-relaxed text-ink-secondary">
+          Most people who need this data are not developers. They are reporting officers,
+          analysts and programme staff who need a defensible figure before a meeting. This
+          whole track assumes no technical background and nothing beyond a browser.
+        </p>
+
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Practical
+            to="/start"
+            step="Five minutes"
+            title="Start here"
+            body="The five words the system uses, the three rules that keep you out of trouble, and your first number on screen."
+          />
+          <Practical
+            to="/tutorials"
+            step="Six walkthroughs"
+            title="Tutorials"
+            body="Find a defensible figure. Compare countries honestly. Make a chart. Draft a section with AI. Each about five minutes."
+          />
+          <Practical
+            to="/toolkit"
+            step="Three clicks"
+            title="Data Finder"
+            body="Pick a topic and countries. Leave with a chart, a spreadsheet, a citation and an AI prompt. No identifiers."
+          />
+          <Practical
+            to="/visualise"
+            step="Free tools"
+            title="Make a chart"
+            body="Datawrapper, Flourish and the rest — which to use, how to get UN data in, and five rules that keep a chart honest."
+          />
+          <Practical
+            to="/cite"
+            step="Copy and paste"
+            title="Cite it properly"
+            body="Credit the agency, not the website. Four styles, generated for the indicator you used."
+          />
+          <Practical
+            to="/ai"
+            step="Prompts included"
+            title="Use AI safely"
+            body="Never ask a chatbot what a statistic is — give it the statistic and ask what it means. Four prompts that do exactly that."
+          />
         </div>
       </section>
 
@@ -63,7 +129,7 @@ export function Home() {
 
       <section className="mt-16">
         <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
-          Three ways in, and the one nobody mentions
+          For developers: three ways in, and the one nobody mentions
         </h2>
         <p className="mt-2 max-w-3xl text-[0.9rem] leading-relaxed text-ink-secondary">
           The platform has three public surfaces. The search box is the one everybody finds.
@@ -140,7 +206,7 @@ export function Home() {
                 href={searchUrl(question)}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-block rounded-full border border-hairline bg-surface-0 px-3 py-1.5 font-mono text-[0.73rem] text-ink-secondary transition-colors hover:border-un-blue/50 hover:text-ink-primary"
+                className="inline-block rounded-full border border-hairline bg-surface-0 px-3 py-1.5 font-mono text-[0.73rem] text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
               >
                 {question} ↗
               </a>
@@ -149,6 +215,34 @@ export function Home() {
         </ul>
       </section>
     </>
+  );
+}
+
+function Practical({
+  to,
+  step,
+  title,
+  body,
+}: {
+  to: string;
+  step: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group flex flex-col rounded-lg border border-hairline bg-surface-1 p-4 transition-colors hover:border-volt/50"
+    >
+      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-volt">
+        {step}
+      </span>
+      <h3 className="mt-2 text-[0.95rem] font-semibold text-ink-primary">{title}</h3>
+      <p className="mt-1.5 flex-1 text-[0.81rem] leading-relaxed text-ink-secondary">{body}</p>
+      <span className="mt-3 text-[0.78rem] font-medium text-ink-secondary group-hover:text-ink-primary">
+        Open →
+      </span>
+    </Link>
   );
 }
 
@@ -175,7 +269,7 @@ function Door({
       <p className="mt-3 text-[0.78rem] leading-relaxed text-ink-muted">{detail}</p>
       <Link
         to={to}
-        className="mt-4 text-[0.8rem] font-medium text-un-blue underline decoration-un-blue/30 underline-offset-2 hover:decoration-un-blue"
+        className="mt-4 text-[0.8rem] font-medium text-volt underline decoration-volt/30 underline-offset-2 hover:decoration-volt"
       >
         {cta} →
       </Link>
@@ -197,9 +291,9 @@ function PillarCard({
   return (
     <Link
       to={to}
-      className="group flex flex-col rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-un-blue/50"
+      className="group flex flex-col rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/50"
     >
-      <span className="text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-un-blue">
+      <span className="text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-volt">
         {pillar}
       </span>
       <p className="mt-3 flex-1 text-[0.95rem] leading-snug text-ink-primary">“{question}”</p>

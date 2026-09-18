@@ -12,7 +12,7 @@ export function NotFound() {
       <div className="mt-6 flex flex-wrap justify-center gap-3">
         <Link
           to="/"
-          className="rounded bg-un-blue px-4 py-2 text-[0.82rem] font-semibold text-surface-0"
+          className="rounded bg-volt px-4 py-2 text-[0.82rem] font-semibold text-surface-0"
         >
           Back to the start
         </Link>

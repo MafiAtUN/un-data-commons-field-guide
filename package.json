@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "snapshots": "node scripts/fetch-snapshots.mjs",
+    "countries": "node scripts/fetch-countries.mjs",
     "verify": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {

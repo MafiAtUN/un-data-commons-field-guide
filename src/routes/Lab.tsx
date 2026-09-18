@@ -137,7 +137,7 @@ export function Lab() {
           <Takeaway>
             Use natural language to <em>discover</em> the indicator, then switch to its dcid
             to <em>retrieve</em> it. Prompting is a search strategy; identifiers are a data
-            strategy. The <a href="/cookbook" className="text-un-blue underline decoration-un-blue/30 underline-offset-2">query cookbook</a> picks up from here.
+            strategy. The <a href="/cookbook" className="text-volt underline decoration-volt/30 underline-offset-2">query cookbook</a> picks up from here.
           </Takeaway>
         </div>
       </Section>
@@ -148,7 +148,7 @@ export function Lab() {
 function Move({ n, move, why, example }: { n: string; move: string; why: string; example: string }) {
   return (
     <li className="flex gap-4 rounded-lg border border-hairline bg-surface-1 p-4">
-      <span className="tnum shrink-0 font-mono text-[0.8rem] font-semibold text-un-blue">{n}</span>
+      <span className="tnum shrink-0 font-mono text-[0.8rem] font-semibold text-volt">{n}</span>
       <div>
         <h3 className="text-[0.92rem] font-semibold text-ink-primary">{move}</h3>
         <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-secondary">{why}</p>

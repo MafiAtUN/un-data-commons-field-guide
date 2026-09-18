@@ -28,6 +28,12 @@ import { fileURLToPath } from 'node:url';
  * and cannot import the app's TypeScript.
  */
 const ROUTES = [
+  'start',
+  'tutorials',
+  'toolkit',
+  'visualise',
+  'cite',
+  'ai',
   'lab',
   'peace-and-security',
   'development',
