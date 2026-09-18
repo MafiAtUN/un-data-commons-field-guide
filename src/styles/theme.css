@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+
+/**
+ * Design tokens.
+ *
+ * The categorical series colours are not a taste decision. They were checked with
+ * the palette validator against the dark chart surface (#1a1a19) and clear every
+ * gate: the lightness band, the chroma floor, adjacent-pair separation under
+ * protanopia/deuteranopia/tritanopia (worst ΔE 8.4), the normal-vision floor
+ * (worst ΔE 19.3) and 3:1 contrast against the surface.
+ *
+ * Slot 1 is a UN-Blue-leaning step: #009EDB itself sits outside the dark band, so
+ * #1b9bd8 is the nearest step that keeps the brand read and still passes. Forms
+ * that put every pair on screen at once (maps, scatter) cap at the first three
+ * slots, which validate under `--pairs all` in both modes.
+ *
+ * Do not add a ninth slot. Past eight, fold the tail into "Other" or facet.
+ */
+
+@theme {
+  --color-surface-0: #121211;
+  --color-surface-1: #1a1a19;
+  --color-surface-2: #232322;
+  --color-surface-3: #2e2e2c;
+
+  --color-ink-primary: #ffffff;
+  --color-ink-secondary: #c3c2b7;
+  --color-ink-muted: #8a8980;
+
+  --color-hairline: #35352f;
+
+  /* Brand — chrome only, never a series colour. */
+  --color-un-blue: #009edb;
+
+  /* Categorical series slots, in fixed order. Colour follows the entity. */
+  --color-series-1: #1b9bd8;
+  --color-series-2: #d95926;
+  --color-series-3: #199e70;
+  --color-series-4: #c98500;
+  --color-series-5: #d55181;
+  --color-series-6: #008300;
+  --color-series-7: #9085e9;
+  --color-series-8: #e66767;
+
+  /* Sequential ramp: one hue, light to dark. For magnitude only. */
+  --color-seq-100: #cde2fb;
+  --color-seq-250: #86b6ef;
+  --color-seq-400: #3987e5;
+  --color-seq-550: #1c5cab;
+  --color-seq-700: #0d366b;
+
+  /* Status — reserved. Never reused as a series colour; always with a label. */
+  --color-status-good: #0ca30c;
+  --color-status-warning: #fab219;
+  --color-status-serious: #ec835a;
+  --color-status-critical: #d03b3b;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-surface-0);
+  color: var(--color-ink-secondary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A visible, consistent focus ring: every interactive element is keyboard-reachable. */
+:focus-visible {
+  outline: 2px solid var(--color-un-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Numbers align vertically in tables and on axes; hero figures use proportional
+   figures, where equal-width digits read loose. */
+.tnum { font-variant-numeric: tabular-nums; }
+
+::selection { background: color-mix(in oklab, var(--color-un-blue) 35%, transparent); }
+
+/**
+ * Grid and flex items default to `min-width: auto`, which means their minimum
+ * size is their content's. A wide `<pre>` or a long unbroken identifier then
+ * sizes its own track and pushes the whole page wider than the viewport — the
+ * inner `overflow-x-auto` never gets a chance to scroll.
+ *
+ * Resetting the minimum lets the inner scroll containers do their job. Written
+ * with `:where()` so it carries zero specificity and any explicit utility on the
+ * element still wins.
+ */
+:where(.grid, .flex) > * {
+  min-width: 0;
+}
