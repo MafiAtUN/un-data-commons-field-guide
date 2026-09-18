@@ -45,8 +45,6 @@ export function Cite() {
         }
       />
 
-      <PageVideo page="/cite" />
-
       <Section title="The rule, in one comparison">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-status-critical/30 bg-status-critical/5 p-4">
@@ -78,6 +76,8 @@ export function Cite() {
           </div>
         </div>
       </Section>
+
+      <PageVideo page="/cite" />
 
       <Section
         title="Build your citation"

@@ -45,14 +45,14 @@ export function Cookbook() {
         </div>
       </div>
 
-      <PageVideo page="/cookbook" />
-
       <Section
         title="First, learn the identifier grammar"
         lead="Almost every difficulty with this API dissolves once you can read a dcid. Pick an example, or paste one of your own — the breakdown below is produced by the same parser the rest of the site uses."
       >
         <DcidExplainer />
       </Section>
+
+      <PageVideo page="/cookbook" />
 
       <Section title="Recipe 1 — A time series for known places">
         <Recipe

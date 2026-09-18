@@ -34,8 +34,6 @@ export function Start() {
         }
       />
 
-      <PageVideo page="/start" />
-
       <Section
         title="Five behaviours worth knowing before you quote anything"
         lead="In rough order of how much trouble they cause."
@@ -153,6 +151,8 @@ export function Start() {
           />
         </div>
       </Section>
+
+      <PageVideo page="/start" />
 
       <Section
         title="The identifier is the unit of precision"

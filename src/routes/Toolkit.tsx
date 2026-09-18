@@ -21,8 +21,6 @@ export function Toolkit() {
         <DataFinder />
       </div>
 
-      <PageVideo page="/toolkit" />
-
       <Section title="What just happened" lead="Thirty seconds on why the result is trustworthy.">
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -46,6 +44,8 @@ export function Toolkit() {
           ))}
         </div>
       </Section>
+
+      <PageVideo page="/toolkit" />
 
       <Section
         title="This list is deliberately short"

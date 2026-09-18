@@ -153,16 +153,42 @@ describe('a page offers its video only once that video exists', () => {
     expect(atRest(<PageVideo page="/nowhere" />)).toBe('');
   });
 
-  it('renders a resting poster, not a player, for one that has', () => {
+  it('renders resting stills, not a player, for one that has', () => {
     const uploaded = publishedVideos()[0];
     if (!uploaded?.page) return;
 
     const html = atRest(<PageVideo page={uploaded.page} />);
-    expect(html).toContain('Watch it instead');
+    expect(html).toContain('Prefer to watch?');
     expect(html).not.toContain('<iframe');
     // Every video on that page, not merely the first one.
     for (const video of videosForPage(uploaded.page)) {
       expect(html, video.slug).toContain(asRendered(video.title));
+    }
+  });
+
+  it('offers the videos as a strip rather than as the page', () => {
+    // The version this replaces stacked a full-width 16:9 player per video, so
+    // /start opened with roughly three thousand pixels of video above its first
+    // sentence. Video is an alternative to the page, not a toll gate in front
+    // of it — at rest each entry is one small still in a grid.
+    const uploaded = publishedVideos().find((v) => v.page === '/start');
+    if (!uploaded) return;
+
+    const html = atRest(<PageVideo page="/start" />);
+    expect(html).toContain('grid');
+    expect(html).toContain('aspect-video');
+    // The commitment is stated before anyone presses anything.
+    expect(html).toMatch(/\d short videos · \d+:\d\d in total/);
+    // And the text remains the canonical version.
+    expect(html).toContain('written out on this page too');
+  });
+
+  it('states the runtime of every still, so no click is a surprise', () => {
+    const html = atRest(<PageVideo page="/start" />);
+    for (const video of videosForPage('/start')) {
+      if (!video.seconds) continue;
+      const mmss = `${Math.floor(video.seconds / 60)}:${String(Math.round(video.seconds % 60)).padStart(2, '0')}`;
+      expect(html, video.slug).toContain(mmss);
     }
   });
 });
