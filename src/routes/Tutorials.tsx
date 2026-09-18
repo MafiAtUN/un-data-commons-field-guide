@@ -1,27 +1,40 @@
+import { useState } from 'react';
 import { PageHeader, Section } from '../components/Prose';
 import { Tutorial } from '../components/Tutorial';
 import { TUTORIALS } from '../content/tutorials';
 
+/** Shown before the list has to earn more of the reader's attention. */
+const SHOWN_BY_DEFAULT = 3;
+
 export function Tutorials() {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? TUTORIALS : TUTORIALS.slice(0, SHOWN_BY_DEFAULT);
+  const hidden = TUTORIALS.length - SHOWN_BY_DEFAULT;
+
   return (
     <>
       <PageHeader
         eyebrow="Tutorials · 5 minutes each"
         title="Six walkthroughs"
-        lead={
-          <>
-            Each ends with something you can put in front of a manager. No technical
-            background needed. Open one and follow along in a second tab.
-          </>
-        }
+        lead={<>Each ends with something you can put in front of a manager. Open one and follow along in a second tab.</>}
       />
 
       <Section title="Start with the first one" lead="Each also works on its own.">
-        <div className="space-y-3">
-          {TUTORIALS.map((spec, index) => (
+        <div className="space-y-2.5">
+          {visible.map((spec, index) => (
             <Tutorial key={spec.id} spec={spec} defaultOpen={index === 0} />
           ))}
         </div>
+
+        {!showAll && hidden > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowAll(true)}
+            className="mt-3 w-full rounded-lg border border-dashed border-hairline py-2.5 text-[0.82rem] font-medium text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
+          >
+            Show {hidden} more walkthroughs
+          </button>
+        )}
       </Section>
 
       <Section title="If something does not work" lead="The three that most often go wrong.">

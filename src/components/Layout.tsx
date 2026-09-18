@@ -237,7 +237,7 @@ export function Layout({ children }: { children: ReactNode }) {
         )}
       </header>
 
-      <main id="main" className="mx-auto max-w-6xl px-4 py-10">
+      <main id="main" className="mx-auto max-w-6xl px-4 pb-10 pt-7">
         {children}
       </main>
 

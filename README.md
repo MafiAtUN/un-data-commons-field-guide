@@ -124,11 +124,13 @@ figure before a meeting, not a reader who would admire the prose:
 
 | | Before | After |
 |---|---|---|
-| Words across the track | 6,246 (~28 min) | **4,158 (~19 min)** |
+| Words across the track | 6,246 (~28 min) | **3,639 (~17 min)** |
 | Top-level navigation choices | 13 | **3** |
-| Time to a number on screen | 2 clicks + 4 min reading | **0.3s, zero clicks** |
-| Actions above the fold, homepage | 8 (below 2.9 screens of prose) | **17** |
-| Longest page | 5.6 screens, 1 action | 3.5 screens |
+| Time to a number on screen | 2 clicks + 4 min reading | **0.5s, zero clicks** |
+| Actions above the fold, homepage | 8 (below 2.9 screens of prose) | **19** |
+| Is the chart above the fold? | no, 1.19 screens down | **yes, 0.88** |
+| Longest page | 5.6 screens, 1 action | **2.7 screens** |
+| `/ai` | 1,573 words | **534** |
 
 Reference material — prompt bodies, workflow files, the reasoning behind each rule — is
 kept but placed behind the question a reader would ask, so the page is short for someone in

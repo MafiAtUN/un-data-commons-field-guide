@@ -212,44 +212,54 @@ export function AiTools() {
       </Section>
 
       <Section title="Which free tool" lead="Free tiers as of September 2026. Check before a deadline.">
-        <div className="space-y-3">
-          {TOOLS.map((tool) => (
-            <div key={tool.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-[0.92rem] font-semibold text-ink-primary">
-                  <a
-                    href={tool.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="underline decoration-hairline underline-offset-2 hover:decoration-volt"
-                  >
-                    {tool.name} ↗
-                  </a>
-                </h3>
-                <span className="text-[0.75rem] text-ink-muted">{tool.free}</span>
-              </div>
-              <p className="mt-2 text-[0.84rem] leading-relaxed text-ink-secondary">
-                <span className="text-ink-muted">Best for: </span>
-                {tool.bestFor}
-              </p>
-              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-ink-muted">{tool.note}</p>
-            </div>
-          ))}
-        </div>
+        <Expander question="Compare the free AI tools" time={`${TOOLS.length} tools`}>
+          <div className="overflow-x-auto rounded border border-hairline">
+            <table className="w-full border-collapse text-[0.8rem]">
+              <caption className="sr-only">Free AI tools compared</caption>
+              <thead className="bg-surface-2">
+                <tr>
+                  <th scope="col" className="border-b border-hairline p-2.5 text-left font-semibold text-ink-primary">Tool</th>
+                  <th scope="col" className="border-b border-hairline p-2.5 text-left font-semibold text-ink-primary">Best for</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLS.map((tool) => (
+                  <tr key={tool.name} className="align-top even:bg-surface-1">
+                    <th scope="row" className="p-2.5 text-left font-normal">
+                      <a
+                        href={tool.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="font-semibold text-ink-primary underline decoration-hairline underline-offset-2 hover:decoration-volt"
+                      >
+                        {tool.name} ↗
+                      </a>
+                      <span className="mt-0.5 block text-[0.72rem] text-ink-muted">{tool.free}</span>
+                    </th>
+                    <td className="p-2.5 text-ink-secondary">
+                      {tool.bestFor}
+                      <span className="mt-1 block text-[0.73rem] text-ink-muted">{tool.note}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Expander>
       </Section>
 
       <Section
         title="Fetching data by describing it"
         lead="Describe what you want; a coding assistant writes the request. You do not need to read the code — but you do need to check the result."
       >
-        <div className="grid gap-4 lg:grid-cols-2">
-          <div className="space-y-3 text-[0.87rem] leading-relaxed text-ink-secondary">
+        <div className="space-y-4">
+          <div className="text-[0.87rem] leading-relaxed text-ink-secondary">
             <ul className="space-y-2">
               <li>The UN data needs no key and no account.</li>
               <li>So an assistant can write you a working script from a plain description.</li>
               <li>
-                The prompt opposite gives it the three things it cannot guess: the address,
-                the request shape, and the answer shape.
+                The prompt below gives it the three things it cannot guess: the address, the
+                request shape, and the answer shape.
               </li>
               <li>
                 Without those it invents an API that does not exist. That is the most common
@@ -306,8 +316,9 @@ Explain each step in plain language as a comment. I am not a programmer.`}
       </Section>
 
       <Section title="The data, in plain language" lead="What to tell an assistant, and what to check in its answer.">
-        <div className="grid gap-4 lg:grid-cols-5">
-          <div className="lg:col-span-3 space-y-3">
+        <div className="space-y-4">
+          <div>
+            <Expander question="What the data looks like underneath" time="5 terms">
             <dl className="space-y-2.5">
               {[
                 [
@@ -345,13 +356,14 @@ Explain each step in plain language as a comment. I am not a programmer.`}
                 </div>
               ))}
             </dl>
+            </Expander>
           </div>
 
-          <div className="lg:col-span-2 rounded-lg border border-hairline bg-surface-1 p-5">
+          <div className="rounded-lg border border-hairline bg-surface-1 p-5">
             <h3 className="text-[0.88rem] font-semibold text-ink-primary">
               Three things to check in any AI answer
             </h3>
-            <ol className="mt-3 space-y-3 text-[0.82rem] leading-relaxed text-ink-secondary">
+            <ol className="mt-3 grid gap-3 text-[0.82rem] leading-relaxed text-ink-secondary sm:grid-cols-3">
               <li>
                 <span className="font-semibold text-ink-primary">Do the figures match your table?</span>{' '}
                 Pick three at random. If any differ, the model is paraphrasing rather than

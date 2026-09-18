@@ -162,45 +162,25 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
           ))}
         </select>
 
-        <div className="mt-3 rounded border border-hairline bg-surface-0 p-3.5">
-          <p className="text-[0.85rem] leading-relaxed text-ink-secondary">{indicator.what}</p>
-          <dl className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[0.75rem]">
-            <Meta term="Measured in" value={indicator.unit} />
-            <Meta term="Published by" value={indicator.source} />
-            {indicator.sdg && <Meta term="SDG indicator" value={indicator.sdg} />}
-            <Meta term="Available for" value={`~${indicator.countryCoverage} countries`} />
-            <Meta term="Years" value={indicator.years} />
+        {/* Description and provenance only. The caveat moved down to sit with the
+            chart: a warning lands better beside the number it is about than
+            before the reader has seen anything. */}
+        <div className="mt-2.5 rounded border border-hairline bg-surface-0 px-3.5 py-2.5">
+          <p className="text-[0.84rem] leading-snug text-ink-secondary">{indicator.what}</p>
+          <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[0.73rem]">
+            <Meta term="In" value={indicator.unit} />
+            <Meta term="From" value={indicator.source} />
+            {indicator.sdg && <Meta term="SDG" value={indicator.sdg} />}
+            <Meta term="Covers" value={`~${indicator.countryCoverage} countries`} />
           </dl>
-          {indicator.watchOut && (
-            <p className="mt-3 flex gap-2 border-t border-hairline pt-3 text-[0.8rem] leading-relaxed text-ink-secondary">
-              <span aria-hidden="true" className="shrink-0 font-semibold text-status-warning">!</span>
-              <span>
-                <span className="font-semibold text-status-warning">Watch out. </span>
-                {indicator.watchOut}
-              </span>
-            </p>
-          )}
-          {/* The identifier matters for reproducibility, but it is jargon to a
-              reporting officer and was the loudest thing in this card. Kept, and
-              put one click away. */}
-          <p className="mt-3 text-[0.72rem] text-ink-muted">
-            <button
-              type="button"
-              onClick={() => setShowId((value) => !value)}
-              aria-expanded={showId}
-              className="underline decoration-hairline underline-offset-2 hover:text-ink-secondary hover:decoration-volt"
-            >
-              {showId ? 'Hide technical ID' : 'Technical ID (for citations and scripts)'}
-            </button>
-            {showId && (
-              <span className="ml-2 font-mono text-ink-secondary">{indicator.dcid}</span>
-            )}
-          </p>
         </div>
       </Step>
 
+      {/* Steps 2 and 3 share a row on wide screens, which lifts the chart itself
+          above the fold on a normal laptop. */}
+      <div className="grid border-b border-hairline lg:grid-cols-[1.9fr_1fr]">
       {/* ---------- Step 2 ---------- */}
-      <Step number={2} title="Which countries?" hint="Up to eight, so the chart stays readable.">
+      <Step number={2} title="Which countries?" hint="Up to eight." bare>
         <div className="flex flex-wrap gap-2">
           {COUNTRY_PRESETS.map((preset) => (
             <button
@@ -261,7 +241,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
       </Step>
 
       {/* ---------- Step 3 ---------- */}
-      <Step number={3} title="How far back?">
+      <Step number={3} title="How far back?" bare className="border-t border-hairline lg:border-l lg:border-t-0">
         <div className="flex flex-wrap items-center gap-2">
           {[1990, 2000, 2010, 2015, 2020].map((year) => (
             <button
@@ -278,11 +258,10 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
               from {year}
             </button>
           ))}
-          <span className="text-[0.75rem] text-ink-muted">
-            2015 is the SDG baseline year.
-          </span>
         </div>
+        <p className="mt-2 text-[0.72rem] text-ink-muted">2015 is the SDG baseline year.</p>
       </Step>
+      </div>
 
       {/* ---------- Result ---------- */}
       <div className="border-t border-hairline p-5">
@@ -350,6 +329,16 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
           )}
         </div>
 
+        {indicator.watchOut && series.length > 0 && (
+          <p className="mt-4 flex gap-2 rounded border border-status-warning/25 bg-status-warning/5 p-3 text-[0.8rem] leading-relaxed text-ink-secondary">
+            <span aria-hidden="true" className="shrink-0 font-semibold text-status-warning">!</span>
+            <span>
+              <span className="font-semibold text-status-warning">Watch out. </span>
+              {indicator.watchOut}
+            </span>
+          </p>
+        )}
+
         {missing.length > 0 && series.length > 0 && (
           <p className="mt-4 flex gap-2 rounded border border-status-warning/25 bg-status-warning/5 p-3 text-[0.8rem] leading-relaxed text-ink-secondary">
             <span aria-hidden="true" className="shrink-0 font-semibold text-status-warning">!</span>
@@ -366,6 +355,16 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
 
         <p className="mt-4 text-[0.75rem] leading-relaxed text-ink-muted">
           Source: {indicator.source}
+          {' · '}
+          <button
+            type="button"
+            onClick={() => setShowId((value) => !value)}
+            aria-expanded={showId}
+            className="underline decoration-hairline underline-offset-2 hover:text-ink-secondary hover:decoration-volt"
+          >
+            {showId ? 'hide technical ID' : 'technical ID'}
+          </button>
+          {showId && <span className="ml-1.5 font-mono text-ink-secondary">{indicator.dcid}</span>}
           {facet?.provenanceUrl && (
             <>
               {' · '}
@@ -462,14 +461,19 @@ function Step({
   title,
   hint,
   children,
+  bare = false,
+  className = '',
 }: {
   number: number;
   title: string;
   hint?: string;
   children: React.ReactNode;
+  /** Omit the bottom rule when the step sits inside a shared row. */
+  bare?: boolean;
+  className?: string;
 }) {
   return (
-    <div className="border-b border-hairline p-5">
+    <div className={`${bare ? '' : 'border-b border-hairline'} p-5 ${className}`}>
       <h3 className="flex items-baseline gap-2.5 text-[0.9rem] font-semibold text-ink-primary">
         <span className="tnum grid size-5 shrink-0 place-items-center rounded-full bg-volt text-[0.7rem] font-bold text-surface-0">
           {number}
@@ -477,7 +481,7 @@ function Step({
         {title}
         {hint && <span className="text-[0.75rem] font-normal text-ink-muted">{hint}</span>}
       </h3>
-      <div className="mt-3">{children}</div>
+      <div className="mt-2.5">{children}</div>
     </div>
   );
 }

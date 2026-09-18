@@ -71,38 +71,42 @@ export function Visualise() {
       />
 
       <Section title="Pick a tool" lead="Ordered by speed to a finished chart.">
-        <div className="space-y-3">
-          {TOOLS.map((tool) => (
-            <div key={tool.name} className="rounded-lg border border-hairline bg-surface-1 p-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-[0.95rem] font-semibold text-ink-primary">
-                  <a
-                    href={tool.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="underline decoration-hairline underline-offset-2 hover:decoration-volt"
-                  >
-                    {tool.name} ↗
-                  </a>
-                </h3>
-                <span className="text-[0.75rem] text-ink-muted">{tool.cost}</span>
-              </div>
-              <dl className="mt-3 grid gap-2 text-[0.82rem] leading-relaxed sm:grid-cols-3">
-                <div>
-                  <dt className="text-ink-muted">Best for</dt>
-                  <dd className="text-ink-secondary">{tool.bestFor}</dd>
-                </div>
-                <div>
-                  <dt className="text-ink-muted">Getting UN data in</dt>
-                  <dd className="text-ink-secondary">{tool.getting}</dd>
-                </div>
-                <div>
-                  <dt className="text-ink-muted">Watch out</dt>
-                  <dd className="text-ink-secondary">{tool.watch}</dd>
-                </div>
-              </dl>
-            </div>
-          ))}
+        <div className="overflow-x-auto rounded-lg border border-hairline">
+          <table className="w-full border-collapse text-[0.82rem]">
+            <caption className="sr-only">Free charting tools compared</caption>
+            <thead className="bg-surface-2">
+              <tr>
+                <th scope="col" className="border-b border-hairline p-3 text-left font-semibold text-ink-primary">Tool</th>
+                <th scope="col" className="border-b border-hairline p-3 text-left font-semibold text-ink-primary">Best for</th>
+                <th scope="col" className="border-b border-hairline p-3 text-left font-semibold text-ink-primary">Getting data in</th>
+              </tr>
+            </thead>
+            <tbody>
+              {TOOLS.map((tool) => (
+                <tr key={tool.name} className="align-top even:bg-surface-1">
+                  <th scope="row" className="p-3 text-left font-normal">
+                    <a
+                      href={tool.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="font-semibold text-ink-primary underline decoration-hairline underline-offset-2 hover:decoration-volt"
+                    >
+                      {tool.name} ↗
+                    </a>
+                    <span className="mt-0.5 block text-[0.72rem] text-ink-muted">{tool.cost}</span>
+                  </th>
+                  <td className="p-3 text-ink-secondary">{tool.bestFor}</td>
+                  <td className="p-3 text-ink-secondary">
+                    {tool.getting}
+                    <span className="mt-1 block text-[0.74rem] text-ink-muted">
+                      <span className="font-semibold text-status-warning">! </span>
+                      {tool.watch}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Section>
 
@@ -181,7 +185,7 @@ export function Visualise() {
             <ul className="space-y-2">
               <li>Datawrapper and Flourish can read a CSV from a web address on a schedule.</li>
               <li>The UN platform does not publish CSV files, so something has to write one.</li>
-              <li>A free GitHub Action does it. Copy the file opposite into a repository.</li>
+              <li>A free GitHub Action does it. Copy the workflow file below into a repository.</li>
               <li>Change the indicator and countries at the top. Enable GitHub Pages.</li>
               <li>In Datawrapper, choose "Link to external dataset" and paste the URL.</li>
               <li>The chart now refreshes itself every Monday.</li>

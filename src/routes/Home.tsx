@@ -15,20 +15,22 @@ import { searchUrl } from '../lib/undc/config';
 export function Home() {
   return (
     <>
+      {/* The hero is kept deliberately short: every pixel it takes is a pixel
+          between the reader and the chart they came for. */}
       <section className="max-w-3xl">
-        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-volt">
+        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-volt">
           Official UN statistics · free · no login
         </p>
-        <h1 className="mt-3 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-5xl">
+        <h1 className="mt-2 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-4xl">
           What number do you need?
         </h1>
-        <p className="mt-4 text-[1.05rem] leading-relaxed text-ink-secondary">
+        <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-secondary">
           Pick a topic and some countries. Get the figure, a chart, a spreadsheet and a
-          citation. About fifteen seconds.
+          citation — in about fifteen seconds.
         </p>
       </section>
 
-      <div className="mt-8">
+      <div className="mt-5">
         <DataFinder showIntro={false} />
       </div>
 

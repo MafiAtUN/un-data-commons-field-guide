@@ -40,18 +40,14 @@ export function Tutorial({ spec, defaultOpen = false }: { spec: TutorialSpec; de
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
-        className="flex w-full items-start justify-between gap-4 p-5 text-left transition-colors hover:bg-surface-2/40"
+        className="flex w-full items-start justify-between gap-4 px-5 py-3.5 text-left transition-colors hover:bg-surface-2/40"
       >
         <div>
-          <h3 className="text-[1rem] font-semibold text-ink-primary">{spec.title}</h3>
-          <p className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-secondary">
-            <span className="text-ink-muted">For: </span>
-            {spec.forWhom}
-          </p>
-          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[0.75rem] text-ink-muted">
-            <span className="tnum">About {spec.minutes} minutes</span>
-            <span>{spec.steps.length} steps</span>
-            <span>You end up with: {spec.outcome}</span>
+          <h3 className="text-[0.98rem] font-semibold text-ink-primary">{spec.title}</h3>
+          <p className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.76rem] text-ink-muted">
+            <span className="tnum">{spec.minutes} min</span>
+            <span>·</span>
+            <span>You get: {spec.outcome}</span>
           </p>
         </div>
         <span aria-hidden="true" className="shrink-0 pt-1 text-[0.8rem] text-volt">
@@ -61,6 +57,9 @@ export function Tutorial({ spec, defaultOpen = false }: { spec: TutorialSpec; de
 
       {open && (
         <div className="border-t border-hairline p-5">
+          <p className="mb-4 text-[0.8rem] text-ink-muted">
+            <span className="text-ink-secondary">For:</span> {spec.forWhom}
+          </p>
           <ol className="space-y-4">
             {spec.steps.map((step, index) => (
               <li key={step.do} className="flex gap-4">
