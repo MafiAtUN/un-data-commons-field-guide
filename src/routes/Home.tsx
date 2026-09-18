@@ -30,8 +30,10 @@ export function Home() {
           </p>
 
           <h1 className="mt-4 text-balance text-[2.35rem] font-semibold leading-[0.98] tracking-tight text-ink-primary sm:text-[3.2rem] lg:text-[3.75rem]">
-            The UN opened its statistics.
-            <span className="block text-ink-muted">Asking well is the hard part.</span>
+            {/* The setup is recessed and the payoff carries the weight; the
+                other way round put the emphasis on the half nobody disputes. */}
+            <span className="block text-ink-muted">The UN opened its statistics.</span>
+            Asking well is the hard part.
           </h1>
 
           <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-secondary">

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { DESTINATIONS } from '../content/navigation';
 import { paletteHint, usePaletteHotkey } from '../lib/palette';
 import { SITE_ROOT } from '../lib/undc/config';
-import { IndexOverlay } from './nav/IndexOverlay';
+import { GuideContents } from './nav/GuideContents';
 import { SiteCredit } from './SiteCredit';
 
 /**
@@ -12,21 +12,24 @@ import { SiteCredit } from './SiteCredit';
  * Only two controls sit in the header, and both are sized to be seen. The first
  * is a link off this site entirely — the guide's whole purpose is to get people
  * onto data.un.org, so the platform should never be more than one deliberate
- * click away from any page. The second opens the index.
+ * click away from any page. The second opens the contents.
  *
- * There is no separate mobile menu. The index is full-screen at every width, so
+ * It said "Index" until a reader pointed out that on a statistics site an index
+ * is the Human Development Index, not a list of pages.
+ *
+ * There is no separate mobile menu. The contents are full-screen at every width, so
  * the small-screen navigation and the large-screen navigation are the same
  * object, which is one fewer thing to keep in step.
  */
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  const [indexOpen, setIndexOpen] = useState(false);
+  const [contentsOpen, setContentsOpen] = useState(false);
 
-  usePaletteHotkey(useCallback(() => setIndexOpen(true), []));
+  usePaletteHotkey(useCallback(() => setContentsOpen(true), []));
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    setIndexOpen(false);
+    setContentsOpen(false);
   }, [pathname]);
 
   const here = DESTINATIONS.find((destination) => destination.to === pathname);
@@ -70,9 +73,9 @@ export function Layout({ children }: { children: ReactNode }) {
 
             <button
               type="button"
-              onClick={() => setIndexOpen(true)}
+              onClick={() => setContentsOpen(true)}
               aria-haspopup="dialog"
-              aria-expanded={indexOpen}
+              aria-expanded={contentsOpen}
               className="flex items-center gap-2.5 rounded-lg border border-volt/55 bg-volt/10 px-3.5 py-2 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-volt/20"
             >
               <span aria-hidden="true" className="flex flex-col gap-[3px]">
@@ -80,7 +83,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <span className="block h-px w-4 bg-volt" />
                 <span className="block h-px w-4 bg-volt" />
               </span>
-              Index
+              Contents
               <kbd className="hidden text-[0.66rem] font-normal text-ink-muted sm:block">
                 {paletteHint()}
               </kbd>
@@ -89,7 +92,7 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <IndexOverlay open={indexOpen} onClose={() => setIndexOpen(false)} />
+      <GuideContents open={contentsOpen} onClose={() => setContentsOpen(false)} />
 
       <main id="main" className="mx-auto max-w-6xl px-4 pb-16 pt-8">
         {children}

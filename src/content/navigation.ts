@@ -37,11 +37,11 @@ export interface Destination {
 export const DESTINATIONS: readonly Destination[] = [
   {
     to: '/start',
-    label: 'The basics',
-    hint: 'Five words, three rules, four minutes',
+    label: 'Start here',
+    hint: 'Five platform behaviours that cause corrections',
     track: 'practical',
-    time: '4 min',
-    keywords: ['beginner', 'first', 'glossary', 'jargon', 'what is'],
+    time: '5 min',
+    keywords: ['beginner', 'first', 'orientation', 'gotchas', 'mistakes', 'rules', 'dcid'],
   },
   {
     to: '/toolkit',

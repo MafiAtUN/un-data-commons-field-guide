@@ -47,16 +47,22 @@ table to an AI assistant. No identifiers required, no reading required.
 
 ### The navigation
 
-One full-screen index, set in display type: twelve numbered chapters grouped by track,
-each carrying what it is for and how long it takes. It opens from a labelled button in the
-header and from ⌘K, typing filters it, and the last row always offers the query to
-data.un.org itself — this guide has twelve pages and the platform has about 85,000
-indicators, so the honest answer is often "not here, out there".
+One full-screen table of contents, set in display type: twelve numbered chapters grouped
+by track, each carrying what it is for and how long it takes, with the page you are on
+marked. It opens from a labelled **Contents** button in the header and from ⌘K, typing
+filters it, and the last row always offers the query to data.un.org itself — this guide
+has twelve pages and the platform has about 85,000 indicators, so the honest answer is
+often "not here, out there".
 
 It is full-screen at every width, so the small-screen and large-screen navigation are the
-same object. Two earlier attempts are worth recording as failures: two dropdowns, which
-say what exists but not where you are; and a rail of three-pixel ticks, which was
-information-dense, elegant, and invisible.
+same object. Every row is a real link, so ⌘-click, middle-click and "copy link address"
+all work; an earlier version used buttons and a keyboard cursor, which broke all three for
+no gain over a link plus arrow keys.
+
+Three earlier attempts are worth recording as failures. Two dropdowns, which say what
+exists but not where you are. A rail of three-pixel ticks — information-dense, elegant,
+invisible. And the same full-screen list labelled "Index", which on a statistics site is
+the worst available word, because an index here is the Human Development Index.
 
 The manifest lives in [`src/content/navigation.ts`](src/content/navigation.ts) and feeds
 the overlay, the front page's chapter index and the header breadcrumb at once, so a new
@@ -69,7 +75,7 @@ No animation library anywhere: CSS transitions and `IntersectionObserver`, nothi
 
 | Section | What it does |
 |---|---|
-| **The basics** | Five words, three rules, four minutes. Written to be scanned, with the reasoning behind each rule behind an expander. |
+| **Start here** | Five platform behaviours that cause corrections — the resolver substituting a place it did not recognise, "latest available" hiding a decade of vintage spread, a blank that is not a zero, two official figures that legitimately disagree, and revised history. Plus the dcid grammar, because the identifier is what makes a figure reproducible. Every claim checked against the live deployment. |
 | **Tutorials** | Six walkthroughs of about five minutes each. Find a defensible figure. Compare countries honestly. Make a chart. Draft a report section with AI. Every step states both the action and the expected result. |
 | **Make a chart** | Datawrapper, Flourish and the rest — which to use, how to get UN data in, five rules that keep a chart honest, and a GitHub Action recipe for a chart that refreshes itself. |
 | **Cite the data** | Credit the agency, not the website. A generator, and what each part of a citation is actually for. |
@@ -290,12 +296,12 @@ src/
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
-tests/                 131 tests, no network
+tests/                 138 tests, no network
 ```
 
 ## Tests
 
-131 tests, no network access, run against the committed payloads.
+138 tests, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping

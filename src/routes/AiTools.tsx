@@ -178,8 +178,8 @@ export function AiTools() {
 
         <p className="mt-4 max-w-3xl text-[0.88rem] leading-relaxed text-ink-secondary">
           The{' '}
-          <Link to="/" className="text-volt underline decoration-volt/30 underline-offset-2">
-            tool on the front page
+          <Link to="/toolkit" className="text-volt underline decoration-volt/30 underline-offset-2">
+            Data Finder
           </Link>{' '}
           has a <strong className="text-ink-primary">Copy AI prompt</strong> button that does
           this for you. It packages the real table, the unit, the source and the caveat.

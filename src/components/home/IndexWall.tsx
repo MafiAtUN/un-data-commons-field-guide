@@ -35,7 +35,7 @@ export function IndexWall() {
   return (
     <div ref={ref} className="relative" aria-hidden="true">
       <p className="text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-ink-muted/70">
-        A fraction of the index
+        A fraction of what is in there
       </p>
 
       {/*

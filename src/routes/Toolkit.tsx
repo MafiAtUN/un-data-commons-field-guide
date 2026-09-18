@@ -10,8 +10,8 @@ export function Toolkit() {
         title="Get the data, the citation and the chart in one go"
         lead={
           <>
-            The same tool as the front page. Three choices, and you leave with a spreadsheet,
-            a citation and an AI prompt.
+            Three choices, and you leave with a chart, a spreadsheet, a citation and an AI
+            prompt. Everything is fetched from data.un.org as you use it.
           </>
         }
       />

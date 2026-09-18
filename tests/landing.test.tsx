@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { Layout } from '../src/components/Layout';
+import { GuideContents } from '../src/components/nav/GuideContents';
 import { Home } from '../src/routes/Home';
 import { DESTINATIONS } from '../src/content/navigation';
 import { AUTHOR } from '../src/components/SiteCredit';
@@ -95,11 +96,16 @@ describe('the resolver film', () => {
 describe('chrome', () => {
   const html = render(<Layout><p /></Layout>);
 
-  it('puts an unmissable index trigger in the header, not a subtle one', () => {
+  it('puts an unmissable contents trigger in the header, not a subtle one', () => {
     // The rail this replaced was three-pixel ticks. Whatever the trigger looks
     // like in future, it has to be a real labelled control.
     expect(html).toMatch(/<button[^>]*aria-haspopup="dialog"[^>]*>/);
-    expect(html).toContain('Index');
+    expect(html).toContain('Contents');
+  });
+
+  it('does not call the navigation an index', () => {
+    // On a statistics site an index is the Human Development Index.
+    expect(html).not.toMatch(/>\s*Index\s*</);
   });
 
   it('keeps the platform one click away from every page', () => {
@@ -127,5 +133,73 @@ describe('chrome', () => {
 
   it('still carries the disclaimer the credit sits next to', () => {
     expect(html).toContain('Not an official United Nations publication');
+  });
+});
+
+describe('the guide contents', () => {
+  const open = (at = '/') =>
+    render(<GuideContents open onClose={() => undefined} />, at);
+
+  it('renders every chapter it lets you arrow onto', () => {
+    // The bug this pins: the keyboard list once began with the front page while
+    // the grouped view rendered only the twelve chapters, so opening the dialog
+    // and pressing Enter navigated somewhere the reader had never been shown.
+    const html = open();
+    const rendered = [...html.matchAll(/data-row="([^"]+)"/g)].map((match) => match[1]);
+    expect(rendered).toEqual(DESTINATIONS.map((destination) => destination.to));
+  });
+
+  it('makes every chapter a real link', () => {
+    // Buttons cannot be ⌘-clicked, opened in a new tab, or copied as a URL.
+    // Attribute order is React's business, so match the tag then its contents.
+    const anchors = open().match(/<a\b[^>]*>/g) ?? [];
+    for (const destination of DESTINATIONS) {
+      const row = anchors.find((tag) => tag.includes(`data-row="${destination.to}"`));
+      expect(row, destination.to).toBeDefined();
+      expect(row, destination.to).toContain(`href="${destination.to}"`);
+    }
+  });
+
+  it('marks the page you are on, and only that one', () => {
+    const target = DESTINATIONS[4]!;
+    const html = open(target.to);
+    const marked = [...html.matchAll(/<a[^>]*aria-current="page"[^>]*>/g)];
+
+    expect(marked).toHaveLength(1);
+    expect(marked[0]![0]).toContain(`href="${target.to}"`);
+    expect(html).toContain('You are here');
+  });
+
+  it('reserves aria-current for the current page, not the keyboard cursor', () => {
+    // Rendered at a path that is not a chapter, nothing is current.
+    expect(open('/')).not.toContain('aria-current');
+  });
+
+  it('numbers a filtered chapter the same as an unfiltered one', () => {
+    // The number is the chapter's place in the guide, so it must not renumber
+    // itself when the list is filtered.
+    const all = open();
+    const cookbook = DESTINATIONS.findIndex((d) => d.to === '/cookbook') + 1;
+    expect(all).toContain(`${String(cookbook).padStart(2, '0')}`);
+  });
+});
+
+describe('copy that outlived the front page being a tool', () => {
+  it('never tells a reader the tool is on the front page', () => {
+    // The Data Finder moved to /toolkit. Three pages still pointed at "/".
+    const files = [
+      'src/routes/Start.tsx',
+      'src/routes/AiTools.tsx',
+      'src/routes/Toolkit.tsx',
+      'src/routes/Tutorials.tsx',
+      'src/routes/Visualise.tsx',
+      'src/routes/Cite.tsx',
+    ];
+    for (const file of files) {
+      const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+      expect(source, file).not.toMatch(/tool on the front page/i);
+      expect(source, file).not.toMatch(/same tool as the front page/i);
+      expect(source, file).not.toMatch(/The tool, on the front page/i);
+    }
   });
 });

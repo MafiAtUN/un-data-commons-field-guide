@@ -16,7 +16,6 @@ import { Reveal } from '../Reveal';
  */
 const WAYS = [
   {
-    number: '01',
     name: 'Ask',
     line: 'Type a question in plain English. The URL is shareable, so a colleague opens exactly what you saw.',
     endpoint: `${SITE_ROOT}/search?q=…`,
@@ -27,7 +26,6 @@ const WAYS = [
     toLabel: 'How to ask well',
   },
   {
-    number: '02',
     name: 'Query',
     line: 'A REST v2 graph and observation API, served cross-origin. No key, no quota, no registration.',
     endpoint: `${API_ROOT}/core/api/v2`,
@@ -38,7 +36,6 @@ const WAYS = [
     toLabel: 'Copy-paste recipes',
   },
   {
-    number: '03',
     name: 'Delegate',
     line: 'A streamable MCP endpoint, so an AI assistant reads authoritative UN statistics instead of its own recall.',
     endpoint: `${API_ROOT}/mcp`,
@@ -56,14 +53,12 @@ export function WaysIn() {
       {WAYS.map((way, index) => (
         <Reveal key={way.name} delay={index * 90}>
           <article className="group flex h-full flex-col rounded-xl border border-hairline bg-surface-1 p-6 transition-colors hover:border-volt/40">
-            <div className="flex items-baseline gap-3">
-              <span aria-hidden="true" className="tnum text-[0.72rem] text-ink-muted/60">
-                {way.number}
-              </span>
-              <h3 className="text-[1.45rem] font-semibold leading-none text-ink-primary">
-                {way.name}
-              </h3>
-            </div>
+            {/* Deliberately unnumbered. The chapter index further down this
+                same page numbers 01 to 12, and two numbering systems on one
+                page make the reader work out that they are unrelated. */}
+            <h3 className="text-[1.45rem] font-semibold leading-none text-ink-primary">
+              {way.name}
+            </h3>
 
             <p className="mt-3 flex-1 text-[0.86rem] leading-relaxed text-ink-secondary">
               {way.line}
