@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 const ROUTES = [
   'start',
   'tutorials',
+  'watch',
   'toolkit',
   'visualise',
   'cite',

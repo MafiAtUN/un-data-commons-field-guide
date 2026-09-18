@@ -1,5 +1,6 @@
 import { PageHeader, Section } from '../components/Prose';
 import { DataFinder } from '../components/DataFinder';
+import { PageVideo } from '../components/PageVideo';
 import { Link } from 'react-router-dom';
 
 export function Toolkit() {
@@ -19,6 +20,8 @@ export function Toolkit() {
       <div className="mt-8">
         <DataFinder />
       </div>
+
+      <PageVideo page="/toolkit" />
 
       <Section title="What just happened" lead="Thirty seconds on why the result is trustworthy.">
         <div className="grid gap-4 md:grid-cols-3">

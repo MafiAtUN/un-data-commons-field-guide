@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { PageHeader, Section } from '../components/Prose';
 import { Tutorial } from '../components/Tutorial';
 import { TUTORIALS } from '../content/tutorials';
+import { publishedVideos, seriesMinutes } from '../content/videos';
 
 /** Shown before the list has to earn more of the reader's attention. */
 const SHOWN_BY_DEFAULT = 3;
@@ -18,6 +20,27 @@ export function Tutorials() {
         title="Six walkthroughs"
         lead={<>Each ends with something you can put in front of a manager. Open one and follow along in a second tab.</>}
       />
+
+      <Link
+        to="/watch"
+        className="group mt-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/50"
+      >
+        <div className="max-w-2xl">
+          <span className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-volt">
+            {publishedVideos().length} videos · {seriesMinutes()} minutes
+          </span>
+          <h2 className="mt-1.5 text-[1.05rem] font-semibold text-ink-primary">
+            Would you rather watch it done once first?
+          </h2>
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-secondary">
+            The same ground as these walkthroughs, recorded on the platform itself. Ninety seconds
+            each, one idea each, transcripts and a companion notebook included.
+          </p>
+        </div>
+        <span className="text-[0.82rem] font-medium text-ink-secondary group-hover:text-ink-primary">
+          Watch the series →
+        </span>
+      </Link>
 
       <Section title="Start with the first one" lead="Each also works on its own.">
         <div className="space-y-2.5">

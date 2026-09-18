@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { Home } from './routes/Home';
 import { Start } from './routes/Start';
 import { Tutorials } from './routes/Tutorials';
+import { Watch } from './routes/Watch';
 import { Toolkit } from './routes/Toolkit';
 import { Visualise } from './routes/Visualise';
 import { Cite } from './routes/Cite';
@@ -30,6 +31,7 @@ export function App() {
           {/* Practical track — no technical background assumed. */}
           <Route path="/start" element={<Start />} />
           <Route path="/tutorials" element={<Tutorials />} />
+          <Route path="/watch" element={<Watch />} />
           <Route path="/toolkit" element={<Toolkit />} />
           <Route path="/visualise" element={<Visualise />} />
           <Route path="/cite" element={<Cite />} />

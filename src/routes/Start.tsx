@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { PageHeader, Section } from '../components/Prose';
 import { Expander } from '../components/Expander';
 import { CodeBlock } from '../components/CodeBlock';
+import { PageVideo } from '../components/PageVideo';
 import { searchUrl } from '../lib/undc/config';
 
 /**
@@ -32,6 +33,8 @@ export function Start() {
           </>
         }
       />
+
+      <PageVideo page="/start" />
 
       <Section
         title="Five behaviours worth knowing before you quote anything"

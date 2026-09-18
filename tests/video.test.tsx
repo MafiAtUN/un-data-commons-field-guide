@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Tutorial, type TutorialSpec } from '../src/components/Tutorial';
 import { VideoEmbed } from '../src/components/VideoEmbed';
 import { TUTORIALS } from '../src/content/tutorials';
+import { VIDEOS, publishedVideos, seriesMinutes, videosForPage } from '../src/content/videos';
+import { PageVideo } from '../src/components/PageVideo';
+import { DESTINATIONS } from '../src/content/navigation';
 
 const SPEC: TutorialSpec = {
   id: 'example',
@@ -13,8 +16,17 @@ const SPEC: TutorialSpec = {
   outcome: 'A figure and its source.',
   steps: [{ do: 'Open the platform search.', see: 'A page of charts.' }],
   lesson: 'A number needs a year.',
-  video: { id: 'aaaaaaaaaaa', title: 'Finding one number', minutes: 3 },
+  video: { id: 'aaaaaaaaaaa', title: 'Finding one number', seconds: 80 },
 };
+
+/**
+ * Rendered markup escapes `&` and `"`, so the title of video 04 — which carries
+ * quotation marks by design, because "Latest" is a label and not a year — is
+ * not found literally in the HTML.
+ */
+function asRendered(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
 
 /**
  * Effects do not run in a server render, so this is the resting frame: what a
@@ -86,6 +98,95 @@ describe('walkthroughs with a recording', () => {
     for (const spec of TUTORIALS.filter((t) => t.video)) {
       expect(spec.video!.id, spec.title).toMatch(/^[\w-]{11}$/);
       expect(spec.video!.title.length, spec.title).toBeGreaterThan(5);
+    }
+  });
+});
+
+/**
+ * The series manifest is filled in by hand as videos are uploaded, one id at a
+ * time, so these guard the half-filled states rather than only the finished one.
+ */
+describe('the tutorial series', () => {
+  it('lists all twelve, uploaded or not', () => {
+    expect(VIDEOS.length).toBe(12);
+    expect(new Set(VIDEOS.map((v) => v.slug)).size).toBe(12);
+  });
+
+  it('carries the real runtime of every one, so no page has to estimate', () => {
+    for (const video of VIDEOS) {
+      expect(video.seconds, video.slug).toBeGreaterThan(30);
+      expect(video.seconds, video.slug).toBeLessThan(120);
+      expect(video.idea.length, video.slug).toBeGreaterThan(20);
+    }
+  });
+
+  it('only ever renders a video that has an id', () => {
+    // The empty string is the "recorded but not uploaded yet" state. It must
+    // never reach a player, or the page ships an embed pointing at nothing.
+    for (const video of publishedVideos()) {
+      expect(video.id, video.slug).toMatch(/^[\w-]{11}$/);
+    }
+    expect(publishedVideos().length).toBe(VIDEOS.filter((v) => v.id !== '').length);
+  });
+
+  it('points every video at a page that exists', () => {
+    const routes = new Set(DESTINATIONS.map((d) => d.to));
+    for (const video of VIDEOS.filter((v) => v.page)) {
+      expect(routes.has(video.page!), `${video.slug} → ${video.page}`).toBe(true);
+    }
+  });
+
+  it('hands a page every one of its videos, not just the first', () => {
+    // Four of the twelve belong to /start. An earlier single-video lookup
+    // returned 01 and silently dropped 02, 03 and 04.
+    for (const page of new Set(VIDEOS.map((v) => v.page).filter(Boolean))) {
+      const expected = VIDEOS.filter((v) => v.page === page && v.id !== '');
+      expect(videosForPage(page!).length, page).toBe(expected.length);
+    }
+  });
+});
+
+describe('a page offers its video only once that video exists', () => {
+  it('renders nothing for a page whose video has not been uploaded', () => {
+    // Every route not in the manifest is permanently in this state, so the
+    // empty render is the common case, not the edge case.
+    expect(atRest(<PageVideo page="/nowhere" />)).toBe('');
+  });
+
+  it('renders a resting poster, not a player, for one that has', () => {
+    const uploaded = publishedVideos()[0];
+    if (!uploaded?.page) return;
+
+    const html = atRest(<PageVideo page={uploaded.page} />);
+    expect(html).toContain('Watch it instead');
+    expect(html).not.toContain('<iframe');
+    // Every video on that page, not merely the first one.
+    for (const video of videosForPage(uploaded.page)) {
+      expect(html, video.slug).toContain(asRendered(video.title));
+    }
+  });
+});
+
+describe('the posters ship with the site', () => {
+  it('never points two entries at the same upload', () => {
+    // Twelve ids are pasted in by hand from twelve browser tabs. Pasting the
+    // same one twice is the likeliest way this file goes wrong, and the page
+    // would look entirely correct while doing it.
+    const ids = publishedVideos().map((video) => video.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('tells the contents dialog the truth about how long the series runs', () => {
+    const entry = DESTINATIONS.find((d) => d.to === '/watch');
+    expect(entry?.time).toBe(`${seriesMinutes()} min`);
+  });
+
+  it('has a local still for every video, uploaded or not', () => {
+    // Without the file the img falls back to i.ytimg.com, which would contact
+    // Google before any click — the exact thing local posters exist to prevent.
+    for (const video of VIDEOS) {
+      const file = new URL(`../public/posters/${video.slug}.jpg`, import.meta.url);
+      expect(existsSync(file), `public/posters/${video.slug}.jpg`).toBe(true);
     }
   });
 });

@@ -5,14 +5,19 @@ export interface VideoSpec {
   id: string;
   /** Spoken aloud by screen readers, and shown under the poster. */
   title: string;
-  /** Runtime, so nobody presses play not knowing what they are committing to. */
-  minutes?: number;
+  /** Runtime in seconds, so nobody presses play not knowing the commitment. */
+  seconds?: number;
   /**
    * A poster served from this site. Supplying one means the page touches no
    * Google domain at all before a click; without it the still comes from
    * `i.ytimg.com`, which is cookieless but is still Google.
    */
   poster?: string;
+}
+
+/** 80 seconds reads as "1:20", which is the unit people judge a tutorial in. */
+function runtime(seconds: number): string {
+  return `${Math.floor(seconds / 60)}:${String(Math.round(seconds % 60)).padStart(2, '0')}`;
 }
 
 /** YouTube only guarantees `hqdefault`; `maxresdefault` exists for HD uploads. */
@@ -81,7 +86,7 @@ export function VideoEmbed({ spec }: { spec: VideoSpec }) {
       <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-[0.76rem]">
         <span className="text-ink-secondary">
           {spec.title}
-          {spec.minutes ? <span className="tnum text-ink-muted"> · {spec.minutes} min</span> : null}
+          {spec.seconds ? <span className="tnum text-ink-muted"> · {runtime(spec.seconds)}</span> : null}
         </span>
         <a
           href={watchUrl(spec.id)}

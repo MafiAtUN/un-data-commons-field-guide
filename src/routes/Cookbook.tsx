@@ -1,6 +1,7 @@
 import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { DcidExplainer } from '../components/DcidExplainer';
+import { PageVideo } from '../components/PageVideo';
 
 /** Copy-paste reference for the REST surface. Ordered by how often you need it. */
 export function Cookbook() {
@@ -43,6 +44,8 @@ export function Cookbook() {
           </p>
         </div>
       </div>
+
+      <PageVideo page="/cookbook" />
 
       <Section
         title="First, learn the identifier grammar"

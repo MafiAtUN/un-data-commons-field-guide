@@ -60,6 +60,16 @@ export const DESTINATIONS: readonly Destination[] = [
     keywords: ['walkthrough', 'learn', 'course', 'practice', 'guide'],
   },
   {
+    to: '/watch',
+    label: 'Watch the series',
+    hint: 'Screen tutorials, ninety seconds each',
+    track: 'practical',
+    // Guarded against the real runtime by tests/video.test.tsx, because this
+    // file is static data and the series grows one upload at a time.
+    time: '13 min',
+    keywords: ['video', 'videos', 'watch', 'screencast', 'recording', 'course', 'demo', 'transcript', 'notebook'],
+  },
+  {
     to: '/visualise',
     label: 'Make a chart',
     hint: 'Free tools, and what makes a chart honest',

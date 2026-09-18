@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { PageHeader, Section } from '../components/Prose';
 import { CopyButton } from '../components/CopyButton';
+import { PageVideo } from '../components/PageVideo';
 import { INDICATORS, indicatorsByTopic } from '../content/indicators';
 import { CITATION_STYLE_LABELS, formatCitation, type CitationStyle } from '../lib/undc/citation';
 
@@ -43,6 +44,8 @@ export function Cite() {
           </>
         }
       />
+
+      <PageVideo page="/cite" />
 
       <Section title="The rule, in one comparison">
         <div className="grid gap-4 md:grid-cols-2">

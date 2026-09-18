@@ -6,6 +6,7 @@ import { useSourcedData } from '../lib/undc/useSourcedData';
 import type { VariableGroupInfoResponse } from '../lib/undc/types';
 import { COLLECTIONS, THEME_IDS, type Pillar } from '../content/catalog';
 import { OriginBadge } from '../components/OriginBadge';
+import { PageVideo } from '../components/PageVideo';
 
 const PILLAR_FILTERS: ReadonlyArray<{ id: Pillar | 'all'; label: string }> = [
   { id: 'all', label: 'All collections' },
@@ -152,6 +153,8 @@ export function Catalogue() {
         the practical one: it is the second segment of every identifier that collection
         publishes, so it tells you who stands behind a number you are already holding.
       </p>
+
+      <PageVideo page="/catalogue" />
 
       <Section
         title="The same data, arranged by theme"
