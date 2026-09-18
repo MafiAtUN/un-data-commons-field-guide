@@ -1,24 +1,53 @@
 /**
- * Give GitHub Pages an SPA fallback.
+ * Make every route a real URL on GitHub Pages.
  *
- * Pages serves `404.html` for any path it has no file for. Because the app is a
- * single-page bundle that reads the current URL itself, copying `index.html` to
- * `404.html` is enough to make a deep link such as
- * /un-data-commons-field-guide/cookbook load correctly on a cold visit —
- * no redirect hack, no hash routing, and the URL the reader shared is the URL
- * that stays in the address bar.
+ * Pages serves static files only, so a single-page bundle has two options for
+ * deep links. The common one is to copy `index.html` to `404.html` and let the
+ * not-found handler serve the app: it renders, but the response carries HTTP
+ * 404. Browsers do not mind. Search engines and social-preview crawlers do —
+ * a link shared to LinkedIn or Slack may get no preview card at all.
  *
- * Also writes `.nojekyll`, without which Pages would refuse to serve the
- * `_`-prefixed files a bundler can emit.
+ * So instead each known route is emitted as its own `index.html`. Pages then
+ * answers /cookbook with a 200, the bundle reads the URL and renders the right
+ * page, and the address the reader shared stays in the address bar.
+ *
+ * `404.html` is still written, as the fallback for paths that genuinely do not
+ * exist — the app renders its NotFound page for those.
+ *
+ * `.nojekyll` stops Pages from discarding the `_`-prefixed files a bundler can
+ * emit.
  */
 
-import { copyFile, writeFile } from 'node:fs/promises';
-import { resolve, dirname } from 'node:path';
+import { copyFile, mkdir, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const dist = resolve(dirname(fileURLToPath(import.meta.url)), '../dist');
+/**
+ * Routes to materialise. Must stay in step with the router in `src/App.tsx`;
+ * `tests/routes.test.ts` asserts that it does, because this file is plain Node
+ * and cannot import the app's TypeScript.
+ */
+const ROUTES = [
+  'lab',
+  'peace-and-security',
+  'development',
+  'cookbook',
+  'connect',
+  'catalogue',
+];
 
-await copyFile(resolve(dist, 'index.html'), resolve(dist, '404.html'));
+const dist = resolve(dirname(fileURLToPath(import.meta.url)), '../dist');
+const index = resolve(dist, 'index.html');
+
+for (const route of ROUTES) {
+  const directory = resolve(dist, route);
+  await mkdir(directory, { recursive: true });
+  await copyFile(index, resolve(directory, 'index.html'));
+}
+
+await copyFile(index, resolve(dist, '404.html'));
 await writeFile(resolve(dist, '.nojekyll'), '');
 
-console.log('postbuild: wrote dist/404.html and dist/.nojekyll');
+console.log(
+  `postbuild: ${ROUTES.length} routes materialised, plus 404.html and .nojekyll`,
+);
