@@ -1,0 +1,4219 @@
+{
+  "generatedAt": "2026-09-18T14:43:22.457Z",
+  "records": {
+    "catalogue.collections": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/variable-group/info",
+        "body": {
+          "dcid": "undata/g/Root",
+          "entities": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:19.802Z",
+      "payload": {
+        "absoluteName": "UN System Data Commons",
+        "childStatVarGroups": [
+          {
+            "descendentStatVarCount": 783,
+            "displayName": "ECLAC (UN Data)",
+            "id": "undata/g/eclac",
+            "specializedEntity": "ECLAC (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 7671,
+            "displayName": "ILO (UN Data)",
+            "id": "undata/g/ilo",
+            "specializedEntity": "ILO (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 3,
+            "displayName": "IOM-DTM (UN Data)",
+            "id": "undata/g/iomdtm",
+            "specializedEntity": "IOM-DTM (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 1789,
+            "displayName": "ITU (UN Data)",
+            "id": "undata/g/itu",
+            "specializedEntity": "ITU (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 36,
+            "displayName": "OHCHR (UN Data)",
+            "id": "undata/g/ohchr",
+            "specializedEntity": "OHCHR (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 6048,
+            "displayName": "SDG (UN Data)",
+            "id": "undata/g/sdg",
+            "specializedEntity": "SDG (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 174,
+            "displayName": "UNAIDS (UN Data)",
+            "id": "undata/g/unaids",
+            "specializedEntity": "UNAIDS (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 56,
+            "displayName": "UNDP-HDRO (UN Data)",
+            "id": "undata/g/undphdro",
+            "specializedEntity": "UNDP-HDRO (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 5,
+            "displayName": "UNDRR (UN Data)",
+            "id": "undata/g/undrr",
+            "specializedEntity": "UNDRR (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 74,
+            "displayName": "UNESCO (UN Data)",
+            "id": "undata/g/unesco",
+            "specializedEntity": "UNESCO (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 15135,
+            "displayName": "UNFPA (UN Data)",
+            "id": "undata/g/unfpa",
+            "specializedEntity": "UNFPA (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 8183,
+            "displayName": "UNHCR (UN Data)",
+            "id": "undata/g/unhcr",
+            "specializedEntity": "UNHCR (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 3607,
+            "displayName": "UNICEF (UN Data)",
+            "id": "undata/g/unicef",
+            "specializedEntity": "UNICEF (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 13108,
+            "displayName": "UNIDO (UN Data)",
+            "id": "undata/g/unido",
+            "specializedEntity": "UNIDO (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 180,
+            "displayName": "UNODC (UN Data)",
+            "id": "undata/g/unodc",
+            "specializedEntity": "UNODC (UN Data)"
+          },
+          {
+            "descendentStatVarCount": 28041,
+            "displayName": "WHO (UN Data)",
+            "id": "undata/g/who",
+            "specializedEntity": "WHO (UN Data)"
+          }
+        ],
+        "descendentStatVarCount": 84893
+      }
+    },
+    "catalogue.themes": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/variable-group/info",
+        "body": {
+          "dcid": "dc/g/UN",
+          "entities": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:19.905Z",
+      "payload": {
+        "absoluteName": "12 UN Data Thematic Areas",
+        "childStatVarGroups": [
+          {
+            "descendentStatVarCount": 183,
+            "displayName": "1: Poverty and food security",
+            "id": "dc/g/UN_THEME_1",
+            "specializedEntity": "1: Poverty and food security"
+          },
+          {
+            "descendentStatVarCount": 21442,
+            "displayName": "2: Health",
+            "id": "dc/g/UN_THEME_2",
+            "specializedEntity": "2: Health"
+          },
+          {
+            "descendentStatVarCount": 493,
+            "displayName": "3: Children and youth",
+            "id": "dc/g/UN_THEME_3",
+            "specializedEntity": "3: Children and youth"
+          },
+          {
+            "descendentStatVarCount": 113,
+            "displayName": "4: Education and culture",
+            "id": "dc/g/UN_THEME_4",
+            "specializedEntity": "4: Education and culture"
+          },
+          {
+            "descendentStatVarCount": 181,
+            "displayName": "5: Equality and human rights",
+            "id": "dc/g/UN_THEME_5",
+            "specializedEntity": "5: Equality and human rights"
+          },
+          {
+            "descendentStatVarCount": 191,
+            "displayName": "6: Economic development",
+            "id": "dc/g/UN_THEME_6",
+            "specializedEntity": "6: Economic development"
+          },
+          {
+            "descendentStatVarCount": 70,
+            "displayName": "8: Drinking water, sanitation and hygiene",
+            "id": "dc/g/UN_THEME_8",
+            "specializedEntity": "8: Drinking water, sanitation and hygiene"
+          },
+          {
+            "descendentStatVarCount": 2961,
+            "displayName": "9: Climate and the environment",
+            "id": "dc/g/UN_THEME_9",
+            "specializedEntity": "9: Climate and the environment"
+          },
+          {
+            "descendentStatVarCount": 449,
+            "displayName": "10: Population and demography",
+            "id": "dc/g/UN_THEME_10",
+            "specializedEntity": "10: Population and demography"
+          },
+          {
+            "descendentStatVarCount": 11,
+            "displayName": "11: Disasters and humanitarian action",
+            "id": "dc/g/UN_THEME_11",
+            "specializedEntity": "11: Disasters and humanitarian action"
+          },
+          {
+            "descendentStatVarCount": 4,
+            "displayName": "12: Governance and peace",
+            "id": "dc/g/UN_THEME_12",
+            "specializedEntity": "12: Governance and peace"
+          }
+        ],
+        "descendentStatVarCount": 21471
+      }
+    },
+    "peace.conflict-deaths.series": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/VC_DTH_TOTN"
+          ],
+          "entities": [
+            "country/SSD",
+            "country/COD",
+            "country/SYR",
+            "country/AFG",
+            "country/SOM"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:19.965Z",
+      "payload": {
+        "data": {
+          "undata/sdg/VC_DTH_TOTN": {
+            "country/AFG": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 3565
+                },
+                {
+                  "date": "2016",
+                  "value": 3527
+                },
+                {
+                  "date": "2017",
+                  "value": 3442
+                },
+                {
+                  "date": "2018",
+                  "value": 3803
+                },
+                {
+                  "date": "2019",
+                  "value": 3409
+                },
+                {
+                  "date": "2020",
+                  "value": 3035
+                },
+                {
+                  "date": "2021",
+                  "value": 2477
+                },
+                {
+                  "date": "2022",
+                  "value": 608
+                },
+                {
+                  "date": "2023",
+                  "value": 241
+                },
+                {
+                  "date": "2024",
+                  "value": 285
+                }
+              ]
+            },
+            "country/COD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 945
+                },
+                {
+                  "date": "2016",
+                  "value": 836
+                },
+                {
+                  "date": "2017",
+                  "value": 1938
+                },
+                {
+                  "date": "2018",
+                  "value": 1057
+                },
+                {
+                  "date": "2019",
+                  "value": 1359
+                },
+                {
+                  "date": "2020",
+                  "value": 2810
+                },
+                {
+                  "date": "2021",
+                  "value": 2474
+                },
+                {
+                  "date": "2022",
+                  "value": 2891
+                },
+                {
+                  "date": "2023",
+                  "value": 2851
+                },
+                {
+                  "date": "2024",
+                  "value": 2915
+                }
+              ]
+            },
+            "country/SOM": {
+              "series": []
+            },
+            "country/SSD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 2418
+                },
+                {
+                  "date": "2016",
+                  "value": 2807
+                },
+                {
+                  "date": "2017",
+                  "value": 779
+                },
+                {
+                  "date": "2018",
+                  "value": 1514
+                },
+                {
+                  "date": "2019",
+                  "value": 1131
+                },
+                {
+                  "date": "2020",
+                  "value": 2421
+                },
+                {
+                  "date": "2021",
+                  "value": 1907
+                },
+                {
+                  "date": "2022",
+                  "value": 1600
+                },
+                {
+                  "date": "2023",
+                  "value": 1524
+                },
+                {
+                  "date": "2024",
+                  "value": 1561
+                }
+              ]
+            },
+            "country/SYR": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 49903
+                },
+                {
+                  "date": "2016",
+                  "value": 45317
+                },
+                {
+                  "date": "2017",
+                  "value": 34231
+                },
+                {
+                  "date": "2018",
+                  "value": 23210
+                },
+                {
+                  "date": "2019",
+                  "value": 12249
+                },
+                {
+                  "date": "2020",
+                  "value": 7694
+                },
+                {
+                  "date": "2021",
+                  "value": 4349
+                },
+                {
+                  "date": "2022",
+                  "value": 3037
+                },
+                {
+                  "date": "2023",
+                  "value": 2900
+                },
+                {
+                  "date": "2024",
+                  "value": 14995
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "12883393359649061195": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "undata/UNIT_MEASURE-COUNT",
+            "unitDisplayName": "Number"
+          }
+        },
+        "mixer_response_ids": [
+          "502fe327-51ce-4543-8583-d00fea7bf63f"
+        ]
+      }
+    },
+    "peace.conflict-deaths.by-age": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17",
+            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+          ],
+          "entities": [
+            "country/SSD",
+            "country/COD"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.029Z",
+      "payload": {
+        "data": {
+          "undata/sdg/VC_DTH_TOTN.AGE--Y0T17": {
+            "country/COD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 0
+                },
+                {
+                  "date": "2016",
+                  "value": 0
+                },
+                {
+                  "date": "2017",
+                  "value": 304
+                },
+                {
+                  "date": "2018",
+                  "value": 93
+                },
+                {
+                  "date": "2019",
+                  "value": 102
+                },
+                {
+                  "date": "2020",
+                  "value": 278
+                },
+                {
+                  "date": "2021",
+                  "value": 171
+                },
+                {
+                  "date": "2022",
+                  "value": 249
+                },
+                {
+                  "date": "2023",
+                  "value": 288
+                },
+                {
+                  "date": "2024",
+                  "value": 182
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 9
+                },
+                {
+                  "date": "2016",
+                  "value": 44
+                },
+                {
+                  "date": "2017",
+                  "value": 37
+                },
+                {
+                  "date": "2018",
+                  "value": 63
+                },
+                {
+                  "date": "2019",
+                  "value": 116
+                },
+                {
+                  "date": "2020",
+                  "value": 123
+                },
+                {
+                  "date": "2021",
+                  "value": 119
+                },
+                {
+                  "date": "2022",
+                  "value": 180
+                },
+                {
+                  "date": "2023",
+                  "value": 123
+                },
+                {
+                  "date": "2024",
+                  "value": 77
+                }
+              ]
+            }
+          },
+          "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18": {
+            "country/COD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 0
+                },
+                {
+                  "date": "2016",
+                  "value": 0
+                },
+                {
+                  "date": "2017",
+                  "value": 1634
+                },
+                {
+                  "date": "2018",
+                  "value": 964
+                },
+                {
+                  "date": "2019",
+                  "value": 1257
+                },
+                {
+                  "date": "2020",
+                  "value": 2532
+                },
+                {
+                  "date": "2021",
+                  "value": 2303
+                },
+                {
+                  "date": "2022",
+                  "value": 2642
+                },
+                {
+                  "date": "2023",
+                  "value": 2527
+                },
+                {
+                  "date": "2024",
+                  "value": 2470
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 18
+                },
+                {
+                  "date": "2016",
+                  "value": 63
+                },
+                {
+                  "date": "2017",
+                  "value": 240
+                },
+                {
+                  "date": "2018",
+                  "value": 1451
+                },
+                {
+                  "date": "2019",
+                  "value": 1015
+                },
+                {
+                  "date": "2020",
+                  "value": 2298
+                },
+                {
+                  "date": "2021",
+                  "value": 1788
+                },
+                {
+                  "date": "2022",
+                  "value": 1420
+                },
+                {
+                  "date": "2023",
+                  "value": 1401
+                },
+                {
+                  "date": "2024",
+                  "value": 1484
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "12883393359649061195": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "undata/UNIT_MEASURE-COUNT",
+            "unitDisplayName": "Number"
+          }
+        },
+        "mixer_response_ids": [
+          "4c7372f6-e611-4a0d-83b3-e4217dd5972d"
+        ]
+      }
+    },
+    "peace.conflict-deaths.civilian-split": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/VC_DTH_TOCVN",
+            "undata/sdg/VC_DTH_TONCVN"
+          ],
+          "entities": [
+            "country/SSD",
+            "country/COD"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.210Z",
+      "payload": {
+        "data": {
+          "undata/sdg/VC_DTH_TOCVN": {
+            "country/COD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 945
+                },
+                {
+                  "date": "2016",
+                  "value": 836
+                },
+                {
+                  "date": "2017",
+                  "value": 1938
+                },
+                {
+                  "date": "2018",
+                  "value": 1057
+                },
+                {
+                  "date": "2019",
+                  "value": 1359
+                },
+                {
+                  "date": "2020",
+                  "value": 2810
+                },
+                {
+                  "date": "2021",
+                  "value": 2474
+                },
+                {
+                  "date": "2022",
+                  "value": 2891
+                },
+                {
+                  "date": "2023",
+                  "value": 2851
+                },
+                {
+                  "date": "2024",
+                  "value": 2915
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2015",
+              "facet": "12883393359649061195",
+              "latestDate": "2024",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "2015",
+                  "value": 2418
+                },
+                {
+                  "date": "2016",
+                  "value": 2807
+                },
+                {
+                  "date": "2017",
+                  "value": 779
+                },
+                {
+                  "date": "2018",
+                  "value": 1514
+                },
+                {
+                  "date": "2019",
+                  "value": 1131
+                },
+                {
+                  "date": "2020",
+                  "value": 2421
+                },
+                {
+                  "date": "2021",
+                  "value": 1907
+                },
+                {
+                  "date": "2022",
+                  "value": 1600
+                },
+                {
+                  "date": "2023",
+                  "value": 1524
+                },
+                {
+                  "date": "2024",
+                  "value": 1561
+                }
+              ]
+            }
+          },
+          "undata/sdg/VC_DTH_TONCVN": {
+            "country/COD": {
+              "series": []
+            },
+            "country/SSD": {
+              "series": []
+            }
+          }
+        },
+        "facets": {
+          "12883393359649061195": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "undata/UNIT_MEASURE-COUNT",
+            "unitDisplayName": "Number"
+          }
+        },
+        "mixer_response_ids": [
+          "d4c96bff-b337-4333-b6ec-b9d48bdda15e"
+        ]
+      }
+    },
+    "peace.homicide.africa-countries": {
+      "request": {
+        "method": "GET",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation?date=LATEST&variable.dcids=undata%2Funodc%2FVIC_HOM_RT&entity.expression=africa%3C-containedInPlace%2B%7BtypeOf%3ACountry%7D&select=date&select=value&select=variable&select=entity"
+      },
+      "fetchedAt": "2026-09-18T14:43:20.365Z",
+      "payload": {
+        "byVariable": {
+          "undata/unodc/VIC_HOM_RT": {
+            "byEntity": {
+              "country/RWA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 3.61
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/LBR": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 3.09
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ERI": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 15.61
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MRT": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MUS": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 2.67
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/DZA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 1.38
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/UGA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 8.82
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ETH": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 8.51
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/GNB": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2017",
+                        "value": 1.12
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZMB": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2015",
+                        "value": 5.2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/AGO": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2016",
+                        "value": 4.1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SSD": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 13.98
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SHN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2009",
+                        "value": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/NGA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 15.75
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZWE": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 6.76
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/NAM": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2025",
+                        "value": 8.41
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MAR": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 1.67
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/CPV": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 6.99
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/TUN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 4.69
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SYC": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 7.97
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SWZ": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 13.68
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MOZ": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2011",
+                        "value": 3.59
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/REU": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2009",
+                        "value": 1.79
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/NER": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 4.42
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/BWA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 12.98
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MYT": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2009",
+                        "value": 5.94
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SLE": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 2.22
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/LSO": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 22.2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/BDI": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2016",
+                        "value": 5.65
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/EGY": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2017",
+                        "value": 1.31
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/TZA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 3.3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZAF": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 39.72
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MWI": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 1.78
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/STP": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2011",
+                        "value": 3.23
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/KEN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 4.65
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/CMR": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 6.76
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/GHA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 1.83
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "facets": {
+          "5181773110054467647": {
+            "provenanceUrl": "https://data.unodc.org/",
+            "observationPeriod": "P1Y",
+            "unit": "undata/UNIT_MEASURE-RATIO_COUNT_PER_100000_COUNT_POP",
+            "provenanceId": "undata/p/UNODC"
+          }
+        }
+      }
+    },
+    "peace.refugees.by-origin": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/SM_POP_REFG_OR"
+          ],
+          "entities": [
+            "country/SSD",
+            "country/SYR",
+            "country/AFG",
+            "country/UKR"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.423Z",
+      "payload": {
+        "data": {
+          "undata/sdg/SM_POP_REFG_OR": {
+            "country/AFG": {
+              "earliestDate": "2000",
+              "facet": "3277002664679928740",
+              "latestDate": "2025",
+              "obsCount": 26,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 15203.10012
+                },
+                {
+                  "date": "2001",
+                  "value": 15633.20833
+                },
+                {
+                  "date": "2002",
+                  "value": 10160.41456
+                },
+                {
+                  "date": "2003",
+                  "value": 8407.67555
+                },
+                {
+                  "date": "2004",
+                  "value": 9192.34516
+                },
+                {
+                  "date": "2005",
+                  "value": 7986.13451
+                },
+                {
+                  "date": "2006",
+                  "value": 7527.3349
+                },
+                {
+                  "date": "2007",
+                  "value": 10548.44693
+                },
+                {
+                  "date": "2008",
+                  "value": 9485.06349
+                },
+                {
+                  "date": "2009",
+                  "value": 9378.86402
+                },
+                {
+                  "date": "2010",
+                  "value": 9628.13609
+                },
+                {
+                  "date": "2011",
+                  "value": 8151.13787
+                },
+                {
+                  "date": "2012",
+                  "value": 7677.88265
+                },
+                {
+                  "date": "2013",
+                  "value": 7366.29438
+                },
+                {
+                  "date": "2014",
+                  "value": 7205.29675
+                },
+                {
+                  "date": "2015",
+                  "value": 7227.01478
+                },
+                {
+                  "date": "2016",
+                  "value": 6639.44741
+                },
+                {
+                  "date": "2017",
+                  "value": 6758.6833
+                },
+                {
+                  "date": "2018",
+                  "value": 6709.27982
+                },
+                {
+                  "date": "2019",
+                  "value": 6627.11681
+                },
+                {
+                  "date": "2020",
+                  "value": 6133.93169
+                },
+                {
+                  "date": "2021",
+                  "value": 6308.16368
+                },
+                {
+                  "date": "2022",
+                  "value": 12168.77834
+                },
+                {
+                  "date": "2023",
+                  "value": 13216.58417
+                },
+                {
+                  "date": "2024",
+                  "value": 11764.48147
+                },
+                {
+                  "date": "2025",
+                  "value": 9819.53999
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2000",
+              "facet": "3277002664679928740",
+              "latestDate": "2025",
+              "obsCount": 26,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 0
+                },
+                {
+                  "date": "2001",
+                  "value": 0
+                },
+                {
+                  "date": "2002",
+                  "value": 0
+                },
+                {
+                  "date": "2003",
+                  "value": 0
+                },
+                {
+                  "date": "2004",
+                  "value": 0
+                },
+                {
+                  "date": "2005",
+                  "value": 0
+                },
+                {
+                  "date": "2006",
+                  "value": 0
+                },
+                {
+                  "date": "2007",
+                  "value": 0
+                },
+                {
+                  "date": "2008",
+                  "value": 0
+                },
+                {
+                  "date": "2009",
+                  "value": 0
+                },
+                {
+                  "date": "2010",
+                  "value": 0
+                },
+                {
+                  "date": "2011",
+                  "value": 0
+                },
+                {
+                  "date": "2012",
+                  "value": 786.49549
+                },
+                {
+                  "date": "2013",
+                  "value": 997.85493
+                },
+                {
+                  "date": "2014",
+                  "value": 5253.51143
+                },
+                {
+                  "date": "2015",
+                  "value": 6554.54643
+                },
+                {
+                  "date": "2016",
+                  "value": 11977.55497
+                },
+                {
+                  "date": "2017",
+                  "value": 19676.66212
+                },
+                {
+                  "date": "2018",
+                  "value": 18178.81059
+                },
+                {
+                  "date": "2019",
+                  "value": 17465.36457
+                },
+                {
+                  "date": "2020",
+                  "value": 16804.63973
+                },
+                {
+                  "date": "2021",
+                  "value": 17821.08894
+                },
+                {
+                  "date": "2022",
+                  "value": 17073.99142
+                },
+                {
+                  "date": "2023",
+                  "value": 16244.52651
+                },
+                {
+                  "date": "2024",
+                  "value": 15954.08866
+                },
+                {
+                  "date": "2025",
+                  "value": 16351.75013
+                }
+              ]
+            },
+            "country/SYR": {
+              "earliestDate": "2000",
+              "facet": "3277002664679928740",
+              "latestDate": "2025",
+              "obsCount": 26,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 34.82566
+                },
+                {
+                  "date": "2001",
+                  "value": 28.15725
+                },
+                {
+                  "date": "2002",
+                  "value": 106.84494
+                },
+                {
+                  "date": "2003",
+                  "value": 114.86818
+                },
+                {
+                  "date": "2004",
+                  "value": 115.25004
+                },
+                {
+                  "date": "2005",
+                  "value": 85.96528
+                },
+                {
+                  "date": "2006",
+                  "value": 60.9309
+                },
+                {
+                  "date": "2007",
+                  "value": 63.46012
+                },
+                {
+                  "date": "2008",
+                  "value": 69.94844
+                },
+                {
+                  "date": "2009",
+                  "value": 80.5234
+                },
+                {
+                  "date": "2010",
+                  "value": 81.09255
+                },
+                {
+                  "date": "2011",
+                  "value": 86.50021
+                },
+                {
+                  "date": "2012",
+                  "value": 3138.64891
+                },
+                {
+                  "date": "2013",
+                  "value": 10591.72261
+                },
+                {
+                  "date": "2014",
+                  "value": 16473.20611
+                },
+                {
+                  "date": "2015",
+                  "value": 20295.76744
+                },
+                {
+                  "date": "2016",
+                  "value": 22299.34554
+                },
+                {
+                  "date": "2017",
+                  "value": 24737.32485
+                },
+                {
+                  "date": "2018",
+                  "value": 25006.53876
+                },
+                {
+                  "date": "2019",
+                  "value": 24173.1036
+                },
+                {
+                  "date": "2020",
+                  "value": 23895.558
+                },
+                {
+                  "date": "2021",
+                  "value": 23815.02196
+                },
+                {
+                  "date": "2022",
+                  "value": 22180.48786
+                },
+                {
+                  "date": "2023",
+                  "value": 20817.88863
+                },
+                {
+                  "date": "2024",
+                  "value": 19124.63956
+                },
+                {
+                  "date": "2025",
+                  "value": 17632.45346
+                }
+              ]
+            },
+            "country/UKR": {
+              "earliestDate": "2000",
+              "facet": "3277002664679928740",
+              "latestDate": "2025",
+              "obsCount": 26,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 39.12078
+                },
+                {
+                  "date": "2001",
+                  "value": 54.62602
+                },
+                {
+                  "date": "2002",
+                  "value": 175.54806
+                },
+                {
+                  "date": "2003",
+                  "value": 195.13954
+                },
+                {
+                  "date": "2004",
+                  "value": 187.01948
+                },
+                {
+                  "date": "2005",
+                  "value": 177.51677
+                },
+                {
+                  "date": "2006",
+                  "value": 134.81948
+                },
+                {
+                  "date": "2007",
+                  "value": 55.3295
+                },
+                {
+                  "date": "2008",
+                  "value": 60.7989
+                },
+                {
+                  "date": "2009",
+                  "value": 52.64299
+                },
+                {
+                  "date": "2010",
+                  "value": 54.1004
+                },
+                {
+                  "date": "2011",
+                  "value": 54.83791
+                },
+                {
+                  "date": "2012",
+                  "value": 54.64525
+                },
+                {
+                  "date": "2013",
+                  "value": 11.18478
+                },
+                {
+                  "date": "2014",
+                  "value": 515.35925
+                },
+                {
+                  "date": "2015",
+                  "value": 698.3633
+                },
+                {
+                  "date": "2016",
+                  "value": 522.28443
+                },
+                {
+                  "date": "2017",
+                  "value": 306.91747
+                },
+                {
+                  "date": "2018",
+                  "value": 206.42742
+                },
+                {
+                  "date": "2019",
+                  "value": 133.29557
+                },
+                {
+                  "date": "2020",
+                  "value": 78.89708
+                },
+                {
+                  "date": "2021",
+                  "value": 62.4979
+                },
+                {
+                  "date": "2022",
+                  "value": 13004.71431
+                },
+                {
+                  "date": "2023",
+                  "value": 13733.03975
+                },
+                {
+                  "date": "2024",
+                  "value": 11797.53027
+                },
+                {
+                  "date": "2025",
+                  "value": 11969.7036
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "3277002664679928740": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "undata/UNIT_MEASURE-RATIO_COUNT_PER_100000_COUNT_POP",
+            "unitDisplayName": "Count per 100,000 persons"
+          }
+        },
+        "mixer_response_ids": [
+          "03dc5742-f596-4667-8e9d-40c4cff3b075"
+        ]
+      }
+    },
+    "development.poverty.series": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/SI_POV_DAY1"
+          ],
+          "entities": [
+            "country/BGD",
+            "country/ETH",
+            "country/SSD",
+            "country/IND"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.479Z",
+      "payload": {
+        "data": {
+          "undata/sdg/SI_POV_DAY1": {
+            "country/BGD": {
+              "earliestDate": "1983",
+              "facet": "3722936608695937273",
+              "latestDate": "2022",
+              "obsCount": 10,
+              "series": [
+                {
+                  "date": "1983",
+                  "value": 47.1
+                },
+                {
+                  "date": "1985",
+                  "value": 41.4
+                },
+                {
+                  "date": "1988",
+                  "value": 51.1
+                },
+                {
+                  "date": "1991",
+                  "value": 51.2
+                },
+                {
+                  "date": "1995",
+                  "value": 43.4
+                },
+                {
+                  "date": "2000",
+                  "value": 41.4
+                },
+                {
+                  "date": "2005",
+                  "value": 32.3
+                },
+                {
+                  "date": "2010",
+                  "value": 25.1
+                },
+                {
+                  "date": "2016",
+                  "value": 19.5
+                },
+                {
+                  "date": "2022",
+                  "value": 8
+                }
+              ]
+            },
+            "country/ETH": {
+              "earliestDate": "1995",
+              "facet": "3722936608695937273",
+              "latestDate": "2021",
+              "obsCount": 6,
+              "series": [
+                {
+                  "date": "1995",
+                  "value": 73.5
+                },
+                {
+                  "date": "1999",
+                  "value": 65.9
+                },
+                {
+                  "date": "2004",
+                  "value": 41.3
+                },
+                {
+                  "date": "2010",
+                  "value": 37.4
+                },
+                {
+                  "date": "2015",
+                  "value": 33
+                },
+                {
+                  "date": "2021",
+                  "value": 38.6
+                }
+              ]
+            },
+            "country/IND": {
+              "earliestDate": "1977",
+              "facet": "3722936608695937273",
+              "latestDate": "2022",
+              "obsCount": 8,
+              "series": [
+                {
+                  "date": "1977",
+                  "value": 59.7
+                },
+                {
+                  "date": "1983",
+                  "value": 50.9
+                },
+                {
+                  "date": "1987",
+                  "value": 51.8
+                },
+                {
+                  "date": "1993",
+                  "value": 47.5
+                },
+                {
+                  "date": "2004",
+                  "value": 46.4
+                },
+                {
+                  "date": "2009",
+                  "value": 34.6
+                },
+                {
+                  "date": "2011",
+                  "value": 27.1
+                },
+                {
+                  "date": "2022",
+                  "value": 5.3
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2009",
+              "facet": "3722936608695937273",
+              "latestDate": "2016",
+              "obsCount": 2,
+              "series": [
+                {
+                  "date": "2009",
+                  "value": 44.9
+                },
+                {
+                  "date": "2016",
+                  "value": 76.5
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "3722936608695937273": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "Percent",
+            "unitDisplayName": "%"
+          }
+        },
+        "mixer_response_ids": [
+          "62063dab-7c66-430c-a0f0-1299a12c5f46"
+        ]
+      }
+    },
+    "development.hdi.southern-asia": {
+      "request": {
+        "method": "GET",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation?date=LATEST&variable.dcids=undata%2Fundphdro%2FHDI_hdi&entity.expression=SouthernAsia%3C-containedInPlace%2B%7BtypeOf%3ACountry%7D&select=date&select=value&select=variable&select=entity"
+      },
+      "fetchedAt": "2026-09-18T14:43:20.615Z",
+      "payload": {
+        "byVariable": {
+          "undata/undphdro/HDI_hdi": {
+            "byEntity": {
+              "country/BGD": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.685
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/AFG": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.496
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/IND": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.685
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MDV": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.766
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/NPL": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.622
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/PAK": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.544
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/IRN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.799
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/BTN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.698
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/LKA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.776
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "facets": {
+          "9235035198795760647": {
+            "provenanceUrl": "https://hdr.undp.org/",
+            "observationPeriod": "P1Y",
+            "unit": "undata/UNIT_MEASURE-INDEX",
+            "provenanceId": "undata/p/UNDP_HDRO"
+          }
+        }
+      }
+    },
+    "development.electricity.access": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/EG_ACS_ELEC"
+          ],
+          "entities": [
+            "country/BGD",
+            "country/ETH",
+            "country/SSD",
+            "country/IND"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.675Z",
+      "payload": {
+        "data": {
+          "undata/sdg/EG_ACS_ELEC": {
+            "country/BGD": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 25,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 32
+                },
+                {
+                  "date": "2001",
+                  "value": 35
+                },
+                {
+                  "date": "2002",
+                  "value": 37.8
+                },
+                {
+                  "date": "2003",
+                  "value": 40.5
+                },
+                {
+                  "date": "2004",
+                  "value": 40.6
+                },
+                {
+                  "date": "2005",
+                  "value": 44.2
+                },
+                {
+                  "date": "2006",
+                  "value": 50.5
+                },
+                {
+                  "date": "2007",
+                  "value": 46.5
+                },
+                {
+                  "date": "2008",
+                  "value": 54.3
+                },
+                {
+                  "date": "2009",
+                  "value": 57.1
+                },
+                {
+                  "date": "2010",
+                  "value": 55.3
+                },
+                {
+                  "date": "2011",
+                  "value": 59.6
+                },
+                {
+                  "date": "2012",
+                  "value": 65.5
+                },
+                {
+                  "date": "2013",
+                  "value": 61.5
+                },
+                {
+                  "date": "2014",
+                  "value": 62.4
+                },
+                {
+                  "date": "2015",
+                  "value": 74
+                },
+                {
+                  "date": "2016",
+                  "value": 75.9
+                },
+                {
+                  "date": "2017",
+                  "value": 88
+                },
+                {
+                  "date": "2018",
+                  "value": 86.9
+                },
+                {
+                  "date": "2019",
+                  "value": 92.2
+                },
+                {
+                  "date": "2020",
+                  "value": 96.2
+                },
+                {
+                  "date": "2021",
+                  "value": 99
+                },
+                {
+                  "date": "2022",
+                  "value": 99.4
+                },
+                {
+                  "date": "2023",
+                  "value": 99.5
+                },
+                {
+                  "date": "2024",
+                  "value": 99.5
+                }
+              ]
+            },
+            "country/ETH": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 25,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 12.7
+                },
+                {
+                  "date": "2001",
+                  "value": 10.2
+                },
+                {
+                  "date": "2002",
+                  "value": 11.9
+                },
+                {
+                  "date": "2003",
+                  "value": 13.5
+                },
+                {
+                  "date": "2004",
+                  "value": 15.2
+                },
+                {
+                  "date": "2005",
+                  "value": 14
+                },
+                {
+                  "date": "2006",
+                  "value": 18.6
+                },
+                {
+                  "date": "2007",
+                  "value": 20.3
+                },
+                {
+                  "date": "2008",
+                  "value": 22
+                },
+                {
+                  "date": "2009",
+                  "value": 23.7
+                },
+                {
+                  "date": "2010",
+                  "value": 25.5
+                },
+                {
+                  "date": "2011",
+                  "value": 23
+                },
+                {
+                  "date": "2012",
+                  "value": 29
+                },
+                {
+                  "date": "2013",
+                  "value": 30.8
+                },
+                {
+                  "date": "2014",
+                  "value": 27.2
+                },
+                {
+                  "date": "2015",
+                  "value": 29
+                },
+                {
+                  "date": "2016",
+                  "value": 42.9
+                },
+                {
+                  "date": "2017",
+                  "value": 44.3
+                },
+                {
+                  "date": "2018",
+                  "value": 44.8
+                },
+                {
+                  "date": "2019",
+                  "value": 48
+                },
+                {
+                  "date": "2020",
+                  "value": 51.1
+                },
+                {
+                  "date": "2021",
+                  "value": 54.2
+                },
+                {
+                  "date": "2022",
+                  "value": 55
+                },
+                {
+                  "date": "2023",
+                  "value": 55.4
+                },
+                {
+                  "date": "2024",
+                  "value": 56.6
+                }
+              ]
+            },
+            "country/IND": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 25,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 60.3
+                },
+                {
+                  "date": "2001",
+                  "value": 62
+                },
+                {
+                  "date": "2002",
+                  "value": 62.3
+                },
+                {
+                  "date": "2003",
+                  "value": 65.4
+                },
+                {
+                  "date": "2004",
+                  "value": 64.4
+                },
+                {
+                  "date": "2005",
+                  "value": 68.8
+                },
+                {
+                  "date": "2006",
+                  "value": 67.9
+                },
+                {
+                  "date": "2007",
+                  "value": 72.3
+                },
+                {
+                  "date": "2008",
+                  "value": 74.1
+                },
+                {
+                  "date": "2009",
+                  "value": 75
+                },
+                {
+                  "date": "2010",
+                  "value": 76.3
+                },
+                {
+                  "date": "2011",
+                  "value": 79.5
+                },
+                {
+                  "date": "2012",
+                  "value": 79.9
+                },
+                {
+                  "date": "2013",
+                  "value": 83.1
+                },
+                {
+                  "date": "2014",
+                  "value": 85.1
+                },
+                {
+                  "date": "2015",
+                  "value": 88
+                },
+                {
+                  "date": "2016",
+                  "value": 89.6
+                },
+                {
+                  "date": "2017",
+                  "value": 91.8
+                },
+                {
+                  "date": "2018",
+                  "value": 95.7
+                },
+                {
+                  "date": "2019",
+                  "value": 95.9
+                },
+                {
+                  "date": "2020",
+                  "value": 96.5
+                },
+                {
+                  "date": "2021",
+                  "value": 99.6
+                },
+                {
+                  "date": "2022",
+                  "value": 99.2
+                },
+                {
+                  "date": "2023",
+                  "value": 99.5
+                },
+                {
+                  "date": "2024",
+                  "value": 99.9
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2007",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 18,
+              "series": [
+                {
+                  "date": "2007",
+                  "value": 0.8
+                },
+                {
+                  "date": "2008",
+                  "value": 1.3
+                },
+                {
+                  "date": "2009",
+                  "value": 3
+                },
+                {
+                  "date": "2010",
+                  "value": 1.5
+                },
+                {
+                  "date": "2011",
+                  "value": 2.8
+                },
+                {
+                  "date": "2012",
+                  "value": 3.3
+                },
+                {
+                  "date": "2013",
+                  "value": 3.8
+                },
+                {
+                  "date": "2014",
+                  "value": 4.3
+                },
+                {
+                  "date": "2015",
+                  "value": 4.8
+                },
+                {
+                  "date": "2016",
+                  "value": 5.3
+                },
+                {
+                  "date": "2017",
+                  "value": 4.2
+                },
+                {
+                  "date": "2018",
+                  "value": 6.3
+                },
+                {
+                  "date": "2019",
+                  "value": 6.8
+                },
+                {
+                  "date": "2020",
+                  "value": 7.3
+                },
+                {
+                  "date": "2021",
+                  "value": 7.7
+                },
+                {
+                  "date": "2022",
+                  "value": 8.4
+                },
+                {
+                  "date": "2023",
+                  "value": 5.4
+                },
+                {
+                  "date": "2024",
+                  "value": 5.4
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "3722936608695937273": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "Percent",
+            "unitDisplayName": "%"
+          }
+        },
+        "mixer_response_ids": [
+          "6cbeecc9-0fce-495e-9885-0a8543ad8ae1"
+        ]
+      }
+    },
+    "development.internet.use": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/IT_USE_ii99"
+          ],
+          "entities": [
+            "country/BGD",
+            "country/IND",
+            "country/KEN"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.732Z",
+      "payload": {
+        "data": {
+          "undata/sdg/IT_USE_ii99": {
+            "country/BGD": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 25,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 0.1
+                },
+                {
+                  "date": "2001",
+                  "value": 0.1
+                },
+                {
+                  "date": "2002",
+                  "value": 0.1
+                },
+                {
+                  "date": "2003",
+                  "value": 0.2
+                },
+                {
+                  "date": "2004",
+                  "value": 0.2
+                },
+                {
+                  "date": "2005",
+                  "value": 0.2
+                },
+                {
+                  "date": "2006",
+                  "value": 1
+                },
+                {
+                  "date": "2007",
+                  "value": 1.8
+                },
+                {
+                  "date": "2008",
+                  "value": 2.5
+                },
+                {
+                  "date": "2009",
+                  "value": 3.1
+                },
+                {
+                  "date": "2010",
+                  "value": 3.7
+                },
+                {
+                  "date": "2011",
+                  "value": 4.5
+                },
+                {
+                  "date": "2012",
+                  "value": 5
+                },
+                {
+                  "date": "2013",
+                  "value": 6.6
+                },
+                {
+                  "date": "2014",
+                  "value": 9.1
+                },
+                {
+                  "date": "2015",
+                  "value": 12.4
+                },
+                {
+                  "date": "2016",
+                  "value": 16.9
+                },
+                {
+                  "date": "2017",
+                  "value": 21.5
+                },
+                {
+                  "date": "2018",
+                  "value": 25.6
+                },
+                {
+                  "date": "2019",
+                  "value": 30.4
+                },
+                {
+                  "date": "2020",
+                  "value": 36.1
+                },
+                {
+                  "date": "2021",
+                  "value": 38.9
+                },
+                {
+                  "date": "2022",
+                  "value": 41.6
+                },
+                {
+                  "date": "2023",
+                  "value": 44.5
+                },
+                {
+                  "date": "2024",
+                  "value": 53.4
+                }
+              ]
+            },
+            "country/IND": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2025",
+              "obsCount": 26,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 0.5
+                },
+                {
+                  "date": "2001",
+                  "value": 0.7
+                },
+                {
+                  "date": "2002",
+                  "value": 1.5
+                },
+                {
+                  "date": "2003",
+                  "value": 1.7
+                },
+                {
+                  "date": "2004",
+                  "value": 2
+                },
+                {
+                  "date": "2005",
+                  "value": 2.4
+                },
+                {
+                  "date": "2006",
+                  "value": 2.8
+                },
+                {
+                  "date": "2007",
+                  "value": 4
+                },
+                {
+                  "date": "2008",
+                  "value": 4.4
+                },
+                {
+                  "date": "2009",
+                  "value": 5.1
+                },
+                {
+                  "date": "2010",
+                  "value": 7.5
+                },
+                {
+                  "date": "2011",
+                  "value": 10.1
+                },
+                {
+                  "date": "2012",
+                  "value": 11.1
+                },
+                {
+                  "date": "2013",
+                  "value": 12.3
+                },
+                {
+                  "date": "2014",
+                  "value": 13.5
+                },
+                {
+                  "date": "2015",
+                  "value": 14.9
+                },
+                {
+                  "date": "2016",
+                  "value": 16.5
+                },
+                {
+                  "date": "2017",
+                  "value": 18.2
+                },
+                {
+                  "date": "2018",
+                  "value": 20.1
+                },
+                {
+                  "date": "2019",
+                  "value": 29.5
+                },
+                {
+                  "date": "2020",
+                  "value": 43.4
+                },
+                {
+                  "date": "2021",
+                  "value": 49.3
+                },
+                {
+                  "date": "2022",
+                  "value": 55.9
+                },
+                {
+                  "date": "2023",
+                  "value": 60.3
+                },
+                {
+                  "date": "2024",
+                  "value": 64.9
+                },
+                {
+                  "date": "2025",
+                  "value": 70
+                }
+              ]
+            },
+            "country/KEN": {
+              "earliestDate": "2000",
+              "facet": "3722936608695937273",
+              "latestDate": "2024",
+              "obsCount": 25,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 0.3
+                },
+                {
+                  "date": "2001",
+                  "value": 0.6
+                },
+                {
+                  "date": "2002",
+                  "value": 1.2
+                },
+                {
+                  "date": "2003",
+                  "value": 2.9
+                },
+                {
+                  "date": "2004",
+                  "value": 3
+                },
+                {
+                  "date": "2005",
+                  "value": 3.1
+                },
+                {
+                  "date": "2006",
+                  "value": 3.6
+                },
+                {
+                  "date": "2007",
+                  "value": 4.4
+                },
+                {
+                  "date": "2008",
+                  "value": 5.2
+                },
+                {
+                  "date": "2009",
+                  "value": 6.1
+                },
+                {
+                  "date": "2010",
+                  "value": 7.2
+                },
+                {
+                  "date": "2011",
+                  "value": 8.8
+                },
+                {
+                  "date": "2012",
+                  "value": 10.5
+                },
+                {
+                  "date": "2013",
+                  "value": 13
+                },
+                {
+                  "date": "2014",
+                  "value": 16.5
+                },
+                {
+                  "date": "2015",
+                  "value": 16.6
+                },
+                {
+                  "date": "2016",
+                  "value": 16.6
+                },
+                {
+                  "date": "2017",
+                  "value": 17.8
+                },
+                {
+                  "date": "2018",
+                  "value": 19.5
+                },
+                {
+                  "date": "2019",
+                  "value": 22.7
+                },
+                {
+                  "date": "2020",
+                  "value": 24.7
+                },
+                {
+                  "date": "2021",
+                  "value": 27
+                },
+                {
+                  "date": "2022",
+                  "value": 29.4
+                },
+                {
+                  "date": "2023",
+                  "value": 32.1
+                },
+                {
+                  "date": "2024",
+                  "value": 35
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "3722936608695937273": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "Percent",
+            "unitDisplayName": "%"
+          }
+        },
+        "mixer_response_ids": [
+          "386e1a22-712b-4776-ae57-e56ff62871ed"
+        ]
+      }
+    },
+    "development.maternal-mortality": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series",
+        "body": {
+          "variables": [
+            "undata/sdg/SH_STA_MORT.SEX--F"
+          ],
+          "entities": [
+            "country/BGD",
+            "country/IND",
+            "country/SSD"
+          ]
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:20.788Z",
+      "payload": {
+        "data": {
+          "undata/sdg/SH_STA_MORT.SEX--F": {
+            "country/BGD": {
+              "earliestDate": "2000",
+              "facet": "5746826742182915890",
+              "latestDate": "2023",
+              "obsCount": 24,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 522.65295
+                },
+                {
+                  "date": "2001",
+                  "value": 494.79885
+                },
+                {
+                  "date": "2002",
+                  "value": 465.28572
+                },
+                {
+                  "date": "2003",
+                  "value": 435.67462
+                },
+                {
+                  "date": "2004",
+                  "value": 406.05478
+                },
+                {
+                  "date": "2005",
+                  "value": 377.53225
+                },
+                {
+                  "date": "2006",
+                  "value": 352.32345
+                },
+                {
+                  "date": "2007",
+                  "value": 334.08556
+                },
+                {
+                  "date": "2008",
+                  "value": 310.04288
+                },
+                {
+                  "date": "2009",
+                  "value": 292.75088
+                },
+                {
+                  "date": "2010",
+                  "value": 274.63423
+                },
+                {
+                  "date": "2011",
+                  "value": 258.33302
+                },
+                {
+                  "date": "2012",
+                  "value": 244.1809
+                },
+                {
+                  "date": "2013",
+                  "value": 230.40869
+                },
+                {
+                  "date": "2014",
+                  "value": 216.70636
+                },
+                {
+                  "date": "2015",
+                  "value": 203.53675
+                },
+                {
+                  "date": "2016",
+                  "value": 191.02995
+                },
+                {
+                  "date": "2017",
+                  "value": 179.0412
+                },
+                {
+                  "date": "2018",
+                  "value": 167.93237
+                },
+                {
+                  "date": "2019",
+                  "value": 157.21166
+                },
+                {
+                  "date": "2020",
+                  "value": 151.84625
+                },
+                {
+                  "date": "2021",
+                  "value": 193.89067
+                },
+                {
+                  "date": "2022",
+                  "value": 130.51897
+                },
+                {
+                  "date": "2023",
+                  "value": 115.11493
+                }
+              ]
+            },
+            "country/IND": {
+              "earliestDate": "2000",
+              "facet": "5746826742182915890",
+              "latestDate": "2023",
+              "obsCount": 24,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 362.29677
+                },
+                {
+                  "date": "2001",
+                  "value": 349.14353
+                },
+                {
+                  "date": "2002",
+                  "value": 330.11641
+                },
+                {
+                  "date": "2003",
+                  "value": 312.99102
+                },
+                {
+                  "date": "2004",
+                  "value": 296.36725
+                },
+                {
+                  "date": "2005",
+                  "value": 276.53149
+                },
+                {
+                  "date": "2006",
+                  "value": 258.32699
+                },
+                {
+                  "date": "2007",
+                  "value": 240.28579
+                },
+                {
+                  "date": "2008",
+                  "value": 222.70459
+                },
+                {
+                  "date": "2009",
+                  "value": 205.04956
+                },
+                {
+                  "date": "2010",
+                  "value": 188.33091
+                },
+                {
+                  "date": "2011",
+                  "value": 173.39346
+                },
+                {
+                  "date": "2012",
+                  "value": 160.06758
+                },
+                {
+                  "date": "2013",
+                  "value": 148.14653
+                },
+                {
+                  "date": "2014",
+                  "value": 136.9139
+                },
+                {
+                  "date": "2015",
+                  "value": 128.51316
+                },
+                {
+                  "date": "2016",
+                  "value": 120.75441
+                },
+                {
+                  "date": "2017",
+                  "value": 113.01186
+                },
+                {
+                  "date": "2018",
+                  "value": 107.00503
+                },
+                {
+                  "date": "2019",
+                  "value": 101.05407
+                },
+                {
+                  "date": "2020",
+                  "value": 100.5309
+                },
+                {
+                  "date": "2021",
+                  "value": 154.79778
+                },
+                {
+                  "date": "2022",
+                  "value": 89.64525
+                },
+                {
+                  "date": "2023",
+                  "value": 80.48182
+                }
+              ]
+            },
+            "country/SSD": {
+              "earliestDate": "2000",
+              "facet": "5746826742182915890",
+              "latestDate": "2023",
+              "obsCount": 24,
+              "series": [
+                {
+                  "date": "2000",
+                  "value": 1657.76365
+                },
+                {
+                  "date": "2001",
+                  "value": 1580.06481
+                },
+                {
+                  "date": "2002",
+                  "value": 1521.04148
+                },
+                {
+                  "date": "2003",
+                  "value": 1199.0015
+                },
+                {
+                  "date": "2004",
+                  "value": 1149.61875
+                },
+                {
+                  "date": "2005",
+                  "value": 1074.16419
+                },
+                {
+                  "date": "2006",
+                  "value": 1005.14987
+                },
+                {
+                  "date": "2007",
+                  "value": 932.53632
+                },
+                {
+                  "date": "2008",
+                  "value": 857.59663
+                },
+                {
+                  "date": "2009",
+                  "value": 822.89499
+                },
+                {
+                  "date": "2010",
+                  "value": 776.18328
+                },
+                {
+                  "date": "2011",
+                  "value": 770.19196
+                },
+                {
+                  "date": "2012",
+                  "value": 755.06503
+                },
+                {
+                  "date": "2013",
+                  "value": 771.41851
+                },
+                {
+                  "date": "2014",
+                  "value": 1215.60278
+                },
+                {
+                  "date": "2015",
+                  "value": 1435.57864
+                },
+                {
+                  "date": "2016",
+                  "value": 1629.39979
+                },
+                {
+                  "date": "2017",
+                  "value": 1661.52114
+                },
+                {
+                  "date": "2018",
+                  "value": 912.83966
+                },
+                {
+                  "date": "2019",
+                  "value": 744.85135
+                },
+                {
+                  "date": "2020",
+                  "value": 729.03753
+                },
+                {
+                  "date": "2021",
+                  "value": 749.2422
+                },
+                {
+                  "date": "2022",
+                  "value": 703.68635
+                },
+                {
+                  "date": "2023",
+                  "value": 691.82029
+                }
+              ]
+            }
+          }
+        },
+        "facets": {
+          "5746826742182915890": {
+            "observationPeriod": "P1Y",
+            "provenanceId": "undata/p/SDG",
+            "provenanceUrl": "https://unstats.un.org/sdgs/dataportal",
+            "unit": "undata/UNIT_MEASURE-RATIO_COUNT_PER_100000_COUNT_LIVEBIRTHS",
+            "unitDisplayName": "Count per 100,000 live births"
+          }
+        },
+        "mixer_response_ids": [
+          "b544e748-ebed-4d47-9321-2c676dec3157"
+        ]
+      }
+    },
+    "lab.prompt.vague": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/explore/detect-and-fulfill?q=violence",
+        "body": {
+          "contextHistory": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:21.859Z",
+      "payload": {
+        "place": {
+          "dcid": "country/USA",
+          "name": "United States of America"
+        },
+        "entities": [],
+        "variables": [],
+        "failure": null,
+        "userMessage": null,
+        "config": {
+          "categories": [
+            {
+              "statVarSpec": {
+                "undata/sdg/VC_IHR_PSRC": {
+                  "name": "Number of victims of intentional homicide per 100,000 population",
+                  "statVar": "undata/sdg/VC_IHR_PSRC"
+                },
+                "undata/sdg/VC_IHR_PSRC.SEX--F": {
+                  "name": "Number of victims of intentional homicide per 100,000 population [Sex=Female]",
+                  "statVar": "undata/sdg/VC_IHR_PSRC.SEX--F"
+                },
+                "undata/sdg/VC_IHR_PSRC.SEX--M": {
+                  "name": "Number of victims of intentional homicide per 100,000 population [Sex=Male]",
+                  "statVar": "undata/sdg/VC_IHR_PSRC.SEX--M"
+                },
+                "undata/sdg/VC_IHR_PSRCN": {
+                  "name": "Number of victims of intentional homicide",
+                  "statVar": "undata/sdg/VC_IHR_PSRCN"
+                },
+                "undata/sdg/VC_IHR_PSRCN.SEX--F": {
+                  "name": "Number of victims of intentional homicide [Sex=Female]",
+                  "statVar": "undata/sdg/VC_IHR_PSRCN.SEX--F"
+                },
+                "undata/sdg/VC_IHR_PSRCN.SEX--M": {
+                  "name": "Number of victims of intentional homicide [Sex=Male]",
+                  "statVar": "undata/sdg/VC_IHR_PSRCN.SEX--M"
+                },
+                "undata/sdg/VC_PRR_PHYV": {
+                  "name": "Police reporting rate for physical assault in the previous 12 months",
+                  "statVar": "undata/sdg/VC_PRR_PHYV"
+                },
+                "undata/sdg/VC_PRR_PHYV.SEX--F": {
+                  "name": "Police reporting rate for physical assault in the previous 12 months [Sex=Female]",
+                  "statVar": "undata/sdg/VC_PRR_PHYV.SEX--F"
+                },
+                "undata/sdg/VC_PRR_PHYV.SEX--M": {
+                  "name": "Police reporting rate for physical assault in the previous 12 months [Sex=Male]",
+                  "statVar": "undata/sdg/VC_PRR_PHYV.SEX--M"
+                },
+                "undata/sdg/VC_PRR_PHY_VIO": {
+                  "name": "Police reporting rate for physical violence in the previous 12 months",
+                  "statVar": "undata/sdg/VC_PRR_PHY_VIO"
+                },
+                "undata/sdg/VC_PRR_PHY_VIO.SEX--F_multiple_place_bar_block": {
+                  "name": "Police reporting rate for physical violence in the previous 12 months [Sex=Female]",
+                  "statVar": "undata/sdg/VC_PRR_PHY_VIO.SEX--F"
+                },
+                "undata/sdg/VC_PRR_PHY_VIO.SEX--M_multiple_place_bar_block": {
+                  "name": "Police reporting rate for physical violence in the previous 12 months [Sex=Male]",
+                  "statVar": "undata/sdg/VC_PRR_PHY_VIO.SEX--M"
+                },
+                "undata/sdg/VC_SNS_WALN_DRK": {
+                  "name": "Proportion of population that feel safe walking alone around the area they live after dark",
+                  "statVar": "undata/sdg/VC_SNS_WALN_DRK"
+                },
+                "undata/sdg/VC_VAW_MARR.AGE--Y15T49__SEX--F_multiple_place_bar_block": {
+                  "name": "Proportion of ever-partnered women and girls subjected to physical and/or sexual violence by a current or former intimate partner in the previous 12 months [Age=15 to 49 years old, Sex=Female]",
+                  "statVar": "undata/sdg/VC_VAW_MARR.AGE--Y15T49__SEX--F"
+                },
+                "undata/sdg/VC_VAW_MARR.AGE--Y_GE15__SEX--F_multiple_place_bar_block": {
+                  "name": "Proportion of ever-partnered women and girls subjected to physical and/or sexual violence by a current or former intimate partner in the previous 12 months [Age=15 years old and over, Sex=Female]",
+                  "statVar": "undata/sdg/VC_VAW_MARR.AGE--Y_GE15__SEX--F"
+                },
+                "undata/sdg/VC_VAW_MTUHRAN": {
+                  "name": "Countries with at least one verified case of killings of human rights defenders, journalists, and trade unionists",
+                  "statVar": "undata/sdg/VC_VAW_MTUHRAN"
+                },
+                "undata/sdg/VC_VOV_PHY_ASLT": {
+                  "name": "Proportion of population subjected to physical assault in the previous 12 months",
+                  "statVar": "undata/sdg/VC_VOV_PHY_ASLT"
+                },
+                "undata/sdg/VC_VOV_SEXL": {
+                  "name": "Proportion of population subjected to sexual violence in the previous 12 months",
+                  "statVar": "undata/sdg/VC_VOV_SEXL"
+                },
+                "undata/sdg/VC_VOV_SEX_ASLT": {
+                  "name": "Proportion of population subjected to sexual assault in the previous 12 months",
+                  "statVar": "undata/sdg/VC_VOV_SEX_ASLT"
+                },
+                "undata/sdg/VC_VOV_SEX_ASLT.SEX--F": {
+                  "name": "Proportion of population subjected to sexual assault in the previous 12 months [Sex=Female]",
+                  "statVar": "undata/sdg/VC_VOV_SEX_ASLT.SEX--F"
+                }
+              },
+              "blocks": [
+                {
+                  "title": "Number of Victims of Intentional Homicide Per 100,000 Population, Total",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Victims of Intentional Homicide Per 100,000 Population in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRC"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Victims of Intentional Homicide Per 100,000 Population in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRC"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Victims of Intentional Homicide Per 100,000 Population, by Sex",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Victims of Intentional Homicide Per 100,000 Population, by Sex in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRC.SEX--F",
+                            "undata/sdg/VC_IHR_PSRC.SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Victims of Intentional Homicide, Total",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Victims of Intentional Homicide in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRCN"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Victims of Intentional Homicide in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRCN"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Victims of Intentional Homicide, by Sex",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Victims of Intentional Homicide, by Sex in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_IHR_PSRCN.SEX--F",
+                            "undata/sdg/VC_IHR_PSRCN.SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Police Reporting Rate for Physical Assault in the Previous 12 Months, Total",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Police Reporting Rate for Physical Assault in the Previous 12 Months in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_PRR_PHYV"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Police Reporting Rate for Physical Assault in the Previous 12 Months in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_PRR_PHYV"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Police Reporting Rate for Physical Assault in the Previous 12 Months, by Sex",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Police Reporting Rate for Physical Assault in the Previous 12 Months, by Sex in United States of America",
+                          "statVarKey": [
+                            "undata/sdg/VC_PRR_PHYV.SEX--F",
+                            "undata/sdg/VC_PRR_PHYV.SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lab.prompt.precise": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/explore/detect-and-fulfill?q=number%20of%20total%20conflict-related%20deaths%20in%20South%20Sudan",
+        "body": {
+          "contextHistory": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:22.103Z",
+      "payload": {
+        "place": {
+          "dcid": "country/SSD",
+          "name": "South Sudan"
+        },
+        "entities": [],
+        "variables": [],
+        "failure": null,
+        "userMessage": null,
+        "config": {
+          "categories": [
+            {
+              "statVarSpec": {
+                "undata/sdg/VC_DTH_TOCVN": {
+                  "name": "Number of conflict-related deaths (civilians)",
+                  "statVar": "undata/sdg/VC_DTH_TOCVN"
+                },
+                "undata/sdg/VC_DTH_TOTN": {
+                  "name": "Number of total conflict-related deaths",
+                  "statVar": "undata/sdg/VC_DTH_TOTN"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Female]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--M": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Male]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--M"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--F": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Female]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--F"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--M": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Male]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--M"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--_U__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Unknown, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--_U__SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--EXPLOSIVES": {
+                  "name": "Number of total conflict-related deaths [Lethal instrument=Planted explosives and unexploded ordnance]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--EXPLOSIVES"
+                },
+                "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_HEAVY": {
+                  "name": "Number of total conflict-related deaths [Lethal instrument=Heavy weapons and explosive munitions]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_HEAVY"
+                },
+                "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_LIGHT": {
+                  "name": "Number of total conflict-related deaths [Lethal instrument=Small arms and light weapons]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_LIGHT"
+                },
+                "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_OTHER": {
+                  "name": "Number of total conflict-related deaths [Lethal instrument=Other weapons]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_OTHER"
+                },
+                "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--_U": {
+                  "name": "Number of total conflict-related deaths [Lethal instrument=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.SEX--F": {
+                  "name": "Number of total conflict-related deaths [Sex=Female]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.SEX--F"
+                },
+                "undata/sdg/VC_DTH_TOTN.SEX--M": {
+                  "name": "Number of total conflict-related deaths [Sex=Male]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.SEX--M"
+                },
+                "undata/sdg/VC_DTH_TOTN.SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTR": {
+                  "name": "Number of total conflict-related deaths per 100,000 population",
+                  "statVar": "undata/sdg/VC_DTH_TOTR"
+                }
+              },
+              "blocks": [
+                {
+                  "title": "Number of Total Conflict-Related Deaths, Total",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths, by Age — Age 0-17 and 18 Years and Over",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths, by Age — Age 0-17 and 18 Years and Over in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17",
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths, Age: Unknown",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Unknown] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--_U"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Unknown] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--_U"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths, by Lethal Instrument — Instruments of Conflict-Related Death, Including Unknown",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths, by Lethal Instrument — Instruments of Conflict-Related Death, Including Unknown in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--EXPLOSIVES",
+                            "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_HEAVY",
+                            "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_LIGHT",
+                            "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--WEAPON_OTHER",
+                            "undata/sdg/VC_DTH_TOTN.LETHAL_INSTRUMENT--_U"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths, by Sex",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths, by Sex in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.SEX--F",
+                            "undata/sdg/VC_DTH_TOTN.SEX--M",
+                            "undata/sdg/VC_DTH_TOTN.SEX--_U"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Sex=Female], by Age — Age 0-17 and 18 Years and Over",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Sex=Female], by Age — Age 0-17 and 18 Years and Over in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F",
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--F"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lab.prompt.regional": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/explore/detect-and-fulfill?q=compare%20homicide%20rate%20across%20countries%20in%20Africa",
+        "body": {
+          "contextHistory": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:22.295Z",
+      "payload": {
+        "place": {
+          "dcid": "africa",
+          "name": "Africa"
+        },
+        "entities": [],
+        "variables": [],
+        "failure": null,
+        "userMessage": null,
+        "config": {
+          "categories": [
+            {
+              "statVarSpec": {
+                "undata/unodc/VIC_HOM_RT": {
+                  "name": "Rate of victims of intentional homicide",
+                  "statVar": "undata/unodc/VIC_HOM_RT"
+                },
+                "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--FOREIGN__SEX--F": {
+                  "name": "Rate of victims of intentional homicide [Citizenship status=Foreign citizens, Sex=Female]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--FOREIGN__SEX--F"
+                },
+                "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--FOREIGN__SEX--M": {
+                  "name": "Rate of victims of intentional homicide [Citizenship status=Foreign citizens, Sex=Male]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--FOREIGN__SEX--M"
+                },
+                "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--NATIONAL__SEX--F": {
+                  "name": "Rate of victims of intentional homicide [Citizenship status=National citizens, Sex=Female]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--NATIONAL__SEX--F"
+                },
+                "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--NATIONAL__SEX--M": {
+                  "name": "Rate of victims of intentional homicide [Citizenship status=National citizens, Sex=Male]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.CITIZENSHIP_STATUS--NATIONAL__SEX--M"
+                },
+                "undata/unodc/VIC_HOM_RT.LETHAL_INSTRUMENT--WEAPON_OTHER": {
+                  "name": "Rate of victims of intentional homicide [Lethal instrument=Other weapons]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.LETHAL_INSTRUMENT--WEAPON_OTHER"
+                },
+                "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_FM": {
+                  "name": "Rate of victims of intentional homicide [Sex=Male, Victim-perpetrator relationship=Family member]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_FM"
+                },
+                "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_IPFM": {
+                  "name": "Rate of victims of intentional homicide [Sex=Male, Victim-perpetrator relationship=Intimate partner or family member]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_IPFM"
+                },
+                "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_O": {
+                  "name": "Rate of victims of intentional homicide [Sex=Male, Victim-perpetrator relationship=Other perpetrator known to the victim]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_K_O"
+                },
+                "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_U": {
+                  "name": "Rate of victims of intentional homicide [Sex=Male, Victim-perpetrator relationship=Perpetrator unknown to the victim]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_U"
+                },
+                "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_UNK": {
+                  "name": "Rate of victims of intentional homicide [Sex=Male, Victim-perpetrator relationship=Relationship to perpetrator is not known]",
+                  "statVar": "undata/unodc/VIC_HOM_RT.SEX--M__VICTIM_PERPETRATOR_REL--VIP_UNK"
+                },
+                "undata/who/HOMICIDE_N": {
+                  "name": "Number of homicides",
+                  "statVar": "undata/who/HOMICIDE_N"
+                },
+                "undata/who/HOMICIDE_N.SEX--F": {
+                  "name": "Number of homicides [Sex=Female]",
+                  "statVar": "undata/who/HOMICIDE_N.SEX--F"
+                },
+                "undata/who/HOMICIDE_N.SEX--M": {
+                  "name": "Number of homicides [Sex=Male]",
+                  "statVar": "undata/who/HOMICIDE_N.SEX--M"
+                },
+                "undata/who/HOMICIDE_R": {
+                  "name": "Homicide rate",
+                  "statVar": "undata/who/HOMICIDE_R"
+                },
+                "undata/who/HOMICIDE_R.SEX--F": {
+                  "name": "Homicide rate [Sex=Female]",
+                  "statVar": "undata/who/HOMICIDE_R.SEX--F"
+                },
+                "undata/who/HOMICIDE_R.SEX--M": {
+                  "name": "Homicide rate [Sex=Male]",
+                  "statVar": "undata/who/HOMICIDE_R.SEX--M"
+                }
+              },
+              "blocks": [
+                {
+                  "title": "Homicide Rate in Countries of Africa",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "MAP",
+                          "title": "Homicide Rate in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "RANKING",
+                          "title": "Homicide Rate in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Homicide Rate, Total",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Homicide Rate in Africa",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Homicide Rate in Africa",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Homicide Rate [Sex=Female] in Countries of Africa",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "MAP",
+                          "title": "Homicide Rate [Sex=Female] in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R.SEX--F"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "RANKING",
+                          "title": "Homicide Rate [Sex=Female] in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R.SEX--F"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Homicide Rate [Sex=Male] in Countries of Africa",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "MAP",
+                          "title": "Homicide Rate [Sex=Male] in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R.SEX--M"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "RANKING",
+                          "title": "Homicide Rate [Sex=Male] in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R.SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Homicide Rate, by Sex",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Homicide Rate, by Sex in Africa",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_R.SEX--F",
+                            "undata/who/HOMICIDE_R.SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Homicides in Countries of Africa",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "MAP",
+                          "title": "Number of Homicides in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_N"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "RANKING",
+                          "title": "Number of Homicides in Countries of Africa (${date})",
+                          "statVarKey": [
+                            "undata/who/HOMICIDE_N"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lab.prompt.disaggregated": {
+      "request": {
+        "method": "POST",
+        "url": "https://unsd-datacommons.gcp.un-icc.cloud/api/explore/detect-and-fulfill?q=conflict%20related%20deaths%20of%20children%20under%2018%20in%20South%20Sudan%20by%20year",
+        "body": {
+          "contextHistory": []
+        }
+      },
+      "fetchedAt": "2026-09-18T14:43:22.456Z",
+      "payload": {
+        "place": {
+          "dcid": "country/SSD",
+          "name": "South Sudan"
+        },
+        "entities": [],
+        "variables": [],
+        "failure": null,
+        "userMessage": null,
+        "config": {
+          "categories": [
+            {
+              "statVarSpec": {
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Female]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--M": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Male]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--M"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Under 18 years old, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--F": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Female]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--F"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--M": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Male]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--M"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=18 years old and over, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--_U"
+                },
+                "undata/sdg/VC_DTH_TOTN.AGE--_U__SEX--_U": {
+                  "name": "Number of total conflict-related deaths [Age=Unknown, Sex=Unknown]",
+                  "statVar": "undata/sdg/VC_DTH_TOTN.AGE--_U__SEX--_U"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y10T19": {
+                  "name": "Number of deaths among children and adolescents [Age=10 to 19 years old]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y10T19"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y10T19__SEX--F": {
+                  "name": "Number of deaths among children and adolescents [Age=10 to 19 years old, Sex=Female]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y10T19__SEX--F"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y10T19__SEX--M": {
+                  "name": "Number of deaths among children and adolescents [Age=10 to 19 years old, Sex=Male]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y10T19__SEX--M"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y15T19": {
+                  "name": "Number of deaths among children and adolescents [Age=15 to 19 years old]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y15T19"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y15T19__SEX--F": {
+                  "name": "Number of deaths among children and adolescents [Age=15 to 19 years old, Sex=Female]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y15T19__SEX--F"
+                },
+                "undata/who/CHILD_DEATHS.AGE--Y15T19__SEX--M": {
+                  "name": "Number of deaths among children and adolescents [Age=15 to 19 years old, Sex=Male]",
+                  "statVar": "undata/who/CHILD_DEATHS.AGE--Y15T19__SEX--M"
+                }
+              },
+              "blocks": [
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Unknown]",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Unknown] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Unknown] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Sex=Unknown], by Age — Age 0-17 and 18 Years and Over",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Sex=Unknown], by Age — Age 0-17 and 18 Years and Over in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--_U",
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--_U"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Age=18 Years Old and Over]",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Age=18 Years Old and Over] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths [Age=18 Years Old and Over] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Sex=Male], by Age — Age 0-17 and 18 Years and Over",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Sex=Male], by Age — Age 0-17 and 18 Years and Over in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--M",
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18__SEX--M"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old]",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Female]",
+                  "columns": [
+                    {
+                      "tiles": [
+                        {
+                          "type": "LINE",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Female] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tiles": [
+                        {
+                          "type": "HIGHLIGHT",
+                          "title": "Number of Total Conflict-Related Deaths [Age=Under 18 Years Old, Sex=Female] in South Sudan",
+                          "statVarKey": [
+                            "undata/sdg/VC_DTH_TOTN.AGE--Y0T17__SEX--F"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
