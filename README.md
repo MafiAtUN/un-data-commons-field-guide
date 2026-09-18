@@ -31,6 +31,30 @@ The Data Finder is the homepage. Three choices and you leave with a chart, a CSV
 its own provenance, a citation in four styles, and a prompt that hands the real table to an
 AI assistant. No identifiers required, no reading required.
 
+Above it, a six-second demonstration rather than an argument: the resolver being asked
+about `violence` and quietly answering with United States figures. It plays in a
+fixed-height stage so nothing below it reflows, the Data Finder underneath is live
+throughout, and it cuts to its last frame on the first key, click, scroll or touch — and
+immediately under `prefers-reduced-motion`. Nothing in it is fabricated: the query, the
+returned chart title and the resolved place are what the endpoint actually returns.
+
+### The navigation
+
+One axis, not two menus. All twelve destinations sit on a rail ordered by how much the
+reader already knows, from *never used UN data* to *wiring an AI agent*, with the current
+page lit; the front page repeats the same list full size as the guide's table of contents.
+`⌘K` opens a palette for anyone who already knows where they are going, and its last row
+always offers to run whatever you typed against data.un.org itself, because this site
+curates twenty indicators and the platform holds about eighty-five thousand.
+
+The manifest lives in [`src/content/navigation.ts`](src/content/navigation.ts) and feeds
+the rail, the palette, the mobile menu and the contents list at once, so a new page is
+added in one place — and `tests/routes.test.ts` fails if a built route is missing from it.
+
+No animation library: the motion is CSS transitions, one `@property`-registered custom
+property for the rail's magnetism, and `IntersectionObserver` for the scroll reveals. The
+whole landing page adds under 1 kB gzipped to the bundle.
+
 ### Learn — no technical background assumed
 
 | Section | What it does |
@@ -227,12 +251,12 @@ src/
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
-tests/                 63 unit tests, no network
+tests/                 120 tests, no network
 ```
 
 ## Tests
 
-100 tests, no network access, run against the committed payloads.
+120 tests, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping
@@ -241,12 +265,25 @@ tests/scales.test.ts      axis domains, tick rounding, entity-stable colour bind
 tests/resolution.test.ts  the resolver's inferred-place behaviour
 tests/snapshots.test.ts   the script ↔ app key contract, checked across runtimes
 tests/routes.test.ts      router ↔ navigation ↔ build manifest agree
+tests/navigation.test.ts  the depth axis: contiguous tracks, findable by the obvious word
+tests/landing.test.tsx    the front page rendered — see below
 tests/content.test.ts     every curated indicator and preset country actually exists
 tests/export.test.ts      CSV quoting and provenance; citations name the agency first
 ```
 
-That last one matters: the recorder is plain Node and the app is TypeScript, so nothing at
-compile time stops a key being renamed in one and not the other. The test is that check.
+`snapshots.test.ts` matters because the recorder is plain Node and the app is TypeScript,
+so nothing at compile time stops a key being renamed in one and not the other. The test is
+that check.
+
+`landing.test.tsx` is the only suite that mounts components rather than reading their
+source. It renders with `react-dom/server`, in plain Node, with no jsdom — and because
+effects do not run in a server render, what it sees is exactly the front page's *first*
+frame: before the film has played a beat, before anything has scrolled into view, before
+any data has arrived. That frame has to already contain the Data Finder, the resolver
+finding in plain text, and a working link to the Prompt Lab, because it is also what a
+crawler and a reader on a slow connection get. It additionally pins the markup contracts
+that are otherwise only checkable by eye: one tab stop on the rail, `aria-current` on the
+page you are on, and the animated stage hidden from assistive technology.
 
 ## A note on courtesy
 
@@ -267,5 +304,7 @@ site — each chart links to its provenance. See the platform's
 [terms of use](https://data.un.org/undatacommons/terms-of-use).
 
 This is an independent guide. It is **not** an official United Nations publication and is
-not endorsed by the United Nations or by Google. Built by
-[Mafizul Islam](https://github.com/MafiAtUN).
+not endorsed by the United Nations or by Google.
+
+Created by **Mafizul Islam** — [LinkedIn](https://www.linkedin.com/in/mafizul/) ·
+[GitHub](https://github.com/MafiAtUN).

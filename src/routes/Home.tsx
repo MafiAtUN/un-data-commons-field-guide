@@ -1,36 +1,53 @@
 import { Link } from 'react-router-dom';
 import { DataFinder } from '../components/DataFinder';
 import { Expander } from '../components/Expander';
+import { Reveal } from '../components/Reveal';
+import { AgencyRing } from '../components/home/AgencyRing';
+import { DepthLadder } from '../components/home/DepthLadder';
+import { ResolverFilm } from '../components/home/ResolverFilm';
 import { searchUrl } from '../lib/undc/config';
 
 /**
- * The front page is the tool.
+ * The front page is the tool, with one argument in front of it.
  *
- * An earlier version opened with an argument about the platform and put the
- * picker three clicks away. Measured, that was 913 words before a reporting
- * officer could do anything. Everything explanatory now sits below the tool or
- * behind a question, so the page is short for someone in a hurry and complete
- * for someone who is not.
+ * The version before this opened with 913 words before a reporting officer could
+ * do anything, and the fix was to delete all of them. That was right, and this
+ * page keeps it: everything explanatory still sits below the Data Finder or
+ * behind a question a reader would actually ask.
+ *
+ * What comes back above the tool is not an argument but a demonstration — six
+ * seconds of the resolver quietly answering a question about "violence" with
+ * United States figures. It earns its space three ways: it is the one thing a
+ * reader must understand before trusting anything they export, it is the site's
+ * only real claim to exist, and it costs nothing, because it stops dead the
+ * moment anyone touches the keyboard and the tool beneath it is live throughout.
  */
 export function Home() {
   return (
     <>
-      {/* The hero is kept deliberately short: every pixel it takes is a pixel
-          between the reader and the chart they came for. */}
-      <section className="max-w-3xl">
-        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-volt">
-          Official UN statistics · free · no login
-        </p>
-        <h1 className="mt-2 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-4xl">
-          What number do you need?
-        </h1>
-        <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-secondary">
-          Pick a topic and some countries. Get the figure, a chart, a spreadsheet and a
-          citation — in about fifteen seconds.
-        </p>
+      <section className="grid items-center gap-6 lg:grid-cols-[1fr_minmax(0,27rem)]">
+        <div className="max-w-xl">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-volt">
+            Official UN statistics · free · no login
+          </p>
+          <h1 className="mt-2 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-4xl">
+            What number do you need?
+          </h1>
+          <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-secondary">
+            Pick a topic and some countries. Get the figure, a chart, a spreadsheet and a
+            citation — in about fifteen seconds.
+          </p>
+          <p className="mt-3 text-[0.85rem] leading-relaxed text-ink-muted">
+            One thing to know before you trust anything you export: the platform's search box
+            will answer a question you did not ask rather than admit it cannot answer the
+            one you did. Watch it happen.
+          </p>
+        </div>
+
+        <ResolverFilm />
       </section>
 
-      <div className="mt-5">
+      <div className="mt-6">
         <DataFinder showIntro={false} />
       </div>
 
@@ -112,28 +129,64 @@ export function Home() {
           Now that you have the data
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <NextCard
-            to="/visualise"
-            time="8 min"
-            title="Make a chart"
-            body="Free tools, and the five rules that keep a chart honest."
-          />
-          <NextCard
-            to="/cite"
-            time="2 min"
-            title="Cite it properly"
-            body="Credit the agency, not the website. Copy it in four styles."
-          />
-          <NextCard
-            to="/ai"
-            time="5 min"
-            title="Use AI on it"
-            body="Prompts that stop a chatbot inventing figures."
-          />
+          <Reveal delay={0}>
+            <NextCard
+              to="/visualise"
+              time="8 min"
+              title="Make a chart"
+              body="Free tools, and the five rules that keep a chart honest."
+            />
+          </Reveal>
+          <Reveal delay={70}>
+            <NextCard
+              to="/cite"
+              time="2 min"
+              title="Cite it properly"
+              body="Credit the agency, not the website. Copy it in four styles."
+            />
+          </Reveal>
+          <Reveal delay={140}>
+            <NextCard
+              to="/ai"
+              time="5 min"
+              title="Use AI on it"
+              body="Prompts that stop a chatbot inventing figures."
+            />
+          </Reveal>
         </div>
       </section>
 
-      <section className="mt-10 rounded-lg border border-hairline bg-surface-1 p-5">
+      <section className="mt-16 rounded-lg border border-hairline bg-surface-1 p-6 sm:p-8">
+        <Reveal>
+          <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
+            What you are actually querying
+          </h2>
+          <p className="mt-1.5 max-w-2xl text-[0.88rem] leading-relaxed text-ink-secondary">
+            Twenty-six UN System entities published their statistics into a single knowledge
+            graph on 17 September 2026. One query language reaches all of it.
+          </p>
+        </Reveal>
+        <div className="mt-7">
+          <AgencyRing />
+        </div>
+      </section>
+
+      <section className="mt-16">
+        <Reveal>
+          <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
+            The whole guide, in order
+          </h2>
+          <p className="mt-1.5 text-[0.88rem] leading-relaxed text-ink-secondary">
+            Twelve pages on one axis, from never having opened data.un.org to pointing an AI
+            agent at it. Start anywhere; this is just the order things get harder in.
+          </p>
+        </Reveal>
+        <div className="mt-7">
+          <DepthLadder />
+        </div>
+      </section>
+
+      <section className="mt-14 rounded-lg border border-hairline bg-surface-1 p-5">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="text-[0.95rem] font-semibold text-ink-primary">
@@ -160,22 +213,6 @@ export function Home() {
           </div>
         </div>
       </section>
-
-      <p className="mt-8 text-[0.8rem] leading-relaxed text-ink-muted">
-        Writing code? There is a whole technical track — the{' '}
-        <Link to="/lab" className="text-volt underline decoration-volt/30 underline-offset-2">
-          search resolver
-        </Link>
-        , the{' '}
-        <Link to="/cookbook" className="text-volt underline decoration-volt/30 underline-offset-2">
-          REST API
-        </Link>{' '}
-        (no key, CORS open) and an{' '}
-        <Link to="/connect" className="text-volt underline decoration-volt/30 underline-offset-2">
-          MCP endpoint
-        </Link>{' '}
-        for AI agents — under Developers.
-      </p>
     </>
   );
 }
@@ -194,7 +231,7 @@ function NextCard({
   return (
     <Link
       to={to}
-      className="group rounded-lg border border-hairline bg-surface-1 p-4 transition-colors hover:border-volt/50"
+      className="group block h-full rounded-lg border border-hairline bg-surface-1 p-4 transition-colors hover:border-volt/50"
     >
       <div className="flex items-baseline justify-between gap-2">
         <h3 className="text-[0.92rem] font-semibold text-ink-primary">{title}</h3>

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 
 const app = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
-const layout = readFileSync(new URL('../src/components/Layout.tsx', import.meta.url), 'utf8');
+const navigation = readFileSync(new URL('../src/content/navigation.ts', import.meta.url), 'utf8');
 const postbuild = readFileSync(new URL('../scripts/postbuild.mjs', import.meta.url), 'utf8');
 
 /** The route paths the build materialises as static directories. */
@@ -40,8 +40,10 @@ describe('route manifest', () => {
     }
   });
 
-  it('links every emitted route from the main navigation', () => {
-    const unlinked = emitted.filter((route) => !layout.includes(`to: '/${route}'`));
+  it('links every emitted route from the navigation manifest', () => {
+    // The manifest feeds the rail, the command palette, the mobile menu and the
+    // front page's contents list at once, so this one assertion covers all four.
+    const unlinked = emitted.filter((route) => !navigation.includes(`to: '/${route}'`));
     expect(unlinked).toEqual([]);
   });
 

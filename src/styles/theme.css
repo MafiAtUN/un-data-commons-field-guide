@@ -124,3 +124,103 @@ h1, h2, h3, .wordmark {
 :where(.grid, .flex) > * {
   min-width: 0;
 }
+
+/**
+ * Motion.
+ *
+ * Everything here is short, runs once, and is decorative in the strict sense:
+ * remove every rule below and the page still says the same things in the same
+ * order. That is the test a landing-page animation has to pass on a site whose
+ * front page is a working tool — the `prefers-reduced-motion` block above
+ * collapses all of it, and the components that animate also check the query in
+ * JavaScript so they can skip to their final frame rather than flash through it.
+ */
+
+/* The ghost cursor in the hero film. */
+@keyframes film-caret {
+  0%, 45% { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+.film-caret { animation: film-caret 1.05s steps(1, end) infinite; }
+
+/* A single pass of light along the hairline under the search box. */
+@keyframes film-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(400%); }
+}
+.film-sweep { animation: film-sweep 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+/* The workhorse: content arriving from just below, once. */
+@keyframes film-rise {
+  from { opacity: 0; transform: translateY(0.45rem); }
+  to { opacity: 1; transform: none; }
+}
+.film-rise { animation: film-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/**
+ * Scroll reveals.
+ *
+ * Driven by IntersectionObserver rather than `animation-timeline: view()`.
+ * Scroll-driven CSS is the more elegant mechanism and is still not in Firefox,
+ * and its failure mode — the animation running immediately against the document
+ * timeline, off-screen, so the reader scrolls down to content that has already
+ * finished arriving — is exactly the failure a reveal cannot have.
+ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal='shown'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Strokes that draw themselves in as a section arrives. */
+[data-draw] {
+  stroke-dasharray: var(--draw-length, 400);
+  stroke-dashoffset: var(--draw-length, 400);
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-draw='shown'] { stroke-dashoffset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* The duration override above would leave these mid-flight; land them. */
+  [data-reveal] { opacity: 1; transform: none; }
+  [data-draw] { stroke-dashoffset: 0; }
+}
+
+/**
+ * The depth rail.
+ *
+ * `--mag` is how close the pointer is to a given tick, 0 to 1, written by a
+ * pointermove handler. Declaring it with `@property` gives it a type, so the
+ * browser interpolates it on the way back to rest instead of snapping — the
+ * difference between a rail that feels magnetic and one that feels twitchy.
+ */
+@property --mag {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.rail-tick {
+  --mag: 0;
+  transform: scaleY(calc(1 + var(--mag) * 1.25));
+  transform-origin: center;
+  transition: background-color 0.2s ease-out;
+}
+
+/*
+ * While the pointer is on the rail, `--mag` is written every frame and must not
+ * be transitioned, or each write restarts an easing curve and the ticks lag
+ * behind the cursor. The transition is switched on only for the way back to
+ * rest, which is where the ease actually reads as physics.
+ */
+.rail-rest .rail-tick {
+  transition: --mag 0.32s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease-out;
+}

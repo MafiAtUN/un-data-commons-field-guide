@@ -1,123 +1,42 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { DESTINATIONS, FIRST_TECHNICAL, HOME } from '../content/navigation';
+import { paletteHint, usePaletteHotkey } from '../lib/palette';
+import { CommandPalette } from './nav/CommandPalette';
+import { DepthRail } from './nav/DepthRail';
+import { SiteCredit } from './SiteCredit';
 
 /**
- * Two menus and a logo.
+ * Chrome: a logo, one axis, and a keystroke.
  *
- * An earlier version put thirteen destinations in front of a reader who did not
- * yet know which one was theirs, which is a choice a person in a hurry cannot
- * make. The front page is now the tool itself, so the only navigation needed is
- * "teach me" and "I write code" — and each entry says what it is for, because a
- * label like "Toolkit" means nothing to someone who has not read the site.
+ * Two earlier versions of this file. The first put thirteen destinations in
+ * front of a reader who did not yet know which one was theirs. The second hid
+ * twelve of them behind two dropdowns, which is not the same as solving it — a
+ * dropdown can say what exists, but it cannot say where you are in a body of
+ * material or what sensibly comes next.
+ *
+ * So the destinations are ordered instead of hidden. The rail lays all twelve on
+ * the single axis the site actually has, running from a reporting officer who
+ * has never opened data.un.org to someone wiring an MCP endpoint into an agent,
+ * and lights the one you are on. Readers who already know where they are going
+ * press the key and skip the whole apparatus.
+ *
+ * The manifest itself lives in `src/content/navigation.ts`, shared by the rail,
+ * the palette, the mobile menu and the front page's table of contents, so a new
+ * page is added in exactly one place.
  */
-const LEARN = [
-  { to: '/start', label: 'The basics', hint: 'Five words, three rules, four minutes' },
-  { to: '/tutorials', label: 'Tutorials', hint: 'Six walkthroughs, five minutes each' },
-  { to: '/visualise', label: 'Make a chart', hint: 'Free tools, and what makes a chart honest' },
-  { to: '/cite', label: 'Cite the data', hint: 'Credit the agency, not the website' },
-  { to: '/ai', label: 'Use AI on it', hint: 'Prompts that stop invented figures' },
-  { to: '/toolkit', label: 'Data Finder', hint: 'The tool on its own page' },
-] as const;
-
-const DEVELOPERS = [
-  { to: '/lab', label: 'Prompt Lab', hint: 'How the search box really works' },
-  { to: '/cookbook', label: 'Query cookbook', hint: 'The REST API, with recipes' },
-  { to: '/connect', label: 'Connect an agent', hint: 'MCP: six tools, no key' },
-  { to: '/catalogue', label: 'Catalogue', hint: 'All 16 collections, counted live' },
-  { to: '/peace-and-security', label: 'Peace & security case', hint: 'Worked end to end' },
-  { to: '/development', label: 'Development case', hint: 'Worked end to end' },
-] as const;
-
-interface MenuItem { to: string; label: string; hint: string }
-
-/** A labelled dropdown whose entries say what they are for. */
-function Menu({
-  label,
-  items,
-  open,
-  setOpen,
-  active,
-  menuRef,
-}: {
-  label: string;
-  items: readonly MenuItem[];
-  open: boolean;
-  setOpen: (value: boolean) => void;
-  active: boolean;
-  menuRef: React.RefObject<HTMLDivElement | null>;
-}) {
-  return (
-    <div className="relative" ref={menuRef}>
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        aria-haspopup="true"
-        className={`rounded border px-3 py-1.5 text-[0.8rem] font-medium transition-colors ${
-          active || open
-            ? 'border-volt/50 bg-volt/10 text-ink-primary'
-            : 'border-hairline text-ink-secondary hover:text-ink-primary'
-        }`}
-      >
-        {label} <span aria-hidden="true">▾</span>
-      </button>
-
-      {open && (
-        <div className="absolute right-0 top-full z-40 mt-1.5 w-72 overflow-hidden rounded-lg border border-hairline bg-surface-1 shadow-xl">
-          {items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className="block border-b border-hairline px-3.5 py-2.5 last:border-0 hover:bg-surface-2"
-            >
-              <span className="block text-[0.82rem] font-medium text-ink-primary">{item.label}</span>
-              <span className="block text-[0.72rem] text-ink-muted">{item.hint}</span>
-            </NavLink>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [devOpen, setDevOpen] = useState(false);
-  const [learnOpen, setLearnOpen] = useState(false);
-  const devRef = useRef<HTMLDivElement>(null);
-  const learnRef = useRef<HTMLDivElement>(null);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  usePaletteHotkey(useCallback(() => setPaletteOpen(true), []));
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setMenuOpen(false);
-    setDevOpen(false);
-    setLearnOpen(false);
+    setPaletteOpen(false);
   }, [pathname]);
-
-  // Close menus on an outside click or Escape, as menus should.
-  useEffect(() => {
-    if (!devOpen && !learnOpen) return;
-
-    function onPointerDown(event: PointerEvent) {
-      const target = event.target as Node;
-      if (devRef.current && !devRef.current.contains(target)) setDevOpen(false);
-      if (learnRef.current && !learnRef.current.contains(target)) setLearnOpen(false);
-    }
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') { setDevOpen(false); setLearnOpen(false); }
-    }
-
-    document.addEventListener('pointerdown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [devOpen, learnOpen]);
-
-  const isDeveloper = DEVELOPERS.some((item) => item.to === pathname);
-  const isLearn = LEARN.some((item) => item.to === pathname);
 
   return (
     <div className="min-h-screen">
@@ -129,8 +48,8 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
 
       <header className="sticky top-0 z-30 border-b border-hairline bg-surface-0/92 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="flex items-center gap-2.5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-5 px-4 py-3">
+          <Link to="/" className="flex shrink-0 items-center gap-2.5">
             <span
               aria-hidden="true"
               className="grid size-7 place-items-center rounded bg-volt text-[0.8rem] font-bold text-surface-0"
@@ -145,37 +64,33 @@ export function Layout({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-4 md:flex">
             <NavLink
-              to="/"
+              to={HOME.to}
               end
               className={({ isActive }) =>
-                `rounded px-3 py-1.5 text-[0.8rem] font-medium transition-colors ${
+                `shrink-0 rounded px-2.5 py-1.5 text-[0.8rem] font-medium transition-colors ${
                   isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary hover:text-ink-primary'
                 }`
               }
             >
-              Find data
+              {HOME.label}
             </NavLink>
 
-            <Menu
-              label="Learn"
-              items={LEARN}
-              open={learnOpen}
-              setOpen={(value) => { setLearnOpen(value); if (value) setDevOpen(false); }}
-              active={isLearn}
-              menuRef={learnRef}
-            />
+            <DepthRail />
 
-            <Menu
-              label="Developers"
-              items={DEVELOPERS}
-              open={devOpen}
-              setOpen={(value) => { setDevOpen(value); if (value) setLearnOpen(false); }}
-              active={isDeveloper}
-              menuRef={devRef}
-            />
-          </nav>
+            <button
+              type="button"
+              onClick={() => setPaletteOpen(true)}
+              className="flex shrink-0 items-center gap-1.5 rounded border border-hairline px-2.5 py-1.5 text-[0.72rem] text-ink-muted transition-colors hover:border-volt/50 hover:text-ink-secondary"
+            >
+              <span aria-hidden="true">Search</span>
+              <kbd className="rounded bg-surface-2 px-1 py-px text-[0.66rem] text-ink-secondary">
+                {paletteHint()}
+              </kbd>
+              <span className="sr-only">Open the section search</span>
+            </button>
+          </div>
 
           <button
             type="button"
@@ -189,9 +104,13 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
 
         {menuOpen && (
-          <nav id="mobile-nav" aria-label="Main" className="border-t border-hairline px-4 py-3 md:hidden">
+          <nav
+            id="mobile-nav"
+            aria-label="All sections"
+            className="max-h-[70vh] overflow-y-auto border-t border-hairline px-4 py-3 md:hidden"
+          >
             <NavLink
-              to="/"
+              to={HOME.to}
               end
               className={({ isActive }) =>
                 `block rounded px-2 py-2 text-[0.88rem] font-medium ${
@@ -199,114 +118,95 @@ export function Layout({ children }: { children: ReactNode }) {
                 }`
               }
             >
-              Find data
+              {HOME.label}
             </NavLink>
-            <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
-              Learn
-            </p>
-            {LEARN.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `block rounded px-2 py-2 text-[0.85rem] ${
-                    isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-            <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
-              For developers
-            </p>
-            {DEVELOPERS.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `block rounded px-2 py-2 text-[0.85rem] ${
-                    isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
+
+            {/* Same order as the rail, so the two teach the same shape. */}
+            {DESTINATIONS.map((destination, index) => (
+              <div key={destination.to}>
+                {index === 0 && <MenuHeading>Practical</MenuHeading>}
+                {index === FIRST_TECHNICAL && <MenuHeading>Below here, a terminal helps</MenuHeading>}
+                <NavLink
+                  to={destination.to}
+                  className={({ isActive }) =>
+                    `flex items-baseline justify-between gap-3 rounded px-2 py-2 ${
+                      isActive ? 'bg-surface-2' : ''
+                    }`
+                  }
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[0.85rem] text-ink-primary">{destination.label}</span>
+                    <span className="block text-[0.72rem] text-ink-muted">{destination.hint}</span>
+                  </span>
+                  <span className="shrink-0 text-[0.68rem] text-ink-muted">{destination.time}</span>
+                </NavLink>
+              </div>
             ))}
           </nav>
         )}
       </header>
+
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
 
       <main id="main" className="mx-auto max-w-6xl px-4 pb-10 pt-7">
         {children}
       </main>
 
       <footer className="mt-16 border-t border-hairline">
-        <div className="mx-auto max-w-6xl space-y-3 px-4 py-8 text-[0.75rem] leading-relaxed text-ink-muted">
-          <p>
-            A{' '}
-            <a
-              href="https://nerd-factory.github.io/nerd-lab/"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              Nerd Lab
-            </a>{' '}
-            product — unnecessarily clever, occasionally useful. An independent guide to the{' '}
-            <a
-              href="https://data.un.org"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              UN System Data Commons
-            </a>
-            , built and maintained by Mafizul Islam. Not an official United Nations
-            publication, and not endorsed by the United Nations or by Google.
-          </p>
-          <p>
-            All figures are retrieved from data.un.org at the moment you load the page, or
-            from the snapshot committed in this repository when the platform cannot be
-            reached — every chart says which. Each statistic carries its own source
-            attribution and terms of use, which travel with the data, not with this site.
-          </p>
-          <p className="flex flex-wrap gap-x-4 gap-y-1">
-            <a
-              href="https://github.com/MafiAtUN/un-data-commons-field-guide"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              Source on GitHub
-            </a>
-            <a
-              href="https://github.com/nerd-factory"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              More from Nerd Lab
-            </a>
-            <a
-              href="https://data.un.org/undatacommons/docs/getting-started"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              Official getting-started guide
-            </a>
-            <a
-              href="https://data.un.org/undatacommons/terms-of-use"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
-            >
-              Platform terms of use
-            </a>
-          </p>
+        <div className="mx-auto max-w-6xl space-y-5 px-4 py-8">
+          <div className="space-y-3 text-[0.75rem] leading-relaxed text-ink-muted">
+            <p>
+              A{' '}
+              <FooterLink href="https://nerd-factory.github.io/nerd-lab/">Nerd Lab</FooterLink>{' '}
+              product — unnecessarily clever, occasionally useful. An independent guide to the{' '}
+              <FooterLink href="https://data.un.org">UN System Data Commons</FooterLink>. Not an
+              official United Nations publication, and not endorsed by the United Nations or by
+              Google.
+            </p>
+            <p>
+              All figures are retrieved from data.un.org at the moment you load the page, or
+              from the snapshot committed in this repository when the platform cannot be
+              reached — every chart says which. Each statistic carries its own source
+              attribution and terms of use, which travel with the data, not with this site.
+            </p>
+            <p className="flex flex-wrap gap-x-4 gap-y-1">
+              <FooterLink href="https://github.com/MafiAtUN/un-data-commons-field-guide">
+                Source on GitHub
+              </FooterLink>
+              <FooterLink href="https://github.com/nerd-factory">More from Nerd Lab</FooterLink>
+              <FooterLink href="https://data.un.org/undatacommons/docs/getting-started">
+                Official getting-started guide
+              </FooterLink>
+              <FooterLink href="https://data.un.org/undatacommons/terms-of-use">
+                Platform terms of use
+              </FooterLink>
+            </p>
+          </div>
+
+          <SiteCredit />
         </div>
       </footer>
     </div>
+  );
+}
+
+function MenuHeading({ children }: { children: ReactNode }) {
+  return (
+    <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
+      {children}
+    </p>
+  );
+}
+
+function FooterLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
+    >
+      {children}
+    </a>
   );
 }
