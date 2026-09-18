@@ -7,12 +7,14 @@ A practical field guide and live query lab for the **[UN System Data Commons](ht
 the platform launched on 17 September 2026 that unifies public statistics from 26 UN
 System entities into a single knowledge graph.
 
-**The front page is the tool.** Pick a topic and some countries; you get the figure, a
-chart, a spreadsheet and a citation in about fifteen seconds, with no reading first.
-Explanations sit below it or behind the question a reader would actually ask.
+**The front page is a door, not a tool.** It fetches nothing. Its job is to get a
+reporting officer onto data.un.org already knowing how to ask — what the platform is, the
+one way its search box will mislead them, and the three public surfaces they can walk
+through. The Data Finder still exists, on its own page, for when a figure is wanted
+without leaving.
 
-Everything else is depth: a **learn track** for reporting officers who want to get good at
-this, and a **developer track** covering the search resolver, the REST API and MCP.
+Everything else is depth: a **practical track** for reporting officers who want to get good
+at this, and a **developer track** covering the search resolver, the REST API and MCP.
 
 **→ [mafiatun.github.io/un-data-commons-field-guide](https://mafiatun.github.io/un-data-commons-field-guide/)**
 
@@ -25,35 +27,43 @@ actually needed. This site is that guide.
 
 ## What's in it
 
-### Find data — the front page
+### The front page
 
-The Data Finder is the homepage. Three choices and you leave with a chart, a CSV carrying
-its own provenance, a citation in four styles, and a prompt that hands the real table to an
-AI assistant. No identifiers required, no reading required.
+A door. Four moves, in the order of a decision: what this platform is, the one way it will
+mislead you, the three ways in, and then everything else. It makes no network requests —
+`tests/landing.test.tsx` fails the build if an import ever reintroduces one — and its
+primary action goes out to data.un.org rather than inward.
 
-Above it, a six-second demonstration rather than an argument: the resolver being asked
-about `violence` and quietly answering with United States figures. It plays in a
-fixed-height stage so nothing below it reflows, the Data Finder underneath is live
-throughout, and it cuts to its last frame on the first key, click, scroll or touch — and
-immediately under `prefers-reduced-motion`. Nothing in it is fabricated: the query, the
-returned chart title and the resolved place are what the endpoint actually returns.
+The one piece of motion is a re-enactment of the trap below, cut from the live resolver's
+actual responses. It waits to be scrolled to rather than playing to an empty room, sits in
+a fixed-height stage so nothing reflows, and cuts to its last frame on the first key,
+click or touch — and never starts under `prefers-reduced-motion`.
+
+### Find data — the Data Finder
+
+On [`/toolkit`](src/routes/Toolkit.tsx). Three choices and you leave with a chart, a CSV
+carrying its own provenance, a citation in four styles, and a prompt that hands the real
+table to an AI assistant. No identifiers required, no reading required.
 
 ### The navigation
 
-One axis, not two menus. All twelve destinations sit on a rail ordered by how much the
-reader already knows, from *never used UN data* to *wiring an AI agent*, with the current
-page lit; the front page repeats the same list full size as the guide's table of contents.
-`⌘K` opens a palette for anyone who already knows where they are going, and its last row
-always offers to run whatever you typed against data.un.org itself, because this site
-curates twenty indicators and the platform holds about eighty-five thousand.
+One full-screen index, set in display type: twelve numbered chapters grouped by track,
+each carrying what it is for and how long it takes. It opens from a labelled button in the
+header and from ⌘K, typing filters it, and the last row always offers the query to
+data.un.org itself — this guide has twelve pages and the platform has about 85,000
+indicators, so the honest answer is often "not here, out there".
+
+It is full-screen at every width, so the small-screen and large-screen navigation are the
+same object. Two earlier attempts are worth recording as failures: two dropdowns, which
+say what exists but not where you are; and a rail of three-pixel ticks, which was
+information-dense, elegant, and invisible.
 
 The manifest lives in [`src/content/navigation.ts`](src/content/navigation.ts) and feeds
-the rail, the palette, the mobile menu and the contents list at once, so a new page is
-added in one place — and `tests/routes.test.ts` fails if a built route is missing from it.
+the overlay, the front page's chapter index and the header breadcrumb at once, so a new
+page is added in one place — and `tests/routes.test.ts` fails if a built route is missing
+from it.
 
-No animation library: the motion is CSS transitions, one `@property`-registered custom
-property for the rail's magnetism, and `IntersectionObserver` for the scroll reveals. The
-whole landing page adds under 1 kB gzipped to the bundle.
+No animation library anywhere: CSS transitions and `IntersectionObserver`, nothing else.
 
 ### Learn — no technical background assumed
 
@@ -78,19 +88,29 @@ whole landing page adds under 1 kB gzipped to the bundle.
 
 ## The finding that started it
 
-Ask the platform's resolver the single word `violence` and it answers with charts titled
-"Number of Victims of Intentional Homicide". They look like global figures. They are
-United States figures — the resolver needs a place, found none in the question, and
-supplied one.
+The resolver always commits to a place. If your question does not contain one it
+recognises, it supplies one silently — and it does not distinguish between "you gave me no
+place" and "you gave me a place I do not know".
+
+The second case is the dangerous one. Verified against the live deployment on
+18 September 2026:
 
 ```
-POST /api/explore/detect-and-fulfill?q=violence
-→ place: country/USA          ← nothing in the query said so
+POST /api/explore/detect-and-fulfill?q=child mortality in Bengal
+→ place: country/USA          ← you named a place; it was discarded
+
+POST /api/explore/detect-and-fulfill?q=child mortality in Bangladesh
+→ place: country/BGD          ← ask exactly and it is exact
 ```
 
-Screenshot that into a brief and the error is yours, and invisible. The Prompt Lab exists
-to make that decision visible; [`tests/resolution.test.ts`](tests/resolution.test.ts)
-pins the behaviour against a recorded response.
+Both return charts titled "Total Child Mortality, by Age". Nothing on the first one says
+it is about the United States. Screenshot it into a brief and the error is yours, and
+invisible.
+
+The front page re-enacts this, and the Prompt Lab makes both hidden decisions visible on
+any query you like. [`tests/resolution.test.ts`](tests/resolution.test.ts) pins the
+behaviour against a recorded response — the bare word `violence`, which resolves to
+`country/USA` the same way.
 
 ## The three ways in
 
@@ -251,12 +271,12 @@ src/
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
-tests/                 120 tests, no network
+tests/                 122 tests, no network
 ```
 
 ## Tests
 
-120 tests, no network access, run against the committed payloads.
+122 tests, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping
@@ -266,7 +286,7 @@ tests/resolution.test.ts  the resolver's inferred-place behaviour
 tests/snapshots.test.ts   the script ↔ app key contract, checked across runtimes
 tests/routes.test.ts      router ↔ navigation ↔ build manifest agree
 tests/navigation.test.ts  the depth axis: contiguous tracks, findable by the obvious word
-tests/landing.test.tsx    the front page rendered — see below
+tests/landing.test.tsx    the front page rendered, and that it fetches nothing
 tests/content.test.ts     every curated indicator and preset country actually exists
 tests/export.test.ts      CSV quoting and provenance; citations name the agency first
 ```

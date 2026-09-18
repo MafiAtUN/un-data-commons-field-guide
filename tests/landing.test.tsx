@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { Layout } from '../src/components/Layout';
@@ -9,15 +10,14 @@ import { AUTHOR } from '../src/components/SiteCredit';
 /**
  * The landing page, rendered.
  *
- * Every other suite here reasons about source text. This one actually mounts
- * the components, because the front page now has moving parts whose whole point
- * is what they look like at rest — and "at rest" includes the first frame, which
- * is what a reader on a slow connection, a crawler, and a screen reader all get.
+ * Every other suite here reasons about source text. This one mounts components,
+ * because the front page has moving parts whose whole point is what they look
+ * like at rest — and "at rest" includes the first frame, which is what a reader
+ * on a slow connection, a crawler and a screen reader all get.
  *
- * Effects do not run in a server render, so this sees precisely that first
- * frame: before the film has played a beat, before IntersectionObserver has
- * revealed anything, and before any data has arrived. Nothing important is
- * allowed to be missing from it.
+ * Effects do not run in a server render, so this sees precisely that frame:
+ * before the film has played a beat and before anything has scrolled into view.
+ * Nothing important is allowed to be missing from it.
  */
 function render(children: React.ReactNode, at = '/'): string {
   return renderToStaticMarkup(
@@ -30,39 +30,34 @@ function asRendered(text: string): string {
   return text.replace(/&/g, '&amp;');
 }
 
-describe('the front page at its first frame', () => {
+describe('the front page is a door, not a tool', () => {
   const html = render(<Home />);
+  const source = readFileSync(new URL('../src/routes/Home.tsx', import.meta.url), 'utf8');
 
-  it('renders the tool, not a splash screen', () => {
-    // The animation must never be standing between the reader and the picker.
-    expect(html).toContain('What do you want to know?');
-    expect(html).toContain('Which countries?');
-    expect(html).toContain('How far back?');
+  it('fetches nothing', () => {
+    // The guide's job is to get people onto data.un.org, not to be a second
+    // copy of it. The front page is the one page that must never wait on the
+    // network, so the dependency is banned rather than merely discouraged.
+    expect(source).not.toMatch(/from '.*undc\/client'/);
+    expect(source).not.toMatch(/useSourcedData/);
+    expect(source).not.toMatch(/DataFinder/);
   });
 
-  it('states the resolver finding in text, before the film has played a beat', () => {
-    // A crawler and a screen reader both get this render. The point of the
-    // animation has to survive in the markup without it.
-    expect(html).toContain('Number of Victims of Intentional Homicide');
-    expect(html).toMatch(/found none in the question, and supplied/);
+  it('does not put the Data Finder on the front page', () => {
+    expect(html).not.toContain('What do you want to know?');
+    expect(html).not.toContain('Which countries?');
   });
 
-  it('starts the film with an empty search box', () => {
-    // If a beat had already been baked in, the typing would start mid-word.
-    expect(html).not.toContain('>violence<');
+  it('offers the platform itself as the primary action', () => {
+    expect(html).toContain('href="https://data.un.org"');
+    expect(html).toContain('Open data.un.org');
   });
 
-  it('hides the animated stage, and puts a real link in the text that replaces it', () => {
-    // The stage is aria-hidden and its own link is taken out of the tab order,
-    // so the static summary has to carry a working route to the Prompt Lab or
-    // that destination is unreachable for anyone not looking at the animation.
-    expect(html).toContain('aria-hidden="true"');
-
-    const summary = html.slice(html.indexOf('found none in the question'));
-    expect(summary).toContain('href="/lab"');
+  it('still routes a reader who only wants a figure today', () => {
+    expect(html).toContain('href="/toolkit"');
   });
 
-  it('lists every destination in the guide contents', () => {
+  it('lists every chapter with its own link', () => {
     for (const destination of DESTINATIONS) {
       expect(html, destination.label).toContain(asRendered(destination.label));
       expect(html, destination.label).toContain(`href="${destination.to}"`);
@@ -70,57 +65,54 @@ describe('the front page at its first frame', () => {
   });
 });
 
-describe('the depth rail', () => {
-  it('renders one tick per destination, in manifest order', () => {
-    const html = render(<Layout><p /></Layout>);
-    const rail = html.slice(
-      html.indexOf('aria-describedby="rail-help"'),
-      html.indexOf('</ul>'),
-    );
+describe('the resolver film', () => {
+  const html = render(<Home />);
 
-    const order = [...rail.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
-    expect(order).toEqual(DESTINATIONS.map((destination) => destination.to));
+  it('states the finding in text before a single beat has played', () => {
+    // A crawler and a screen reader both get this render, so the point of the
+    // animation has to survive in the markup without the animation.
+    expect(html).toContain('child mortality in Bengal');
+    expect(html).toContain('Total Child Mortality, by Age');
+    expect(html).toMatch(/substituted country\/USA/);
+    expect(html).toContain('child mortality in Bangladesh');
+    expect(html).toMatch(/resolves correctly to\s+country\/BGD/);
   });
 
-  it('exposes exactly one tab stop, as the roving-tabindex pattern requires', () => {
-    const html = render(<Layout><p /></Layout>);
-    const rail = html.slice(
-      html.indexOf('aria-describedby="rail-help"'),
-      html.indexOf('</ul>'),
-    );
-
-    expect([...rail.matchAll(/tabindex="0"/g)]).toHaveLength(1);
-    expect([...rail.matchAll(/tabindex="-1"/g)]).toHaveLength(DESTINATIONS.length - 1);
+  it('starts with an empty search box', () => {
+    // The query is typed a letter at a time; if a beat had been baked into the
+    // initial state it would start mid-word.
+    const stage = html.slice(html.indexOf('You typed'));
+    expect(stage.slice(0, 600)).not.toContain('child mortality in Bengal');
   });
 
-  it('puts the tab stop and the current-page marker on the page you are on', () => {
-    const target = DESTINATIONS[7]!;
-    const html = render(<Layout><p /></Layout>, target.to);
-    const rail = html.slice(
-      html.indexOf('aria-describedby="rail-help"'),
-      html.indexOf('</ul>'),
-    );
-
-    const current = rail.match(/<a[^>]*aria-current="page"[^>]*>/);
-    expect(current?.[0]).toContain(`href="${target.to}"`);
-    expect(current?.[0]).toContain('tabindex="0"');
-  });
-
-  it('describes each tick for a reader who cannot see the rail', () => {
-    const html = render(<Layout><p /></Layout>);
-    for (const destination of DESTINATIONS) {
-      expect(html, destination.label).toContain(
-        asRendered(`${destination.label} — ${destination.hint} (${destination.time})`),
-      );
-    }
+  it('hides the animated stage, and puts a real link in the text that replaces it', () => {
+    expect(html).toContain('aria-hidden="true"');
+    const summary = html.slice(html.indexOf('did not recognise Bengal'));
+    expect(summary).toContain('href="/lab"');
   });
 });
 
 describe('chrome', () => {
   const html = render(<Layout><p /></Layout>);
 
-  it('keeps the command palette out of the document until it is opened', () => {
+  it('puts an unmissable index trigger in the header, not a subtle one', () => {
+    // The rail this replaced was three-pixel ticks. Whatever the trigger looks
+    // like in future, it has to be a real labelled control.
+    expect(html).toMatch(/<button[^>]*aria-haspopup="dialog"[^>]*>/);
+    expect(html).toContain('Index');
+  });
+
+  it('keeps the platform one click away from every page', () => {
+    expect(html).toContain('href="https://data.un.org"');
+  });
+
+  it('keeps the index out of the document until it is opened', () => {
     expect(html).not.toContain('role="dialog"');
+  });
+
+  it('names the current chapter in the header on an inner page', () => {
+    const target = DESTINATIONS[7]!;
+    expect(render(<Layout><p /></Layout>, target.to)).toContain(asRendered(target.label));
   });
 
   it('credits the author with both profiles, safely targeted', () => {

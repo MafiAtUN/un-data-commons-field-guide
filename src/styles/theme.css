@@ -193,34 +193,3 @@ h1, h2, h3, .wordmark {
   [data-reveal] { opacity: 1; transform: none; }
   [data-draw] { stroke-dashoffset: 0; }
 }
-
-/**
- * The depth rail.
- *
- * `--mag` is how close the pointer is to a given tick, 0 to 1, written by a
- * pointermove handler. Declaring it with `@property` gives it a type, so the
- * browser interpolates it on the way back to rest instead of snapping — the
- * difference between a rail that feels magnetic and one that feels twitchy.
- */
-@property --mag {
-  syntax: '<number>';
-  inherits: false;
-  initial-value: 0;
-}
-
-.rail-tick {
-  --mag: 0;
-  transform: scaleY(calc(1 + var(--mag) * 1.25));
-  transform-origin: center;
-  transition: background-color 0.2s ease-out;
-}
-
-/*
- * While the pointer is on the rail, `--mag` is written every frame and must not
- * be transitioned, or each write restarts an easing curve and the ticks lag
- * behind the cursor. The transition is switched on only for the way back to
- * rest, which is where the ease actually reads as physics.
- */
-.rail-rest .rail-tick {
-  transition: --mag 0.32s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease-out;
-}

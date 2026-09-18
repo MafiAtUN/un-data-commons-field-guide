@@ -1,42 +1,35 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { DESTINATIONS, FIRST_TECHNICAL, HOME } from '../content/navigation';
+import { Link, useLocation } from 'react-router-dom';
+import { DESTINATIONS } from '../content/navigation';
 import { paletteHint, usePaletteHotkey } from '../lib/palette';
-import { CommandPalette } from './nav/CommandPalette';
-import { DepthRail } from './nav/DepthRail';
+import { SITE_ROOT } from '../lib/undc/config';
+import { IndexOverlay } from './nav/IndexOverlay';
 import { SiteCredit } from './SiteCredit';
 
 /**
- * Chrome: a logo, one axis, and a keystroke.
+ * Chrome: a wordmark, the way out, and the way in.
  *
- * Two earlier versions of this file. The first put thirteen destinations in
- * front of a reader who did not yet know which one was theirs. The second hid
- * twelve of them behind two dropdowns, which is not the same as solving it — a
- * dropdown can say what exists, but it cannot say where you are in a body of
- * material or what sensibly comes next.
+ * Only two controls sit in the header, and both are sized to be seen. The first
+ * is a link off this site entirely — the guide's whole purpose is to get people
+ * onto data.un.org, so the platform should never be more than one deliberate
+ * click away from any page. The second opens the index.
  *
- * So the destinations are ordered instead of hidden. The rail lays all twelve on
- * the single axis the site actually has, running from a reporting officer who
- * has never opened data.un.org to someone wiring an MCP endpoint into an agent,
- * and lights the one you are on. Readers who already know where they are going
- * press the key and skip the whole apparatus.
- *
- * The manifest itself lives in `src/content/navigation.ts`, shared by the rail,
- * the palette, the mobile menu and the front page's table of contents, so a new
- * page is added in exactly one place.
+ * There is no separate mobile menu. The index is full-screen at every width, so
+ * the small-screen navigation and the large-screen navigation are the same
+ * object, which is one fewer thing to keep in step.
  */
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [indexOpen, setIndexOpen] = useState(false);
 
-  usePaletteHotkey(useCallback(() => setPaletteOpen(true), []));
+  usePaletteHotkey(useCallback(() => setIndexOpen(true), []));
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    setMenuOpen(false);
-    setPaletteOpen(false);
+    setIndexOpen(false);
   }, [pathname]);
+
+  const here = DESTINATIONS.find((destination) => destination.to === pathname);
 
   return (
     <div className="min-h-screen">
@@ -48,126 +41,77 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
 
       <header className="sticky top-0 z-30 border-b border-hairline bg-surface-0/92 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-5 px-4 py-3">
-          <Link to="/" className="flex shrink-0 items-center gap-2.5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+          <Link to="/" className="flex min-w-0 shrink items-center gap-2.5">
             <span
               aria-hidden="true"
-              className="grid size-7 place-items-center rounded bg-volt text-[0.8rem] font-bold text-surface-0"
+              className="grid size-7 shrink-0 place-items-center rounded bg-volt text-[0.8rem] font-bold text-surface-0"
             >
               N
             </span>
-            <span className="wordmark text-[0.88rem] font-semibold leading-tight text-ink-primary">
-              UN Data Commons
-              <span className="block font-sans text-[0.7rem] font-normal text-ink-muted">
-                Field Guide · a Nerd Lab product
+            <span className="wordmark min-w-0 text-[0.88rem] font-semibold leading-tight text-ink-primary">
+              <span className="block truncate">UN Data Commons</span>
+              <span className="block truncate font-sans text-[0.7rem] font-normal text-ink-muted">
+                {/* On an inner page the header doubles as a breadcrumb. */}
+                {here ? here.label : 'Field Guide · a Nerd Lab product'}
               </span>
             </span>
           </Link>
 
-          <div className="hidden items-center gap-4 md:flex">
-            <NavLink
-              to={HOME.to}
-              end
-              className={({ isActive }) =>
-                `shrink-0 rounded px-2.5 py-1.5 text-[0.8rem] font-medium transition-colors ${
-                  isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary hover:text-ink-primary'
-                }`
-              }
+          <div className="flex shrink-0 items-center gap-2">
+            <a
+              href={SITE_ROOT}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="hidden rounded-lg border border-hairline px-3.5 py-2 text-[0.78rem] font-medium text-ink-secondary transition-colors hover:border-volt/60 hover:text-ink-primary sm:block"
             >
-              {HOME.label}
-            </NavLink>
-
-            <DepthRail />
+              data.un.org ↗
+            </a>
 
             <button
               type="button"
-              onClick={() => setPaletteOpen(true)}
-              className="flex shrink-0 items-center gap-1.5 rounded border border-hairline px-2.5 py-1.5 text-[0.72rem] text-ink-muted transition-colors hover:border-volt/50 hover:text-ink-secondary"
+              onClick={() => setIndexOpen(true)}
+              aria-haspopup="dialog"
+              aria-expanded={indexOpen}
+              className="flex items-center gap-2.5 rounded-lg border border-volt/55 bg-volt/10 px-3.5 py-2 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-volt/20"
             >
-              <span aria-hidden="true">Search</span>
-              <kbd className="rounded bg-surface-2 px-1 py-px text-[0.66rem] text-ink-secondary">
+              <span aria-hidden="true" className="flex flex-col gap-[3px]">
+                <span className="block h-px w-4 bg-volt" />
+                <span className="block h-px w-4 bg-volt" />
+                <span className="block h-px w-4 bg-volt" />
+              </span>
+              Index
+              <kbd className="hidden text-[0.66rem] font-normal text-ink-muted sm:block">
                 {paletteHint()}
               </kbd>
-              <span className="sr-only">Open the section search</span>
             </button>
           </div>
-
-          <button
-            type="button"
-            className="rounded border border-hairline px-2.5 py-1.5 text-[0.75rem] text-ink-secondary md:hidden"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-nav"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? 'Close' : 'Menu'}
-          </button>
         </div>
-
-        {menuOpen && (
-          <nav
-            id="mobile-nav"
-            aria-label="All sections"
-            className="max-h-[70vh] overflow-y-auto border-t border-hairline px-4 py-3 md:hidden"
-          >
-            <NavLink
-              to={HOME.to}
-              end
-              className={({ isActive }) =>
-                `block rounded px-2 py-2 text-[0.88rem] font-medium ${
-                  isActive ? 'bg-surface-2 text-ink-primary' : 'text-ink-secondary'
-                }`
-              }
-            >
-              {HOME.label}
-            </NavLink>
-
-            {/* Same order as the rail, so the two teach the same shape. */}
-            {DESTINATIONS.map((destination, index) => (
-              <div key={destination.to}>
-                {index === 0 && <MenuHeading>Practical</MenuHeading>}
-                {index === FIRST_TECHNICAL && <MenuHeading>Below here, a terminal helps</MenuHeading>}
-                <NavLink
-                  to={destination.to}
-                  className={({ isActive }) =>
-                    `flex items-baseline justify-between gap-3 rounded px-2 py-2 ${
-                      isActive ? 'bg-surface-2' : ''
-                    }`
-                  }
-                >
-                  <span className="min-w-0">
-                    <span className="block text-[0.85rem] text-ink-primary">{destination.label}</span>
-                    <span className="block text-[0.72rem] text-ink-muted">{destination.hint}</span>
-                  </span>
-                  <span className="shrink-0 text-[0.68rem] text-ink-muted">{destination.time}</span>
-                </NavLink>
-              </div>
-            ))}
-          </nav>
-        )}
       </header>
 
-      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <IndexOverlay open={indexOpen} onClose={() => setIndexOpen(false)} />
 
-      <main id="main" className="mx-auto max-w-6xl px-4 pb-10 pt-7">
+      <main id="main" className="mx-auto max-w-6xl px-4 pb-16 pt-8">
         {children}
       </main>
 
-      <footer className="mt-16 border-t border-hairline">
-        <div className="mx-auto max-w-6xl space-y-5 px-4 py-8">
+      <footer className="mt-24 border-t border-hairline">
+        <div className="mx-auto max-w-6xl space-y-5 px-4 py-10">
           <div className="space-y-3 text-[0.75rem] leading-relaxed text-ink-muted">
             <p>
               A{' '}
               <FooterLink href="https://nerd-factory.github.io/nerd-lab/">Nerd Lab</FooterLink>{' '}
               product — unnecessarily clever, occasionally useful. An independent guide to the{' '}
-              <FooterLink href="https://data.un.org">UN System Data Commons</FooterLink>. Not an
-              official United Nations publication, and not endorsed by the United Nations or by
-              Google.
+              <FooterLink href={SITE_ROOT}>UN System Data Commons</FooterLink>. Not an
+              official United Nations publication, and not endorsed by the United Nations or
+              by Google.
             </p>
             <p>
-              All figures are retrieved from data.un.org at the moment you load the page, or
-              from the snapshot committed in this repository when the platform cannot be
-              reached — every chart says which. Each statistic carries its own source
-              attribution and terms of use, which travel with the data, not with this site.
+              Figures on the pages that show them are retrieved from data.un.org as you load
+              them, or from the snapshot committed in this repository when the platform
+              cannot be reached — every chart says which. Each statistic carries its own
+              source attribution and terms of use, which travel with the data, not with this
+              site.
             </p>
             <p className="flex flex-wrap gap-x-4 gap-y-1">
               <FooterLink href="https://github.com/MafiAtUN/un-data-commons-field-guide">
@@ -187,14 +131,6 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </footer>
     </div>
-  );
-}
-
-function MenuHeading({ children }: { children: ReactNode }) {
-  return (
-    <p className="mt-3 border-t border-hairline px-2 pb-1 pt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-ink-muted">
-      {children}
-    </p>
   );
 }
 

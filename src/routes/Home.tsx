@@ -1,243 +1,182 @@
 import { Link } from 'react-router-dom';
-import { DataFinder } from '../components/DataFinder';
-import { Expander } from '../components/Expander';
 import { Reveal } from '../components/Reveal';
-import { AgencyRing } from '../components/home/AgencyRing';
-import { DepthLadder } from '../components/home/DepthLadder';
+import { ChapterIndex } from '../components/home/ChapterIndex';
+import { IndexWall } from '../components/home/IndexWall';
 import { ResolverFilm } from '../components/home/ResolverFilm';
-import { searchUrl } from '../lib/undc/config';
+import { WaysIn } from '../components/home/WaysIn';
+import { SITE_ROOT } from '../lib/undc/config';
 
 /**
- * The front page is the tool, with one argument in front of it.
+ * The front page is a door, not a tool.
  *
- * The version before this opened with 913 words before a reporting officer could
- * do anything, and the fix was to delete all of them. That was right, and this
- * page keeps it: everything explanatory still sits below the Data Finder or
- * behind a question a reader would actually ask.
+ * It used to be the Data Finder. That was a reasonable answer to the wrong
+ * question: this site's job is to get a reporting officer onto data.un.org
+ * knowing how to ask, not to become a thin second copy of the platform. The
+ * Data Finder still exists, on its own page, for when a figure is wanted
+ * without leaving; the front page now argues and hands off, and it fetches
+ * nothing at all.
  *
- * What comes back above the tool is not an argument but a demonstration — six
- * seconds of the resolver quietly answering a question about "violence" with
- * United States figures. It earns its space three ways: it is the one thing a
- * reader must understand before trusting anything they export, it is the site's
- * only real claim to exist, and it costs nothing, because it stops dead the
- * moment anyone touches the keyboard and the tool beneath it is live throughout.
+ * The order is the order of a decision: what this is → the one way it will
+ * mislead you → the three doors in → everything else.
  */
 export function Home() {
   return (
     <>
-      <section className="grid items-center gap-6 lg:grid-cols-[1fr_minmax(0,27rem)]">
-        <div className="max-w-xl">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-volt">
-            Official UN statistics · free · no login
+      {/* ---------- Hero ---------- */}
+      <section className="grid items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+        <div>
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-volt">
+            Independent field guide · data.un.org
           </p>
-          <h1 className="mt-2 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-ink-primary sm:text-4xl">
-            What number do you need?
+
+          <h1 className="mt-4 text-balance text-[2.35rem] font-semibold leading-[0.98] tracking-tight text-ink-primary sm:text-[3.2rem] lg:text-[3.75rem]">
+            The UN opened its statistics.
+            <span className="block text-ink-muted">Asking well is the hard part.</span>
           </h1>
-          <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-secondary">
-            Pick a topic and some countries. Get the figure, a chart, a spreadsheet and a
-            citation — in about fifteen seconds.
+
+          <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-secondary">
+            Twenty-six UN System entities put their official statistics into a single
+            knowledge graph: free, no login, no licence to negotiate. What it does not come
+            with is a guide to asking it a precise question. That is this.
           </p>
-          <p className="mt-3 text-[0.85rem] leading-relaxed text-ink-muted">
-            One thing to know before you trust anything you export: the platform's search box
-            will answer a question you did not ask rather than admit it cannot answer the
-            one you did. Watch it happen.
-          </p>
-        </div>
 
-        <ResolverFilm />
-      </section>
-
-      <div className="mt-6">
-        <DataFinder showIntro={false} />
-      </div>
-
-      <section className="mt-10">
-        <h2 className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-ink-muted">
-          Common questions
-        </h2>
-        <div className="mt-3 space-y-2">
-          <Expander question="I've never used UN data before. What is this?" time="40 seconds">
-            <ul className="space-y-2">
-              <li>
-                The UN put official statistics from 26 of its agencies into one place:{' '}
-                <a
-                  href="https://data.un.org"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-volt underline decoration-volt/30 underline-offset-2"
-                >
-                  data.un.org
-                </a>
-                .
-              </li>
-              <li>It is free. No login, no request form, no licence to negotiate.</li>
-              <li>This site is an independent guide that makes it faster to use.</li>
-              <li>The tool above pulls live figures straight from the UN as you use it.</li>
-            </ul>
-          </Expander>
-
-          <Expander question="Can I trust these numbers in an official report?" time="30 seconds">
-            <ul className="space-y-2">
-              <li>
-                <strong className="text-ink-primary">Yes</strong> — they come from the UN agency
-                that produced them, not from this site.
-              </li>
-              <li>Every result names its source and the year. Always quote both.</li>
-              <li>The green badge means the figure arrived from the UN just now.</li>
-              <li>
-                Cite the <strong className="text-ink-primary">agency</strong>, not data.un.org.
-                The copy button above does this correctly.
-              </li>
-            </ul>
-          </Expander>
-
-          <Expander question="What if my country or topic isn't in the list?" time="30 seconds">
-            <ul className="space-y-2">
-              <li>The list above is 20 common indicators. The UN holds about 85,000.</li>
-              <li>
-                Search the platform directly in plain English — for example{' '}
-                <a
-                  href={searchUrl('under five mortality in Chad')}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-volt underline decoration-volt/30 underline-offset-2"
-                >
-                  “under five mortality in Chad” ↗
-                </a>
-              </li>
-              <li>
-                <strong className="text-ink-primary">Always name the country.</strong> Leave it
-                out and the platform picks one for you.
-              </li>
-            </ul>
-          </Expander>
-
-          <Expander question="A country is missing from my results. Why?" time="20 seconds">
-            <ul className="space-y-2">
-              <li>It means that country did not report this figure.</li>
-              <li>
-                <strong className="text-ink-primary">It does not mean zero.</strong>
-              </li>
-              <li>Say so in your report rather than leaving the country out silently.</li>
-            </ul>
-          </Expander>
-        </div>
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
-          Now that you have the data
-        </h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <Reveal delay={0}>
-            <NextCard
-              to="/visualise"
-              time="8 min"
-              title="Make a chart"
-              body="Free tools, and the five rules that keep a chart honest."
-            />
-          </Reveal>
-          <Reveal delay={70}>
-            <NextCard
-              to="/cite"
-              time="2 min"
-              title="Cite it properly"
-              body="Credit the agency, not the website. Copy it in four styles."
-            />
-          </Reveal>
-          <Reveal delay={140}>
-            <NextCard
-              to="/ai"
-              time="5 min"
-              title="Use AI on it"
-              body="Prompts that stop a chatbot inventing figures."
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="mt-16 rounded-lg border border-hairline bg-surface-1 p-6 sm:p-8">
-        <Reveal>
-          <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
-            What you are actually querying
-          </h2>
-          <p className="mt-1.5 max-w-2xl text-[0.88rem] leading-relaxed text-ink-secondary">
-            Twenty-six UN System entities published their statistics into a single knowledge
-            graph on 17 September 2026. One query language reaches all of it.
-          </p>
-        </Reveal>
-        <div className="mt-7">
-          <AgencyRing />
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <Reveal>
-          <h2 className="text-xl font-semibold tracking-tight text-ink-primary">
-            The whole guide, in order
-          </h2>
-          <p className="mt-1.5 text-[0.88rem] leading-relaxed text-ink-secondary">
-            Twelve pages on one axis, from never having opened data.un.org to pointing an AI
-            agent at it. Start anywhere; this is just the order things get harder in.
-          </p>
-        </Reveal>
-        <div className="mt-7">
-          <DepthLadder />
-        </div>
-      </section>
-
-      <section className="mt-14 rounded-lg border border-hairline bg-surface-1 p-5">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2 className="text-[0.95rem] font-semibold text-ink-primary">
-              Want to get good at this?
-            </h2>
-            <p className="mt-1 max-w-xl text-[0.85rem] leading-relaxed text-ink-secondary">
-              Six short walkthroughs: find a defensible figure, compare countries without
-              misleading anyone, build a chart, draft a report section with AI.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={SITE_ROOT}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="rounded-lg bg-volt px-5 py-3 text-[0.9rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
+            >
+              Open data.un.org ↗
+            </a>
             <Link
               to="/start"
-              className="rounded border border-hairline px-4 py-2 text-[0.82rem] font-medium text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
+              className="rounded-lg border border-hairline px-5 py-3 text-[0.9rem] font-medium text-ink-secondary transition-colors hover:border-volt/60 hover:text-ink-primary"
             >
-              Read the basics
-            </Link>
-            <Link
-              to="/tutorials"
-              className="rounded bg-volt px-4 py-2 text-[0.82rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
-            >
-              Open the tutorials
+              Start with the basics
             </Link>
           </div>
+
+          <dl className="mt-10 grid max-w-xl grid-cols-2 gap-x-6 gap-y-5 border-t border-hairline pt-6 sm:grid-cols-4">
+            <Figure value="26" label="UN entities" />
+            <Figure value="16" label="Collections" />
+            <Figure value="~85k" label="Indicators" />
+            <Figure value="0" label="API keys" accent />
+          </dl>
+          <p className="mt-3 text-[0.68rem] text-ink-muted">
+            As published at launch, 17 September 2026. Counted live on the{' '}
+            <Link to="/catalogue" className="underline decoration-hairline underline-offset-2 hover:decoration-volt">
+              catalogue page
+            </Link>
+            .
+          </p>
         </div>
+
+        <IndexWall />
+      </section>
+
+      {/* ---------- The trap ---------- */}
+      <section className="mt-24">
+        <Reveal>
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+            Before you trust a chart
+          </p>
+          <h2 className="mt-3 max-w-3xl text-balance text-[1.7rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[2.2rem]">
+            The search box will answer a question you did not ask, and will not mention it.
+          </h2>
+          <p className="mt-3 max-w-2xl text-[0.92rem] leading-relaxed text-ink-secondary">
+            It always commits to a place. If it cannot find yours, it supplies one — and the
+            chart it draws over the top looks exactly like the chart you wanted.
+          </p>
+        </Reveal>
+
+        <div className="mt-8">
+          <ResolverFilm />
+        </div>
+      </section>
+
+      {/* ---------- Three ways in ---------- */}
+      <section className="mt-24">
+        <Reveal>
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+            Three ways in
+          </p>
+          <h2 className="mt-3 max-w-3xl text-balance text-[1.7rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[2.2rem]">
+            Type it, query it, or hand it to an agent.
+          </h2>
+          <p className="mt-3 max-w-2xl text-[0.92rem] leading-relaxed text-ink-secondary">
+            Every one of these is open to the public and none of them asks who you are.
+          </p>
+        </Reveal>
+
+        <div className="mt-8">
+          <WaysIn />
+        </div>
+      </section>
+
+      {/* ---------- The guide ---------- */}
+      <section className="mt-24">
+        <Reveal>
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+            The guide
+          </p>
+          <h2 className="mt-3 max-w-3xl text-balance text-[1.7rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[2.2rem]">
+            Twelve chapters, shortest first.
+          </h2>
+          <p className="mt-3 max-w-2xl text-[0.92rem] leading-relaxed text-ink-secondary">
+            Start anywhere. This is only the order things get harder in — and the same index
+            opens from the header on any page.
+          </p>
+        </Reveal>
+
+        <div className="mt-8">
+          <ChapterIndex />
+        </div>
+      </section>
+
+      {/* ---------- Closing ---------- */}
+      <section className="mt-24 rounded-xl border border-hairline bg-surface-1 p-8 sm:p-12">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <h2 className="text-balance text-[1.6rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[2rem]">
+                Just need a figure today?
+              </h2>
+              <p className="mt-2.5 text-[0.92rem] leading-relaxed text-ink-secondary">
+                The Data Finder pulls a chart, a spreadsheet and a correctly formatted
+                citation straight from the UN in about fifteen seconds — no identifiers, no
+                reading first.
+              </p>
+            </div>
+            <Link
+              to="/toolkit"
+              className="rounded-lg bg-volt px-5 py-3 text-[0.9rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
+            >
+              Open the Data Finder →
+            </Link>
+          </div>
+        </Reveal>
       </section>
     </>
   );
 }
 
-function NextCard({
-  to,
-  time,
-  title,
-  body,
-}: {
-  to: string;
-  time: string;
-  title: string;
-  body: string;
-}) {
+function Figure({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
   return (
-    <Link
-      to={to}
-      className="group block h-full rounded-lg border border-hairline bg-surface-1 p-4 transition-colors hover:border-volt/50"
-    >
-      <div className="flex items-baseline justify-between gap-2">
-        <h3 className="text-[0.92rem] font-semibold text-ink-primary">{title}</h3>
-        <span className="text-[0.7rem] text-ink-muted">{time}</span>
-      </div>
-      <p className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-secondary">{body}</p>
-    </Link>
+    <div>
+      <dt className="sr-only">{label}</dt>
+      <dd>
+        <span
+          className={`tnum block text-[1.7rem] font-semibold leading-none ${
+            accent ? 'text-volt' : 'text-ink-primary'
+          }`}
+        >
+          {value}
+        </span>
+        <span className="mt-1.5 block text-[0.72rem] uppercase tracking-[0.1em] text-ink-muted">
+          {label}
+        </span>
+      </dd>
+    </div>
   );
 }
