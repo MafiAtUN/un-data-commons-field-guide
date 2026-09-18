@@ -4,6 +4,8 @@ import { ChapterIndex } from '../components/home/ChapterIndex';
 import { IndexWall } from '../components/home/IndexWall';
 import { ResolverFilm } from '../components/home/ResolverFilm';
 import { WaysIn } from '../components/home/WaysIn';
+import { Timeline } from '../components/home/Timeline';
+import { timelineSpan } from '../content/timeline';
 import { SITE_ROOT } from '../lib/undc/config';
 
 /**
@@ -16,30 +18,41 @@ import { SITE_ROOT } from '../lib/undc/config';
  * without leaving; the front page now argues and hands off, and it fetches
  * nothing at all.
  *
- * The order is the order of a decision: what this is → the one way it will
- * mislead you → the three doors in → everything else.
+ * The order is the order of a decision: what this is → where it came from → the
+ * one way it will mislead you → the three doors in → everything else.
  */
 export function Home() {
+  const span = timelineSpan();
+
   return (
     <>
       {/* ---------- Hero ---------- */}
       <section className="grid items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <div>
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-volt">
-            Independent field guide · data.un.org
+            An unofficial guide to data.un.org
           </p>
 
+          {/* The portal is the subject and the headline should say so. An
+              earlier version led with the caveat, which reads as a warning
+              about the thing rather than an invitation to it. */}
           <h1 className="mt-4 text-balance text-[2.35rem] font-semibold leading-[0.98] tracking-tight text-ink-primary sm:text-[3.2rem] lg:text-[3.75rem]">
-            {/* The setup is recessed and the payoff carries the weight; the
-                other way round put the emphasis on the half nobody disputes. */}
-            <span className="block text-ink-muted">The UN opened its statistics.</span>
-            Asking well is the hard part.
+            <span className="block text-ink-muted">The UN opened its statistics</span>
+            to everyone, for free.
           </h1>
 
           <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-secondary">
-            Twenty-six UN System entities put their official statistics into a single
-            knowledge graph: free, no login, no licence to negotiate. What it does not come
-            with is a guide to asking it a precise question. That is this.
+            The <strong className="font-semibold text-ink-primary">UN System Data Commons</strong>{' '}
+            brings the official statistics of 26 UN entities into one searchable knowledge
+            graph. No login, no request form, no licence to negotiate — roughly 44 million
+            figures, open to anybody who wants one.
+          </p>
+
+          <p className="mt-3 max-w-xl text-[1rem] leading-relaxed text-ink-secondary">
+            It is genuinely good, and badly under-used. This is an{' '}
+            <strong className="font-semibold text-ink-primary">unofficial guide</strong> to
+            getting the most out of it: how to ask it a precise question, and the handful of
+            things worth knowing before you quote the answer.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -75,6 +88,26 @@ export function Home() {
         </div>
 
         <IndexWall />
+      </section>
+
+      {/* ---------- Where it came from ---------- */}
+      <section className="mt-24">
+        <Reveal>
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+            {span.years} years in the making
+          </p>
+          <h2 className="mt-3 max-w-3xl text-balance text-[1.7rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[2.2rem]">
+            How the UN ended up with a knowledge graph
+          </h2>
+          <p className="mt-3 max-w-2xl text-[0.92rem] leading-relaxed text-ink-secondary">
+            Two strands: what the UN decided, and what the technology it now runs on could
+            do. They converge in September 2026. Every date below links to its source.
+          </p>
+        </Reveal>
+
+        <div className="mt-9">
+          <Timeline />
+        </div>
       </section>
 
       {/* ---------- The trap ---------- */}
