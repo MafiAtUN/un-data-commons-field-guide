@@ -7,3 +7,6 @@ dist/
 !.env.example
 node_modules/.tmp/
 coverage/
+
+# Tooling artefacts that share this directory but are not part of the site.
+.deepeval/
