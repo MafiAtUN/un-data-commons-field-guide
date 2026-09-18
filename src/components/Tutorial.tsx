@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { VideoEmbed, type VideoSpec } from './VideoEmbed';
 
 export interface TutorialStep {
   /** What the reader does. One action. */
@@ -22,6 +23,13 @@ export interface TutorialSpec {
   steps: TutorialStep[];
   /** The one thing to remember afterwards. */
   lesson: ReactNode;
+  /**
+   * A recorded run of this same walkthrough. Optional, and deliberately so:
+   * the written steps are the canonical version, because they can be skimmed,
+   * searched and followed in a second tab. The video is for people who would
+   * rather watch it done once first.
+   */
+  video?: VideoSpec;
 }
 
 /**
@@ -60,6 +68,18 @@ export function Tutorial({ spec, defaultOpen = false }: { spec: TutorialSpec; de
           <p className="mb-4 text-[0.8rem] text-ink-muted">
             <span className="text-ink-secondary">For:</span> {spec.forWhom}
           </p>
+
+          {/* Above the steps, because its job is to show where they are going,
+              and nothing here renders until the walkthrough has been opened. */}
+          {spec.video && (
+            <div className="mb-5">
+              <VideoEmbed spec={spec.video} />
+              <p className="mt-2 text-[0.76rem] text-ink-muted">
+                Or skip it — the steps below are the same walkthrough, and they are the version you can follow along with.
+              </p>
+            </div>
+          )}
+
           <ol className="space-y-4">
             {spec.steps.map((step, index) => (
               <li key={step.do} className="flex gap-4">

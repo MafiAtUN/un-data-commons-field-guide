@@ -257,6 +257,25 @@ Enforced throughout:
 - **Caveats are computed, not written.** The ranking panel inspects the vintage spread of
   its own result and raises the mixed-year warning itself.
 
+### Video, without handing the reader to Google
+
+Walkthroughs can carry a recording. The player is not an embed until somebody
+asks for one: at rest a tutorial shows a still, a title, a runtime and a play
+button, and the `<iframe>` is mounted on the click. A stock YouTube embed ships
+well over a megabyte of third-party script and sets cookies before anyone has
+decided to watch, which would quietly undo what the front page is careful
+about. When it does load it points at `youtube-nocookie.com`, and there is no
+`preconnect` warm-up on hover, because hovering is not consent.
+`tests/video.test.tsx` fails the build if a player, or that domain, ever appears
+in the resting markup.
+
+Recordings are uploaded by hand and the eleven-character id pasted into
+`src/content/tutorials.ts`. That is not laziness about automation: videos
+uploaded through an unaudited YouTube Data API project are
+[forced to private on arrival](https://developers.google.com/youtube/v3/revision_history),
+so the API would buy a locked video and a quota ceiling of about six uploads a
+day in exchange for an OAuth client to maintain.
+
 ### Layout
 
 ```
@@ -271,12 +290,12 @@ src/
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
-tests/                 122 tests, no network
+tests/                 131 tests, no network
 ```
 
 ## Tests
 
-122 tests, no network access, run against the committed payloads.
+131 tests, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping

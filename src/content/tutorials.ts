@@ -7,6 +7,17 @@ import { searchUrl } from '../lib/undc/config';
  * Every link and every expected result was checked against the live platform on
  * 18 September 2026. Where a figure is quoted it is quoted as "around", because
  * the data updates and a tutorial that promises an exact number ages badly.
+ *
+ * To attach a recording, upload it to YouTube by hand, take the eleven
+ * characters after `?v=` in the share link, and add one field to that
+ * walkthrough:
+ *
+ *   video: { id: 'dQw4w9WgXcQ', title: 'Finding one number, start to finish', minutes: 4 },
+ *
+ * Nothing else changes: the player is a still image until it is clicked, and a
+ * walkthrough without the field simply has no video. Uploading through the
+ * YouTube Data API is not worth it here — videos from an unaudited API project
+ * are forced private on arrival, so the upload stays manual on purpose.
  */
 export const TUTORIALS: readonly TutorialSpec[] = [
   {
