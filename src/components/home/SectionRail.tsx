@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HOME_SECTIONS, type PageSection } from '../../content/sections';
+import { ACCENT_CLASSES, HOME_SECTIONS, type PageSection } from '../../content/sections';
 
 function scrollTo(id: string) {
   const target = document.getElementById(id);
@@ -93,6 +93,7 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
         <ol className="flex flex-col gap-1">
           {sections.map((section, index) => {
             const isActive = index === active;
+            const colour = ACCENT_CLASSES[section.accent];
             return (
               <li key={section.id}>
                 <button
@@ -112,9 +113,11 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
                   </span>
                   <span
                     aria-hidden="true"
+                    // The dot wears the chapter's own colour, so the rail is a
+                    // legend for the page rather than a row of identical marks.
                     className={`block rounded-full transition-all duration-300 ${
                       isActive
-                        ? 'h-5 w-[3px] bg-volt'
+                        ? `h-5 w-[3px] ${colour.dot}`
                         : 'h-[3px] w-[3px] bg-ink-muted/50 group-hover:bg-ink-secondary'
                     }`}
                   />
@@ -132,7 +135,7 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
         className="fixed inset-x-0 top-[3.55rem] z-20 h-px bg-transparent xl:hidden"
       >
         <div
-          className="h-px bg-volt transition-[width] duration-300"
+          className={`h-px transition-[width] duration-300 ${ACCENT_CLASSES[sections[active]?.accent ?? 'volt'].dot}`}
           style={{ width: `${((active + 1) / sections.length) * 100}%` }}
         />
       </div>

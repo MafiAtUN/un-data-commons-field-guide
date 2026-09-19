@@ -38,6 +38,33 @@
   /* Nerd Lab accent. Chrome only — see the note above. */
   --color-volt: #c8f531;
 
+  /*
+   * Section accents.
+   *
+   * Nerd Lab specifies one accent. This keeps volt as the signature and gives
+   * each section of the front page its own hue so a long page reads as chapters
+   * rather than as one grey scroll.
+   *
+   * Every hue is a validated chart-series step, so it is already known to clear
+   * colour-blind separation and 3:1 against the surface. The `-ink` variants are
+   * one step lighter and were measured at 5.4:1 or better on the card surface,
+   * which is what makes them safe for small text; the base is for borders,
+   * tints, rules and marks.
+   *
+   * These are chrome. A chart's colours still come from the series slots and
+   * still follow the entity, never the section.
+   */
+  --color-accent-aqua: #199e70;
+  --color-accent-aqua-ink: #22b981;
+  --color-accent-blue: #1b9bd8;
+  --color-accent-blue-ink: #3fb3e8;
+  --color-accent-orange: #d95926;
+  --color-accent-orange-ink: #ef7239;
+  --color-accent-violet: #9085e9;
+  --color-accent-violet-ink: #a79ef0;
+  --color-accent-magenta: #d55181;
+  --color-accent-magenta-ink: #e56b99;
+
   /* Categorical series slots, in fixed order. Colour follows the entity. */
   --color-series-1: #1b9bd8;
   --color-series-2: #d95926;

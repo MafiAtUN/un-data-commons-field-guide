@@ -114,8 +114,8 @@ export const MILESTONES: readonly Milestone[] = [
     sort: '2026-09',
     title: 'The UN System Data Commons opens',
     body:
-      'The Secretary-General launches data.un.org: official statistics from 26 UN System entities in a single AI-ready knowledge graph, roughly 44 million data points, free and without a login. It is built on open standards including the Model Context Protocol, so an AI agent can look a figure up itself rather than recalling one.',
-    note: 'No API key. The REST surface answers cross-origin, which is why every chart on this site is a request from your own browser.',
+      'The Secretary-General launches data.un.org: official statistics from 26 UN System entities in a single AI-ready knowledge graph, roughly 44 million data points. The data was already free — what is new is that it is joined, so one question reaches all of it and the answers know about each other. Built on open standards including the Model Context Protocol, so an AI agent can fetch a figure itself rather than recalling one.',
+    note: 'No API key, and the REST surface answers cross-origin — which is why every chart on this site is a request from your own browser.',
     actors: 'The United Nations System, with Google and UNICC',
     source: { label: 'data.un.org', href: 'https://data.un.org' },
     strand: 'un',
