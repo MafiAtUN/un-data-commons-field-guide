@@ -67,7 +67,7 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
   return (
     <nav
       aria-label="Sections of this page"
-      className="fixed inset-x-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-20 mx-auto max-w-5xl rounded-2xl border border-white/15 bg-surface-0/90 p-2 shadow-[0_12px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:inset-x-6 sm:rounded-[1.4rem]"
+      className="fixed inset-x-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-20 mx-auto max-w-6xl rounded-2xl border border-white/15 bg-surface-0/90 p-2 shadow-[0_12px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:inset-x-6 sm:rounded-[1.4rem]"
     >
       <div className="flex items-center justify-between px-3 pb-2 pt-1">
         <span className="text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-ink-muted">
@@ -78,12 +78,12 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
           {' / '}{String(sections.length).padStart(2, '0')}
         </span>
       </div>
-      <ol className="grid grid-cols-2 gap-1 min-[480px]:grid-cols-4 lg:grid-cols-7">
+      <ol className="grid grid-cols-2 gap-1 sm:grid-cols-4 xl:grid-cols-8">
         {sections.map((section, index) => {
           const isActive = index === active;
           const colour = ACCENT_CLASSES[section.accent];
           return (
-            <li key={section.id} className={index === sections.length - 1 ? 'col-span-2 min-[480px]:col-span-1' : ''}>
+            <li key={section.id}>
               <a
                 href={`#${section.id}`}
                 onClick={(event) => {
@@ -92,7 +92,7 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
                   scrollTo(section.id);
                 }}
                 aria-current={isActive ? 'location' : undefined}
-                className={`group flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-[0.72rem] font-medium transition-all duration-200 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-volt ${
+                className={`group flex min-h-11 items-center gap-1.5 rounded-xl border px-2 py-2 text-[0.68rem] sm:text-[0.72rem] font-medium transition-all duration-200 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-volt ${
                   isActive
                     ? `${colour.border} ${colour.bg} ${colour.text}`
                     : 'border-transparent text-ink-secondary hover:text-ink-primary'
@@ -101,7 +101,7 @@ export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly 
                 <span aria-hidden="true" className={`font-mono text-[0.6rem] ${isActive ? colour.text : 'text-ink-muted'}`}>
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <span className="whitespace-nowrap">{section.label}</span>
+                <span className="min-w-0">{section.label}</span>
               </a>
             </li>
           );

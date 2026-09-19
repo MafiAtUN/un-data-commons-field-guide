@@ -21,6 +21,7 @@ export interface PageSection {
 export const HOME_SECTIONS: readonly PageSection[] = [
   { id: 'top', label: 'The short version', accent: 'volt' },
   { id: 'wand', label: 'What changed', accent: 'aqua' },
+  { id: 'video-tutorial', label: 'Video tutorial', accent: 'magenta' },
   { id: 'history', label: 'How we got here', accent: 'blue' },
   { id: 'trap', label: 'The one catch', accent: 'orange' },
   { id: 'ways-in', label: 'Three ways in', accent: 'violet' },

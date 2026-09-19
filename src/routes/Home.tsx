@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { VideoEmbed } from '../components/VideoEmbed';
+import { publishedVideos } from '../content/videos';
 import { Reveal } from '../components/Reveal';
 import { Chapter } from '../components/home/Chapter';
 import { ChapterIndex } from '../components/home/ChapterIndex';
@@ -33,9 +35,10 @@ import { SITE_ROOT } from '../lib/undc/config';
  */
 export function Home() {
   const span = timelineSpan();
+  const firstVideo = publishedVideos()[0];
 
   return (
-    <div className="pb-64 min-[480px]:pb-40 lg:pb-28">
+    <div className="pb-64 sm:pb-40 xl:pb-28">
       <SectionRail />
 
       {/* ---------- Hero ---------- */}
@@ -137,6 +140,36 @@ export function Home() {
         boxed
       >
         <TheWand />
+      </Chapter>
+
+      <Chapter
+        id="video-tutorial"
+        accent="magenta"
+        kicker="Watch it happen"
+        title="Your first number, in 80 seconds."
+        lead="Follow a real search from question to figure, year and source. Then try it yourself."
+      >
+        <div className="grid items-center gap-8 lg:grid-cols-[1.5fr_1fr]">
+          {firstVideo && <VideoEmbed spec={firstVideo} />}
+          <div>
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-magenta-ink">
+              Video tutorials
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-ink-primary">
+              See the steps. Try them yourself.
+            </h3>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-secondary">
+              Learn to check a result, download the data and cite its producer.
+              Each short recording covers one task, with a transcript you can follow.
+            </p>
+            <Link
+              to="/watch"
+              className="mt-6 inline-flex min-h-11 items-center rounded-lg border border-accent-magenta/35 bg-accent-magenta/[0.07] px-5 py-3 text-[0.9rem] font-semibold text-accent-magenta-ink transition-colors hover:bg-accent-magenta/15"
+            >
+              Watch all tutorials →
+            </Link>
+          </div>
+        </div>
       </Chapter>
 
       {/* ---------- How we got here ---------- */}
