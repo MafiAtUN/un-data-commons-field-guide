@@ -15,14 +15,17 @@ import { SITE_ROOT } from '../lib/undc/config';
 /**
  * The front page is a door, not a tool.
  *
- * The correction that shaped this version: UN data was never locked away. It
- * has been free since UNdata opened in 2008, and free was never the problem —
- * it was spread across dozens of agency databases that did not speak to each
- * other. What arrived in September 2026 is not access. It is a wand: one
- * question, across all of it, with the provenance still attached.
+ * Two drafts were wrong before this one, in opposite directions. The first said
+ * the UN had just opened its statistics to everyone — not true, they have been
+ * free since 2008. The second corrected that with "UN data was never locked
+ * away, it was just scattered", which is accurate and still wrong for this
+ * page: it opens on a problem. A page whose whole job is to send people to the
+ * platform should not begin by telling them what was wrong with it.
  *
- * An earlier draft opened with "the UN opened its statistics to everyone, for
- * free", which is both wrong and a smaller claim than the true one.
+ * UN data was already excellent. It just got a very large upgrade. That is both
+ * true and the thing worth saying first; the "scattered" explanation still
+ * earns its place, one chapter down, where it explains the upgrade instead of
+ * undercutting it.
  *
  * Each chapter carries its own accent, so four screens read as six places
  * rather than one scroll. The Data Finder still exists on its own page; this
@@ -46,9 +49,9 @@ export function Home() {
           </p>
 
           <h1 className="mt-4 text-balance text-[2.5rem] font-semibold leading-[0.95] tracking-tight text-ink-primary sm:text-[3.4rem] lg:text-[4.1rem]">
-            <span className="block text-ink-muted">UN data was never locked away.</span>
-            It was just{' '}
-            {/* A solid marker with the word knocked out of it. Volt at partial
+            <span className="block text-ink-muted">UN data was always good.</span>
+            It just got a{' '}
+            {/* A solid marker with the words knocked out of it. Volt at partial
                 opacity over near-black turns olive, which is the opposite of
                 the point; at full strength it is the loudest thing on the page,
                 which is exactly the point. Dark-on-volt measures 13.4:1. */}
@@ -57,24 +60,23 @@ export function Home() {
                 aria-hidden="true"
                 className="absolute inset-0 -rotate-[0.8deg] rounded-md bg-volt"
               />
-              <span className="relative text-surface-0">scattered</span>
+              <span className="relative text-surface-0">huge upgrade</span>
             </span>
             .
           </h1>
 
           <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-ink-secondary">
-            Every figure has been free for years. The catch was that it lived in forty
-            different databases, each with its own export, its own country codes and its own
-            opinion about what counts as a year. Getting a number was never the hard part.
-            Getting two that agreed was.
+            The <strong className="font-semibold text-ink-primary">UN System Data Commons</strong>{' '}
+            puts the official statistics of twenty-six UN entities into one knowledge graph.
+            Roughly 44 million figures. Ask it a question in plain English and it answers
+            across all of them at once, with the source and the year still attached.
           </p>
 
           <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-ink-secondary">
-            The <strong className="font-semibold text-ink-primary">UN System Data Commons</strong>{' '}
-            is the magic wand. Twenty-six entities, one knowledge graph, one question — and
-            an AI that can go and fetch it for you.{' '}
-            <span className="text-ink-muted">It's genuinely brilliant, and almost nobody
-            is using it properly yet.</span>
+            Free, as UN data has always been — no login, no request form, no licence to
+            negotiate. What's new is that an AI assistant can now fetch from it directly.{' '}
+            <span className="text-ink-muted">It's genuinely brilliant, and almost nobody is
+            using it properly yet.</span>
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -110,7 +112,7 @@ export function Home() {
 
           {/* Nothing from the next chapter reaches above the fold on any
               viewport, so the hero reads as the whole page without this. */}
-          <ScrollCue to={HOME_SECTIONS[1]!.id} label="See what the wand actually does" />
+          <ScrollCue to={HOME_SECTIONS[1]!.id} label="See what the upgrade actually does" />
         </div>
 
         <IndexWall />
@@ -120,12 +122,13 @@ export function Home() {
       <Chapter
         id="wand"
         accent="aqua"
-        kicker="What actually changed"
-        title="The data didn't get freer. It got joined up."
+        kicker="What the upgrade actually does"
+        title="One question. Twenty-six agencies. One answer."
         lead={
           <>
-            That sounds like a smaller thing than it is. Joined up means one question reaches
-            every agency at once, and the answers come back knowing about each other.
+            The figures were always free — they just lived in forty separate databases, each
+            with its own export, its own country codes and its own opinion about what counts
+            as a year. Now they're joined, and the answers come back knowing about each other.
           </>
         }
         boxed
