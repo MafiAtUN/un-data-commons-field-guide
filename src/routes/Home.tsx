@@ -48,14 +48,14 @@ export function Home() {
             An unofficial guide to data.un.org
           </p>
 
-          <h1 className="mt-4 text-balance text-[2.5rem] font-semibold leading-[0.95] tracking-tight text-ink-primary sm:text-[3.4rem] lg:text-[4.1rem]">
+          <h1 className="mt-4 text-balance text-[2rem] font-semibold leading-[1] min-[380px]:text-[2.5rem] sm:leading-[0.95] tracking-tight text-ink-primary sm:text-[3.4rem] lg:text-[4.1rem]">
             <span className="block text-ink-muted">UN data was always good.</span>
             It just got a{' '}
             {/* A solid marker with the words knocked out of it. Volt at partial
                 opacity over near-black turns olive, which is the opposite of
                 the point; at full strength it is the loudest thing on the page,
                 which is exactly the point. Dark-on-volt measures 13.4:1. */}
-            <span className="relative inline-block whitespace-nowrap px-[0.12em]">
+            <span className="relative inline-block px-[0.12em] max-[380px]:whitespace-normal sm:whitespace-nowrap">
               <span
                 aria-hidden="true"
                 className="absolute inset-0 -rotate-[0.8deg] rounded-md bg-volt"

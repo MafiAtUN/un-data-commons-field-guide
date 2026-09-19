@@ -228,3 +228,62 @@ h1, h2, h3, .wordmark {
   0%, 100% { transform: translateY(0); opacity: 0.85; }
   50%      { transform: translateY(3px); opacity: 1; }
 }
+
+/* ---------------------------------------------------------------------------
+   MOBILE LEGIBILITY
+
+   The label sizes across this site are tuned for a desktop reading distance.
+   Measured on a phone, 83 elements on the front page alone sat below ~12px,
+   which is where small type stops being comfortably readable at arm's length.
+
+   Rather than retune several hundred arbitrary values by hand — and risk
+   missing some — the floor is raised in one place for small viewports. The
+   attribute selectors match the literal class names Tailwind emits, and carry
+   enough specificity to win against the utility they override.
+   --------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  main [class*="text-[0.6"],
+  footer [class*="text-[0.6"],
+  header [class*="text-[0.6"] {
+    font-size: 0.75rem;   /* 12px floor */
+    line-height: 1.45;
+  }
+
+  main [class*="text-[0.7"],
+  footer [class*="text-[0.7"] {
+    font-size: 0.8rem;    /* 12.8px */
+    line-height: 1.5;
+  }
+}
+
+/* Touch targets. A 19px-tall control is comfortable with a mouse and awkward
+   with a thumb, so standalone controls get a floor on coarse pointers. Links
+   inline in a sentence are deliberately excluded: enlarging them would break
+   the line box, and WCAG 2.2 exempts them for that reason. */
+@media (pointer: coarse) {
+  main button,
+  main select,
+  main summary,
+  main [role="button"] {
+    min-height: 24px;
+  }
+
+  /* Standalone links — source lines, captions, "watch on YouTube" — sat at
+     19px. Vertical padding on an inline element grows the hit area without
+     moving the text or changing the line box, which is what makes this safe to
+     apply broadly. Links inside a sentence are excluded: WCAG 2.2 exempts them,
+     and padding them would overlap the lines above and below.
+
+     The exclusion uses child combinators deliberately. A descendant selector
+     (`li a`) also excluded every link inside a list item — which on the video
+     course page meant every caption link in every card, since each card is an
+     <li>. Only a link that is the direct child of a text element is actually
+     inline in a sentence. */
+  main a:not(:where(
+    p > a, li > a, dd > a, dt > a, td > a,
+    h1 > a, h2 > a, h3 > a, h4 > a,
+    strong > a, em > a, span > a
+  )) {
+    padding-block: 0.3rem;
+  }
+}

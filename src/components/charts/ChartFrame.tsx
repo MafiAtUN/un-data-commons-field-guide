@@ -55,7 +55,9 @@ export function ChartFrame({
           {subtitle && <p className="mt-1 text-[0.8rem] leading-relaxed text-ink-muted">{subtitle}</p>}
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        {/* Wraps on a narrow phone: badge plus toggle needs ~332px, which is
+            wider than a 320px viewport. */}
+        <div className="flex flex-wrap items-center gap-2">
           <OriginBadge origin={origin} retrievedAt={retrievedAt} liveError={liveError} />
           <div role="group" aria-label="View as" className="flex overflow-hidden rounded border border-hairline">
             {(['chart', 'table'] as const).map((option) => (

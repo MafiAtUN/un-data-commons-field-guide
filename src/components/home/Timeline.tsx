@@ -1,196 +1,225 @@
-import { useInView } from '../../lib/useInView';
-import { orderedMilestones, type Milestone } from '../../content/timeline';
+import { useRef, useState } from 'react';
+import { MILESTONES, orderedMilestones, type Milestone } from '../../content/timeline';
 
 /**
- * Two threads that converge, drawn as two threads that converge.
+ * How the platform came to exist, as a scrubbable timeline.
  *
- * The version this replaces was a row of nine identical dots and one grey card.
- * It *said* "two strands meet in September 2026" and showed nothing of the kind:
- * every mark the same size, the same colour, carrying no quantity and no
- * structure. A timeline whose geometry means nothing is just a list with extra
- * steps.
+ * Two strands run through it: what the UN did, and what the technology it
+ * eventually ran on did. Keeping them visually distinct is the point — the
+ * story is that the two lines converge, and a single undifferentiated list of
+ * dates hides exactly that.
  *
- * So the lanes are real. UN decisions run down one side, the technology down
- * the other, and at the launch the spine goes solid volt and the entry takes
- * the full width — the convergence is the layout, not a sentence about it. The
- * one entry that has not happened yet is drawn as an outline, because a plan
- * and a fact should not look alike.
+ * Interaction is a rail of years. Clicking one shows its entry; the arrow keys
+ * move along it, which is how a rail like this is expected to behave and costs
+ * a few lines to honour.
+ *
+ * It does not animate itself. An earlier version walked along the rail on its
+ * own until it reached the launch, which looked like the page had been taken
+ * away from the reader — motion they did not ask for, on the one element that
+ * is entirely theirs to drive. It now simply opens on the launch, which is the
+ * entry that matters, and then waits.
  */
-
-const STRAND = {
-  un: {
-    label: 'United Nations',
-    year: 'text-accent-blue-ink',
-    dot: 'bg-accent-blue',
-    border: 'border-accent-blue/35',
-    tint: 'bg-accent-blue/[0.06]',
-    chip: 'bg-accent-blue/15 text-accent-blue-ink',
-  },
-  tech: {
-    label: 'The technology',
-    year: 'text-accent-violet-ink',
-    dot: 'bg-accent-violet',
-    border: 'border-accent-violet/35',
-    tint: 'bg-accent-violet/[0.06]',
-    chip: 'bg-accent-violet/15 text-accent-violet-ink',
-  },
-} as const;
-
 export function Timeline() {
   const entries = orderedMilestones();
+  const launchIndex = Math.max(0, entries.findIndex((entry) => entry.headline));
 
-  return (
-    <div className="relative">
-      {/* ---------- Lane headings ---------- */}
-      <div className="mb-6 hidden items-center justify-between gap-4 lg:flex">
-        <p className="flex-1 text-right text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-blue-ink">
-          What the UN decided
-        </p>
-        <span aria-hidden="true" className="h-px w-16 bg-hairline" />
-        <p className="flex-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-violet-ink">
-          What the technology could do
-        </p>
-      </div>
+  // Opens on the launch: the entry the page is about, and a resting state
+  // rather than a destination the component travels to by itself.
+  const [active, setActive] = useState(launchIndex);
+  const railRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<Array<HTMLButtonElement | null>>([]);
 
-      {/* ---------- The spine ---------- */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 left-[0.4rem] top-0 w-px bg-gradient-to-b from-hairline via-hairline to-volt/60 lg:left-1/2 lg:-translate-x-1/2"
-      />
-
-      <ol className="relative space-y-4">
-        {entries.map((entry) => (
-          <Entry key={entry.sort} entry={entry} />
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-function Entry({ entry }: { entry: Milestone }) {
-  const { ref, inView } = useInView<HTMLLIElement>('-5% 0px -10% 0px');
-
-  const isLaunch = Boolean(entry.headline);
-  // 2027 has not happened. A plan should not be dressed as a fact.
-  const isFuture = entry.sort > '2026-09';
-  const strand = STRAND[entry.strand];
-  const onRight = entry.strand === 'tech';
-
-  const year = entry.sort.slice(0, 4);
-
-  // The launch spans both lanes; that is the convergence.
-  if (isLaunch) {
-    return (
-      <li ref={ref} data-reveal={inView ? 'shown' : 'hidden'} className="relative pl-9 lg:pl-0">
-        <Node className="bg-volt ring-4 ring-volt/20" big />
-        <div className="rounded-xl border border-volt/45 bg-volt/[0.08] p-5 sm:p-7 lg:mx-10">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="rounded-full bg-volt px-2.5 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide text-surface-0">
-              The upgrade
-            </span>
-            <span className="tnum text-[0.82rem] text-ink-secondary">{entry.when}</span>
-          </div>
-          {/* Stacked on narrow screens: a 4.6rem numeral and a wrapping title
-              cannot share a baseline row at phone width without colliding. */}
-          <div className="mt-3 sm:flex sm:items-baseline sm:gap-4">
-            <span className="tnum block shrink-0 text-[3.4rem] font-semibold leading-[0.8] tracking-tight text-volt sm:text-[4.6rem]">
-              {year}
-            </span>
-            <span className="mt-1.5 block text-[1.25rem] font-semibold leading-tight tracking-tight text-ink-primary sm:mt-0 sm:text-[1.6rem]">
-              {entry.title}
-            </span>
-          </div>
-          <p className="mt-4 max-w-3xl text-[0.93rem] leading-relaxed text-ink-secondary">
-            {entry.body}
-          </p>
-          {entry.note && (
-            <p className="mt-3 max-w-3xl border-l-2 border-volt/60 pl-3 text-[0.87rem] leading-relaxed text-ink-secondary">
-              {entry.note}
-            </p>
-          )}
-          <Footer entry={entry} />
-        </div>
-      </li>
-    );
+  function select(index: number) {
+    setActive(Math.min(entries.length - 1, Math.max(0, index)));
   }
 
+  function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    const map: Record<string, number> = {
+      ArrowRight: active + 1,
+      ArrowDown: active + 1,
+      ArrowLeft: active - 1,
+      ArrowUp: active - 1,
+      Home: 0,
+      End: entries.length - 1,
+    };
+    const next = map[event.key];
+    if (next === undefined) return;
+
+    event.preventDefault();
+    const clamped = Math.min(entries.length - 1, Math.max(0, next));
+    select(clamped);
+    buttonsRef.current[clamped]?.focus();
+  }
+
+  const entry = entries[active]!;
+  const progress = entries.length > 1 ? (active / (entries.length - 1)) * 100 : 0;
+
   return (
-    <li
-      ref={ref}
-      data-reveal={inView ? 'shown' : 'hidden'}
-      className={`relative pl-9 lg:flex lg:pl-0 ${onRight ? 'lg:justify-end' : ''}`}
-    >
-      <Node className={isFuture ? 'bg-surface-0 ring-1 ring-ink-muted/60' : strand.dot} />
-
+    <div>
+      {/* ---------- The rail ---------- */}
       <div
-        className={`rounded-xl border p-4 sm:p-5 lg:w-[calc(50%-2.75rem)] ${
-          isFuture
-            ? 'border-dashed border-ink-muted/40 bg-transparent'
-            : `${strand.border} ${strand.tint}`
-        }`}
+        ref={railRef}
+        role="tablist"
+        aria-label="History of the UN System Data Commons"
+        onKeyDown={onKeyDown}
+        className="relative"
       >
-        <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+        {/* The connecting rule belongs to the single-row layout only. Below
+            `lg` the years wrap onto three rows, where one line across the top
+            would join the first row to nothing. */}
+        <div className="absolute inset-x-0 top-[0.56rem] hidden h-px bg-hairline lg:block" aria-hidden="true" />
+        <div
+          className="absolute left-0 top-[0.56rem] hidden h-px bg-volt transition-[width] duration-500 lg:block"
+          style={{ width: `${progress}%` }}
+          aria-hidden="true"
+        />
+
+        <ol className="relative grid grid-cols-3 gap-y-5 sm:grid-cols-5 lg:flex lg:justify-between">
+          {entries.map((item, index) => {
+            const isActive = index === active;
+            const isPast = index < active;
+
+            return (
+              <li key={item.sort} className="flex flex-col items-center lg:flex-1">
+                <button
+                  ref={(node) => { buttonsRef.current[index] = node; }}
+                  type="button"
+                  role="tab"
+                  id={`milestone-tab-${index}`}
+                  aria-selected={isActive}
+                  aria-controls="milestone-panel"
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => select(index)}
+                  className="group flex flex-col items-center gap-2"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`grid size-[1.1rem] place-items-center rounded-full border transition-colors ${
+                      isActive
+                        ? item.headline
+                          ? 'border-volt bg-volt'
+                          : item.strand === 'tech'
+                            ? 'border-accent-violet bg-accent-violet'
+                            : 'border-accent-blue bg-accent-blue'
+                        : isPast
+                          ? 'border-volt/50 bg-volt/25'
+                          : 'border-hairline bg-surface-0 group-hover:border-ink-muted'
+                    }`}
+                  >
+                    {item.headline && !isActive && (
+                      <span className="size-1.5 rounded-full bg-volt" />
+                    )}
+                  </span>
+                  <span
+                    className={`tnum text-center text-[0.68rem] leading-tight transition-colors ${
+                      isActive ? 'font-semibold text-ink-primary' : 'text-ink-muted group-hover:text-ink-secondary'
+                    }`}
+                  >
+                    {item.when}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+
+      {/* ---------- The entry ---------- */}
+      <div
+        id="milestone-panel"
+        role="tabpanel"
+        aria-labelledby={`milestone-tab-${active}`}
+        // Keyed so the fade re-runs on every change rather than only the first.
+        key={entry.sort}
+        data-reveal="shown"
+        className="mt-8 rounded-lg border border-hairline bg-surface-1 p-5 sm:p-6"
+      >
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          {/* The two threads carry a colour each, so which one you are reading
+              is legible without the layout having to grow to say it. */}
           <span
-            className={`rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide ${
-              isFuture ? 'bg-surface-2 text-ink-muted' : strand.chip
+            className={`rounded-full px-2.5 py-0.5 text-[0.66rem] font-semibold uppercase tracking-wide ${
+              entry.strand === 'tech'
+                ? 'bg-accent-violet/15 text-accent-violet-ink'
+                : 'bg-accent-blue/15 text-accent-blue-ink'
             }`}
           >
-            {isFuture ? 'Planned' : strand.label}
+            {entry.strand === 'tech' ? 'The technology' : 'The United Nations'}
           </span>
-          <span className="tnum text-[0.78rem] text-ink-muted">{entry.when}</span>
+          <span className="tnum text-[0.8rem] text-ink-muted">{entry.when}</span>
+          {entry.headline && (
+            <span className="text-[0.7rem] font-semibold uppercase tracking-wide text-volt">
+              ← the one this site is about
+            </span>
+          )}
         </div>
 
-        <div className="mt-2.5 sm:flex sm:items-baseline sm:gap-3">
-          <span
-            className={`tnum block shrink-0 text-[2.1rem] font-semibold leading-[0.8] tracking-tight sm:text-[2.6rem] ${
-              isFuture ? 'text-ink-muted' : strand.year
-            }`}
-          >
-            {year}
-          </span>
-          <span className="mt-1.5 block text-[1.02rem] font-semibold leading-tight tracking-tight text-ink-primary sm:mt-0">
-            {entry.title}
-          </span>
-        </div>
+        <h3 className="mt-3 text-balance text-[1.35rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[1.6rem]">
+          {entry.title}
+        </h3>
 
-        <p className="mt-2.5 text-[0.88rem] leading-relaxed text-ink-secondary">{entry.body}</p>
+        <p className="mt-3 max-w-3xl text-[0.93rem] leading-relaxed text-ink-secondary">
+          {entry.body}
+        </p>
 
         {entry.note && (
-          <p className="mt-2.5 border-l-2 border-hairline pl-3 text-[0.82rem] leading-relaxed text-ink-muted">
+          <p className="mt-3 max-w-3xl border-l-2 border-volt/50 pl-3 text-[0.86rem] leading-relaxed text-ink-secondary">
             {entry.note}
           </p>
         )}
 
-        <Footer entry={entry} />
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-hairline pt-3.5 text-[0.75rem]">
+          <p className="text-ink-muted">{entry.actors}</p>
+          <a
+            href={entry.source.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:text-volt hover:decoration-volt"
+          >
+            Source: {entry.source.label} ↗
+          </a>
+        </div>
       </div>
-    </li>
-  );
-}
 
-/** The mark on the spine. Sits left on narrow screens, centred on wide ones. */
-function Node({ className, big = false }: { className: string; big?: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`absolute left-0 top-6 z-10 rounded-full lg:left-1/2 lg:-translate-x-1/2 ${
-        big ? 'size-[1.1rem]' : 'size-[0.8rem]'
-      } ${className}`}
-    />
-  );
-}
-
-function Footer({ entry }: { entry: Milestone }) {
-  return (
-    <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-t border-hairline pt-3 text-[0.72rem]">
-      <p className="text-ink-muted">{entry.actors}</p>
-      <a
-        href={entry.source.href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:text-volt hover:decoration-volt"
-      >
-        {entry.source.label} ↗
-      </a>
+      {/* ---------- Step controls ---------- */}
+      <div className="mt-3 flex items-center justify-between gap-4">
+        <Step label="← Earlier" disabled={active === 0} onClick={() => select(active - 1)} />
+        <p className="tnum text-[0.72rem] text-ink-muted">
+          {active + 1} of {entries.length}
+          <span className="ml-2 hidden sm:inline">· arrow keys work</span>
+        </p>
+        <Step
+          label="Later →"
+          disabled={active === entries.length - 1}
+          onClick={() => select(active + 1)}
+        />
+      </div>
     </div>
   );
 }
+
+function Step({
+  label,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="rounded border border-hairline px-3 py-1.5 text-[0.76rem] font-medium text-ink-secondary transition-colors enabled:hover:border-volt/60 enabled:hover:text-ink-primary disabled:opacity-35"
+    >
+      {label}
+    </button>
+  );
+}
+
+/** How many entries the timeline holds, for prose that must not go stale. */
+export const MILESTONE_COUNT = MILESTONES.length;
+
+export type { Milestone };
