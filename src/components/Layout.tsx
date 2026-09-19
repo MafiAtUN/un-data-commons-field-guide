@@ -7,25 +7,7 @@ import { GuideContents } from './nav/GuideContents';
 import { NerdLabNavCredit, NerdLabStrip } from './NerdLab';
 import { SiteCredit } from './SiteCredit';
 
-/**
- * Chrome: a credit, a wordmark, the way out, and the way in.
- *
- * The header opens with the Nerd Lab label rather than the site's own initial,
- * because this guide is one of several things out of that lab and the reader
- * should be able to get from any page to the rest of them.
- *
- * Only two controls sit on the right, and both are sized to be seen. The first
- * is a link off this site entirely — the guide's whole purpose is to get people
- * onto data.un.org, so the platform should never be more than one deliberate
- * click away from any page. The second opens the contents.
- *
- * It said "Index" until a reader pointed out that on a statistics site an index
- * is the Human Development Index, not a list of pages.
- *
- * There is no separate mobile menu. The contents are full-screen at every width, so
- * the small-screen navigation and the large-screen navigation are the same
- * object, which is one fewer thing to keep in step.
- */
+/** Shared navigation keeps Home and every guide chapter within reach. */
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const [contentsOpen, setContentsOpen] = useState(false);
@@ -38,6 +20,9 @@ export function Layout({ children }: { children: ReactNode }) {
   }, [pathname]);
 
   const here = DESTINATIONS.find((destination) => destination.to === pathname);
+  const position = DESTINATIONS.findIndex((destination) => destination.to === pathname);
+  const previous = DESTINATIONS[position - 1];
+  const next = DESTINATIONS[position + 1];
 
   return (
     <div className="min-h-screen">
@@ -66,6 +51,13 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
+            <Link
+              to="/"
+              aria-current={pathname === '/' ? 'page' : undefined}
+              className="inline-flex min-h-11 items-center rounded-lg px-3 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-volt/10 hover:text-volt"
+            >
+              Home
+            </Link>
             <a
               href={SITE_ROOT}
               target="_blank"
@@ -98,9 +90,59 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <GuideContents open={contentsOpen} onClose={() => setContentsOpen(false)} />
 
-      <main id="main" className="mx-auto max-w-6xl px-4 pb-16 pt-8">
-        {children}
-      </main>
+      <div className={here ? 'mx-auto grid max-w-[90rem] gap-10 px-4 lg:grid-cols-[13rem_minmax(0,1fr)]' : ''}>
+        {here && (
+          <aside className="hidden pt-8 lg:block">
+            <nav aria-label="Guide pages" className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto rounded-2xl border border-hairline bg-surface-1/60 p-3">
+              <Link to="/" className="mb-4 flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-ink-primary hover:bg-volt/10 hover:text-volt">
+                <span aria-hidden="true">←</span> Home
+              </Link>
+              {(['practical', 'technical'] as const).map((track) => (
+                <div key={track} className="mb-4 last:mb-0">
+                  <p className="mb-2 px-3 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+                    {track === 'practical' ? 'Learn & use' : 'Developer'}
+                  </p>
+                  <ul className="space-y-1">
+                    {DESTINATIONS.filter((page) => page.track === track).map((page) => (
+                      <li key={page.to}>
+                        <Link
+                          to={page.to}
+                          aria-current={pathname === page.to ? 'page' : undefined}
+                          className={`block rounded-lg border px-3 py-2 text-[0.8rem] transition-colors ${pathname === page.to ? 'border-volt/30 bg-volt/10 font-semibold text-volt' : 'border-transparent text-ink-secondary hover:bg-white/5 hover:text-ink-primary'}`}
+                        >
+                          {page.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+          </aside>
+        )}
+        <main id="main" className={`mx-auto w-full min-w-0 max-w-6xl pb-16 pt-8 ${here ? '' : 'px-4'}`}>
+          {here && (
+            <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-[0.8rem]">
+              <Link to="/" className="text-ink-secondary hover:text-volt">Home</Link>
+              <span aria-hidden="true" className="text-ink-muted">/</span>
+              <span aria-current="page" className="text-ink-primary">{here.label}</span>
+            </nav>
+          )}
+          {children}
+          {here && (
+            <nav aria-label="Continue through the guide" className="mt-16 grid gap-3 border-t border-hairline pt-6 sm:grid-cols-2">
+              <Link to={previous?.to ?? '/'} className="rounded-xl border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/50">
+                <span className="block text-xs text-ink-muted">← {previous ? 'Previous' : 'Back to'}</span>
+                <span className="mt-2 block font-semibold text-ink-primary">{previous?.label ?? 'Home'}</span>
+              </Link>
+              <Link to={next?.to ?? '/'} className="rounded-xl border border-hairline bg-surface-1 p-5 text-right transition-colors hover:border-volt/50">
+                <span className="block text-xs text-ink-muted">{next ? 'Next' : 'Back to'} →</span>
+                <span className="mt-2 block font-semibold text-ink-primary">{next?.label ?? 'Home'}</span>
+              </Link>
+            </nav>
+          )}
+        </main>
+      </div>
 
       <footer className="mt-24 border-t border-hairline">
         <div className="mx-auto max-w-6xl space-y-5 px-4 py-10">

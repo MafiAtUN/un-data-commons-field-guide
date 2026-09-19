@@ -143,14 +143,14 @@ export const DESTINATIONS: readonly Destination[] = [
   },
 ] as const;
 
-/** The front page, which is the tool and therefore not a stop on the rail. */
+/** The landing page, available from every page and from navigation search. */
 export const HOME: Destination = {
   to: '/',
-  label: 'Find data',
-  hint: 'The tool itself — a figure in about fifteen seconds',
+  label: 'Home',
+  hint: 'The platform overview, video tutorial and guide',
   track: 'practical',
-  time: '15 sec',
-  keywords: ['home', 'start', 'tool', 'number', 'finder'],
+  time: '3 min',
+  keywords: ['home', 'overview', 'landing', 'introduction'],
 };
 
 /** Where each track begins, for the labels at the ends of the rail. */

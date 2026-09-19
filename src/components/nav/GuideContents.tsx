@@ -103,7 +103,7 @@ export function GuideContents({ open, onClose }: { open: boolean; onClose: () =>
       return;
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target === inputRef.current) {
       const row = rows[cursor];
       if (!row) return;
       event.preventDefault();
@@ -130,9 +130,9 @@ export function GuideContents({ open, onClose }: { open: boolean; onClose: () =>
     >
       <div className="mx-auto min-h-full max-w-6xl px-4 pb-16 pt-5">
         <div className="flex items-center justify-between gap-4 border-b border-hairline pb-4">
-          <span className="wordmark text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-            Guide contents
-          </span>
+          <Link to="/" onClick={onClose} className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-ink-primary hover:bg-volt/10 hover:text-volt">
+            <span aria-hidden="true">←</span> Home
+          </Link>
           <button
             type="button"
             onClick={onClose}

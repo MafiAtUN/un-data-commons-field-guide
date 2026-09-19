@@ -122,6 +122,19 @@ describe('chrome', () => {
     expect(render(<Layout><p /></Layout>, target.to)).toContain(asRendered(target.label));
   });
 
+  it('offers explicit Home and guide navigation on every internal page', () => {
+    for (const destination of DESTINATIONS) {
+      const page = render(<Layout><p /></Layout>, destination.to);
+      expect(page).toMatch(/href="\/"[^>]*>Home<\/a>/);
+      expect(page).toContain('aria-label="Guide pages"');
+      expect(page).toContain('aria-label="Breadcrumb"');
+      expect(page).toContain('aria-label="Continue through the guide"');
+      for (const chapter of DESTINATIONS) {
+        expect(page).toContain(`href="${chapter.to}"`);
+      }
+    }
+  });
+
   it('credits the author with both profiles, safely targeted', () => {
     expect(html).toContain(AUTHOR.name);
     expect(html).toContain(`href="${AUTHOR.linkedin}"`);
@@ -156,6 +169,10 @@ describe('chrome', () => {
 describe('the guide contents', () => {
   const open = (at = '/') =>
     render(<GuideContents open onClose={() => undefined} />, at);
+
+  it('offers a labelled Home link without searching', () => {
+    expect(open()).toMatch(/href="\/"[^>]*>[\s\S]*?Home<\/a>/);
+  });
 
   it('renders every chapter it lets you arrow onto', () => {
     // The bug this pins: the keyboard list once began with the front page while
