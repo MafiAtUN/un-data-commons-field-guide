@@ -67,13 +67,7 @@ export function Peace() {
               code={`curl -s -X POST \\
   'https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series' \\
   -H 'Content-Type: application/json' \\
-  -d '{
-    "variables": [
-      "undata/sdg/VC_DTH_TOTN.AGE--Y0T17",
-      "undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"
-    ],
-    "entities": ["country/SSD", "country/COD"]
-  }'`}
+  -d '{"variables":["undata/sdg/VC_DTH_TOTN.AGE--Y0T17","undata/sdg/VC_DTH_TOTN.AGE--Y_GE18"],"entities":["country/SSD","country/COD"]}'`}
             />
             <a
               href={searchUrl('number of total conflict-related deaths in South Sudan')}

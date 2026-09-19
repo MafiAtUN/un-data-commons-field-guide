@@ -126,6 +126,17 @@ export const DESTINATIONS: readonly Destination[] = [
     keywords: ['rest', 'api', 'curl', 'json', 'dcid', 'endpoint', 'v2'],
   },
   {
+    to: '/scenarios',
+    label: 'Scenarios',
+    hint: 'Real requests, worked end to end',
+    track: 'technical',
+    time: '14 min',
+    keywords: [
+      'scenario', 'example', 'worked', 'scatter', 'discovery', 'find',
+      'identifier', 'how do i', 'recipe', 'builder', 'walkthrough',
+    ],
+  },
+  {
     to: '/dashboards',
     label: 'Power BI & Tableau',
     hint: 'M code, the model, and a tidy extract',

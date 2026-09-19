@@ -126,10 +126,7 @@ export function Lab() {
             code={`curl -s -X POST \\
   'https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series' \\
   -H 'Content-Type: application/json' \\
-  -d '{
-    "variables": ["undata/sdg/VC_DTH_TOTN"],
-    "entities":  ["country/SSD"]
-  }'`}
+  -d '{"variables":["undata/sdg/VC_DTH_TOTN"],"entities":["country/SSD"]}'`}
           />
         </div>
 

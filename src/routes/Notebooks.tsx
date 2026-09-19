@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
+import { ScenarioBrief } from '../components/ScenarioBrief';
+import { findScenario } from '../content/scenarios';
 
 const API = 'https://unsd-datacommons.gcp.un-icc.cloud';
 
@@ -16,6 +18,8 @@ const API = 'https://unsd-datacommons.gcp.un-icc.cloud';
  * R and Julia are written to the same contract: one tidy frame, provenance
  * carried on every row, absence made visible.
  */
+const SCATTER = findScenario('conflict-and-income')!;
+
 export function Notebooks() {
   return (
     <>
@@ -32,6 +36,98 @@ export function Notebooks() {
           </>
         }
       />
+
+      <Section
+        id="scenario"
+        title="A scenario first, because the contract exists for a reason"
+        lead="A real request, and the three lines of it that matter more than the fetching."
+      >
+        <ScenarioBrief scenario={SCATTER} tool="python">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <CodeBlock
+              label="python — the whole finding, in six lines"
+              language="python"
+              code={`x = latest_in("Earth", "undata/unicef/SPP_GDPPC")   # GDP per capita
+y = latest_in("Earth", "undata/sdg/VC_DTH_TOTR")    # conflict deaths /100k
+
+points = x.merge(y, on="entity", suffixes=("_gdp", "_conflict"))
+
+print(len(x), len(y), len(points))      # 210 14 14
+print(sorted(names(points["entity"].tolist())))
+# ['Afghanistan', 'Central African Republic', 'Congo [DRC]', 'Ethiopia',
+#  'Iraq', 'Lebanon', 'Libya', 'Mali', 'Myanmar', 'Palestinian Territories',
+#  'Philippines', 'South Sudan', 'Syria', 'Ukraine']`}
+            />
+            <div className="space-y-3 text-[0.85rem] leading-relaxed text-ink-secondary">
+              <p>
+                That last list is the whole analysis. Printing the names of the surviving
+                entities — not just the count — is what turns “the join dropped some countries”
+                into “the join kept only countries at war”. The first is a data-quality note.
+                The second stops the chart.
+              </p>
+              <p>
+                <span className="font-semibold text-ink-primary">
+                  Make it an assertion when the script runs unattended.
+                </span>{' '}
+                A monthly refresh that quietly loses a country produces a chart nobody re-reads.
+              </p>
+              <CodeBlock
+                label="python — fail loudly rather than plot quietly"
+                language="python"
+                code={`retained = len(points) / min(len(x), len(y))
+assert retained > 0.8, (
+    f"join kept {len(points)} of {min(len(x), len(y))} places — "
+    "check what the missing ones have in common before plotting"
+)`}
+              />
+              <p>
+                In R the same check is{' '}
+                <code className="text-volt">stopifnot(nrow(points) / min(nrow(x), nrow(y)) &gt; 0.8)</code>
+                ; in Julia, <code className="text-volt">@assert</code> over the same ratio. The
+                discipline is identical and the grammar is the only thing that changes.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-hairline bg-surface-1 p-5">
+            <h3 className="text-[0.92rem] font-semibold text-ink-primary">
+              If you do plot it, plot it honestly
+            </h3>
+            <div className="mt-3">
+              <CodeBlock
+                label="python — matplotlib, with the sample stated in the title"
+                language="python"
+                code={`import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.scatter(points["value_gdp"], points["value_conflict"])
+
+# Income spans 353 to 7,330 dollars: linear puts eleven of fourteen
+# points in the left quarter of the plot.
+ax.set_xscale("log")
+ax.set_xlabel("GDP per capita, current US$ (2024)")
+ax.set_ylabel("Conflict deaths per 100,000 (2022–2024)")
+
+# The sample belongs in the title, not in a footnote nobody screenshots.
+ax.set_title(f"Among the {len(points)} countries reporting conflict deaths\n"
+             f"({len(x)} countries have GDP per capita)")
+
+for _, row in points.iterrows():
+    ax.annotate(row["name"], (row["value_gdp"], row["value_conflict"]),
+                fontsize=7, alpha=0.7)
+
+fig.text(0.01, 0.01, "Source: UNICEF and SDG collections via data.un.org",
+         fontsize=7, alpha=0.6)`}
+              />
+            </div>
+            <p className="mt-3 max-w-3xl text-[0.82rem] leading-relaxed text-ink-muted">
+              No regression line, deliberately. <code>scipy.stats.linregress</code> will return a
+              slope and a p-value for these fourteen points and both are statements about which
+              countries file conflict-death returns, not about conflict and income.
+            </p>
+          </div>
+        </ScenarioBrief>
+      </Section>
 
       <Section
         title="The contract, before the code"

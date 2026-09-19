@@ -39,6 +39,7 @@ const ROUTES = [
   'peace-and-security',
   'development',
   'cookbook',
+  'scenarios',
   'dashboards',
   'notebooks',
   'connect',

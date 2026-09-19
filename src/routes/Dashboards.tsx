@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
+import { ScenarioBrief } from '../components/ScenarioBrief';
+import { findScenario } from '../content/scenarios';
 
 const API = 'https://unsd-datacommons.gcp.un-icc.cloud';
 
@@ -18,6 +20,8 @@ const API = 'https://unsd-datacommons.gcp.un-icc.cloud';
  * too, but repeated query keys are the one thing Power Query's `Query` record
  * cannot express, and a hand-built URL forfeits scheduled refresh.
  */
+const SCATTER = findScenario('conflict-and-income')!;
+
 export function Dashboards() {
   return (
     <>
@@ -124,6 +128,83 @@ export function Dashboards() {
             </p>
           </div>
         </div>
+      </Section>
+
+      <Section
+        id="scenario"
+        title="A scenario, before the reference material"
+        lead="This is how the request actually arrives, and it is worth working through before the M code, because it decides whether there is a dashboard to build at all."
+      >
+        <ScenarioBrief scenario={SCATTER} tool="powerquery">
+          <div className="rounded-lg border border-hairline bg-surface-1 p-5">
+            <h3 className="text-[0.92rem] font-semibold text-ink-primary">
+              What this means for the report, specifically
+            </h3>
+            <ul className="mt-3 space-y-2.5 text-[0.85rem] leading-relaxed text-ink-secondary">
+              <li className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+                <span>
+                  <strong className="text-ink-primary">Use JoinKind.Inner and mean it.</strong> A
+                  left join here would give you 210 rows, 196 of them with a blank y value, and a
+                  scatter visual silently plots nothing for those. You would see fourteen points
+                  either way and have no idea the other 196 existed.
+                </span>
+              </li>
+              <li className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+                <span>
+                  <strong className="text-ink-primary">Put the counts on the canvas.</strong> The M
+                  in the tab above carries <code className="text-volt">countries_x</code> and{' '}
+                  <code className="text-volt">countries_both</code> into the model for exactly this
+                  reason. Two cards and a subtitle — “14 of 210 countries have both” — turn a
+                  misleading chart into an honest one without changing a single data point.
+                </span>
+              </li>
+              <li className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+                <span>
+                  <strong className="text-ink-primary">Log the income axis.</strong> The x values
+                  run from 353 to 7,330 dollars. On a linear axis eleven of the fourteen points
+                  pile into the left quarter of the plot. Power BI sets this per axis under Format
+                  → X axis → Scale type.
+                </span>
+              </li>
+              <li className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+                <span>
+                  <strong className="text-ink-primary">Do not add a trend line.</strong> Power BI
+                  offers one on every scatter and it will happily fit fourteen points that were
+                  selected by the join. The R² it prints is a statement about the join, not about
+                  the world.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="rounded-lg border border-hairline bg-surface-1 p-5">
+            <h3 className="text-[0.92rem] font-semibold text-ink-primary">
+              The same guard, as a measure
+            </h3>
+            <p className="mt-2 max-w-3xl text-[0.85rem] leading-relaxed text-ink-secondary">
+              If you would rather the report told you than remembered for you, this reads the
+              two counts out of the model and writes the caption itself. Put it in the scatter
+              visual&apos;s title.
+            </p>
+            <div className="mt-3">
+              <CodeBlock
+                label="DAX — a title that cannot lie about its sample"
+                language="dax"
+                code={`Scatter title =
+VAR Plotted   = DISTINCTCOUNT ( Points[entity] )
+VAR Available = MAX ( Points[countries_x] )
+RETURN
+    "Conflict deaths and income — "
+        & Plotted & " of " & Available
+        & " countries have both indicators"`}
+              />
+            </div>
+          </div>
+        </ScenarioBrief>
       </Section>
 
       <Section
@@ -545,8 +626,7 @@ in
               label="shell — tidy CSV, no Python required"
               code={`curl -s -X POST '${API}/api/observations/series' \\
   -H 'Content-Type: application/json' \\
-  -d '{"variables":["undata/sdg/EG_ACS_ELEC"],
-       "entities":["country/BGD","country/ETH","country/IND"]}' \\
+  -d '{"variables":["undata/sdg/EG_ACS_ELEC"],"entities":["country/BGD","country/ETH","country/IND"]}' \\
 | jq -r '
     .facets as $f
   | ["variable","entity","year","value","unit","source"],

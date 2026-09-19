@@ -89,6 +89,7 @@ No animation library anywhere: CSS transitions and `IntersectionObserver`, nothi
 | **Peace & security** | A worked case: how much of South Sudan's conflict mortality falls on children, using SDG 16, UNODC, UNHCR and IOM DTM. The wrong turns are left in. |
 | **Development** | A worked case on human development in Southern Asia, about the choices — baseline, axis, which "total" to trust — that make a chart honest or not. |
 | **Query cookbook** | Five copy-paste REST recipes, the dcid grammar explained interactively, and five documented ways the API will trip you up. |
+| **Scenarios** | Three requests as they actually arrive, worked end to end — including the discovery trail with the dead ends left in. Plus a live builder: search the platform's own resolver for an indicator, measure what it really covers, and take the call in curl, Python, Power Query M, R, Julia or jq. |
 | **Power BI & Tableau** | The keyed JSON record turned into a rectangle: Power Query M for the call and the cleaning, the firewall rule that decides whether the name lookup gets its own query, a star schema, two DAX measures, and four honestly ranked routes into Tableau. |
 | **Python, R & Julia** | The two calls worth learning, written to one contract in three languages — a tidy frame, the facet joined onto every row, the empty-series branch written first, and the repeated-query-parameter trap that returns a bare 400 in all of them. |
 | **Catalogue** | All 16 contributing collections with indicator counts read live from the graph, so the page cannot go stale. |
@@ -119,6 +120,27 @@ The front page re-enacts this, and the Prompt Lab makes both hidden decisions vi
 any query you like. [`tests/resolution.test.ts`](tests/resolution.test.ts) pins the
 behaviour against a recorded response — the bare word `violence`, which resolves to
 `country/USA` the same way.
+
+## The finding that cost the most debugging
+
+Any line break inside a POST body makes this deployment answer **403 Forbidden** — on every
+POST route, including `/mcp`. Spaces and tabs are fine; a single trailing newline is not.
+
+```
+-d '{"variables":["undata/sdg/VC_DTH_TOTN"],"entities":["country/SSD"]}'   → 200
+-d '{
+      "variables": ["undata/sdg/VC_DTH_TOTN"],
+      "entities":  ["country/SSD"]
+    }'                                                                     → 403
+```
+
+The API has no credentials anywhere in it, so a 403 sends people looking for an API key that
+does not exist. Five samples on this site shipped with pretty-printed bodies before anyone ran
+them end to end; `tests/curl-samples.test.ts` now fails the build if a newline reappears in one.
+
+Second-order consequences worth knowing: `curl -d @body.json` is safe because curl strips the
+newlines, `curl --data-binary @body.json` is not; `requests.post(url, json=payload)` is safe,
+`json.dumps(payload, indent=2)` is not.
 
 ## The three ways in
 

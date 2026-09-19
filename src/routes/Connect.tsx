@@ -134,9 +134,8 @@ export function Connect() {
           code={`curl -s -X POST '${MCP_ENDPOINT}' \\
   -H 'Content-Type: application/json' \\
   -H 'Accept: application/json, text/event-stream' \\
-  -d '{
-    "jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}
-  }' | sed -n 's/^data: //p' | tail -1 | python3 -m json.tool`}
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \\
+  | sed -n 's/^data: //p' | tail -1 | python3 -m json.tool`}
         />
         <p className="mt-3 max-w-3xl text-[0.82rem] leading-relaxed text-ink-muted">
           The response is a server-sent event stream, which is why the{' '}

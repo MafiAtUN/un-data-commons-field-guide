@@ -55,16 +55,80 @@ export function Cookbook() {
 
       <PageVideo page="/cookbook" />
 
+      <Section
+        title="Recipe 0 — Find the identifier, which is the only hard part"
+        lead="The endpoints are three and fixed. The identifiers are about 85,000, and everything below assumes you already have one. Getting one is a three-rung ladder, and the bottom rung is the one people skip."
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div>
+            <CodeBlock
+              label="the walk that always works"
+              code={`API=https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/node
+walk () { curl -s -G "$API" --data-urlencode "nodes=$1" \\
+                --data-urlencode "property=\${2:-<-specializationOf}"; }
+
+walk undata/g/Root                  # the 16 collections
+walk undata/g/sdgf/goal-16          # or start at an SDG goal
+walk undata/g/sdgf/target-16-1      # its indicators — "ind", not "indicator"
+walk undata/g/sdgf/ind-16-1-2       # counts, rates, civilian, unknown
+walk undata/g/sdg/VC_DTH_TOTR.000 '<-memberOf'   # the fetchable leaf`}
+            />
+          </div>
+          <ul className="space-y-2.5 text-[0.84rem] leading-relaxed text-ink-secondary">
+            <li className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+              <span>
+                Try the platform's search first — it is instant and often right. But read the
+                whole result list rather than the top hit: for “GDP per capita” the correct
+                variable is eighth, and it lives in the UNICEF collection.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+              <span>
+                Search returns nothing at all for some ordinary topics — conflict-related deaths
+                among them. That is an answer, not an outage, and it is the signal to walk.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+              <span>
+                The walk shows you variants you did not know to ask for. Conflict deaths exist
+                as a count <em>and</em> as a rate per 100,000 — and only one of those belongs on
+                an axis against income.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
+              <span>
+                Never construct an identifier by analogy.{' '}
+                <code className="text-volt">indicator-16-1-2</code> looks right and returns an
+                empty response; the real segment is{' '}
+                <code className="text-volt">ind-16-1-2</code>.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p className="mt-4 max-w-3xl text-[0.85rem] leading-relaxed text-ink-secondary">
+          The{' '}
+          <Link to="/scenarios" className="text-volt underline decoration-volt/30 underline-offset-2">
+            scenarios page
+          </Link>{' '}
+          runs this ladder three times against real requests, with the dead ends left in, and
+          has a builder that searches, measures coverage and emits the call in six tools.
+        </p>
+      </Section>
+
       <Section title="Recipe 1 — A time series for known places">
         <Recipe
           when="You know the indicator and the countries, and you want every year."
           code={`curl -s -X POST \\
   'https://unsd-datacommons.gcp.un-icc.cloud/api/observations/series' \\
   -H 'Content-Type: application/json' \\
-  -d '{
-    "variables": ["undata/sdg/VC_DTH_TOTN"],
-    "entities":  ["country/SSD", "country/COD", "country/SYR"]
-  }'`}
+  -d '{"variables":["undata/sdg/VC_DTH_TOTN"],"entities":["country/SSD","country/COD","country/SYR"]}'
+
+# The body is on one line deliberately. A line break anywhere inside it
+# makes this deployment answer 403 — see trap 1 below.`}
           notes={[
             'Several variables and several entities in one call: you get the cross product.',
             'Each block carries a facet id; look it up in the top-level `facets` object for the source URL, unit and observation period.',
@@ -159,11 +223,15 @@ curl -s -G \\
       </Section>
 
       <Section
-        title="Five things that will trip you up"
+        title="Six things that will trip you up"
         lead="Collected from working against this deployment; each one cost real debugging time."
       >
         <ol className="space-y-3">
           {[
+            {
+              title: 'A line break in a POST body returns 403',
+              body: 'Pretty-print a JSON payload and this deployment answers 403 Forbidden — on every POST route, including /mcp. Spaces and tabs are fine; one newline anywhere in the body, even a trailing one, is not. Because the API has no credentials at all, a 403 sends people hunting for an API key that does not exist. Keep bodies on one line: curl -d @file.json is safe (curl strips the newlines), curl --data-binary @file.json is not, requests(json=…) is safe, and json.dumps(…, indent=2) is not.',
+            },
             {
               title: 'Relation expressions must be encoded',
               body: 'An unencoded `->` or `<-` in a query string returns HTTP 400 with no useful message. Always build the query with URLSearchParams or --data-urlencode.',

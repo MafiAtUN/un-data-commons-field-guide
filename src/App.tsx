@@ -12,6 +12,7 @@ import { Lab } from './routes/Lab';
 import { Peace } from './routes/Peace';
 import { Development } from './routes/Development';
 import { Cookbook } from './routes/Cookbook';
+import { Scenarios } from './routes/Scenarios';
 import { Dashboards } from './routes/Dashboards';
 import { Notebooks } from './routes/Notebooks';
 import { Connect } from './routes/Connect';
@@ -44,6 +45,7 @@ export function App() {
           <Route path="/peace-and-security" element={<Peace />} />
           <Route path="/development" element={<Development />} />
           <Route path="/cookbook" element={<Cookbook />} />
+          <Route path="/scenarios" element={<Scenarios />} />
           <Route path="/dashboards" element={<Dashboards />} />
           <Route path="/notebooks" element={<Notebooks />} />
           <Route path="/connect" element={<Connect />} />
