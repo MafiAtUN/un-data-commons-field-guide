@@ -108,6 +108,16 @@ export function Visualise() {
             </tbody>
           </table>
         </div>
+        <p className="mt-4 max-w-3xl text-[0.82rem] leading-relaxed text-ink-muted">
+          Power BI and Tableau are deliberately not in this table: this page is for getting
+          one chart published today with no licence and no setup. If your office already
+          runs them, the{' '}
+          <Link to="/dashboards" className="text-volt underline decoration-volt/30 underline-offset-2">
+            Power BI &amp; Tableau page
+          </Link>{' '}
+          has the query, the cleaning code and the model — and the five rules below still
+          apply there, unchanged.
+        </p>
       </Section>
 
       <Section title="Which chart?" lead="Four questions. This covers nearly every report.">

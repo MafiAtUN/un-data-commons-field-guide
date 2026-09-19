@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { DcidExplainer } from '../components/DcidExplainer';
@@ -195,6 +196,46 @@ curl -s -G \\
             </li>
           ))}
         </ol>
+      </Section>
+
+      <Section
+        title="Where this goes next"
+        lead="The recipes above are the API. Getting them inside the thing you actually build in is a separate problem, and it has its own page."
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <Link
+            to="/dashboards"
+            className="group rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/60"
+          >
+            <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-volt">
+              Power BI &amp; Tableau
+            </p>
+            <h3 className="mt-2 text-[0.95rem] font-semibold text-ink-primary">
+              The keyed record, turned into a rectangle
+            </h3>
+            <p className="mt-1.5 text-[0.84rem] leading-relaxed text-ink-secondary">
+              Power Query M for the call and the cleaning, the star schema worth building
+              on top of it, two DAX measures, and why Tableau wants a file rather than a
+              connector.
+            </p>
+          </Link>
+          <Link
+            to="/notebooks"
+            className="group rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/60"
+          >
+            <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-volt">
+              Python, R &amp; Julia
+            </p>
+            <h3 className="mt-2 text-[0.95rem] font-semibold text-ink-primary">
+              The same two calls, three ways
+            </h3>
+            <p className="mt-1.5 text-[0.84rem] leading-relaxed text-ink-secondary">
+              A tidy frame with the provenance carried on every row, the empty-series
+              branch written first, and the repeated-query-parameter trap that returns a
+              bare 400 in every language.
+            </p>
+          </Link>
+        </div>
       </Section>
 
       <Section

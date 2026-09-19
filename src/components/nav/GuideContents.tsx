@@ -12,10 +12,10 @@ import { searchUrl } from '../../lib/undc/config';
  * a statistics site is the worst available word, because an index here is the
  * Human Development Index or a price index, not a list of pages.
  *
- * So it is "Contents" now, which is what it is. Twelve numbered chapters
- * grouped by track, the one you are on marked, and a field that filters them —
- * or, failing that, hands your words to data.un.org, which has about 85,000
- * indicators to this guide's twelve pages.
+ * So it is "Contents" now, which is what it is. Numbered chapters grouped by
+ * track, the one you are on marked, and a field that filters them — or,
+ * failing that, hands your words to data.un.org, which has about 85,000
+ * indicators to this guide's handful of pages.
  *
  * Every row is a real link. An earlier version used buttons and a keyboard
  * cursor, which broke middle-click, ⌘-click and "copy link address" for no gain

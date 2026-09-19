@@ -126,6 +126,28 @@ export const DESTINATIONS: readonly Destination[] = [
     keywords: ['rest', 'api', 'curl', 'json', 'dcid', 'endpoint', 'v2'],
   },
   {
+    to: '/dashboards',
+    label: 'Power BI & Tableau',
+    hint: 'M code, the model, and a tidy extract',
+    track: 'technical',
+    time: '12 min',
+    keywords: [
+      'power bi', 'powerbi', 'tableau', 'power query', 'm code', 'dax',
+      'dashboard', 'hyper', 'refresh', 'bi', 'star schema',
+    ],
+  },
+  {
+    to: '/notebooks',
+    label: 'Python, R & Julia',
+    hint: 'The same two calls in three languages',
+    track: 'technical',
+    time: '10 min',
+    keywords: [
+      'python', 'pandas', 'rstats', 'tidyverse', 'httr2', 'julia',
+      'notebook', 'jupyter', 'colab', 'script', 'dataframe', 'requests',
+    ],
+  },
+  {
     to: '/catalogue',
     label: 'Catalogue',
     hint: 'All 16 collections, counted live',
@@ -169,8 +191,8 @@ export const FIRST_TECHNICAL: number = DESTINATIONS.findIndex(
  *
  * Deliberately simple: a label match beats a hint match beats a keyword match,
  * and a prefix beats a match in the middle. Fuzzy subsequence matching was tried
- * and removed — with only thirteen destinations it produced confident nonsense
- * for typos rather than an honest empty state.
+ * and removed — across a list this short it produced confident nonsense for
+ * typos rather than an honest empty state.
  */
 export function scoreDestination(destination: Destination, query: string): number {
   const needle = query.trim().toLowerCase();

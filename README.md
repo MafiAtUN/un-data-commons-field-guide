@@ -89,6 +89,8 @@ No animation library anywhere: CSS transitions and `IntersectionObserver`, nothi
 | **Peace & security** | A worked case: how much of South Sudan's conflict mortality falls on children, using SDG 16, UNODC, UNHCR and IOM DTM. The wrong turns are left in. |
 | **Development** | A worked case on human development in Southern Asia, about the choices — baseline, axis, which "total" to trust — that make a chart honest or not. |
 | **Query cookbook** | Five copy-paste REST recipes, the dcid grammar explained interactively, and five documented ways the API will trip you up. |
+| **Power BI & Tableau** | The keyed JSON record turned into a rectangle: Power Query M for the call and the cleaning, the firewall rule that decides whether the name lookup gets its own query, a star schema, two DAX measures, and four honestly ranked routes into Tableau. |
+| **Python, R & Julia** | The two calls worth learning, written to one contract in three languages — a tidy frame, the facet joined onto every row, the empty-series branch written first, and the repeated-query-parameter trap that returns a bare 400 in all of them. |
 | **Catalogue** | All 16 contributing collections with indicator counts read live from the graph, so the page cannot go stale. |
 | **Connect** | The MCP endpoint, its six tools, and how to point an AI assistant at authoritative UN statistics instead of its own recall. |
 
