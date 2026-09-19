@@ -93,7 +93,7 @@ No animation library anywhere: CSS transitions and `IntersectionObserver`, nothi
 | **Power BI & Tableau** | The keyed JSON record turned into a rectangle: Power Query M for the call and the cleaning, the firewall rule that decides whether the name lookup gets its own query, a star schema, two DAX measures, and four honestly ranked routes into Tableau. |
 | **Python, R & Julia** | The two calls worth learning, written to one contract in three languages — a tidy frame, the facet joined onto every row, the empty-series branch written first, and the repeated-query-parameter trap that returns a bare 400 in all of them. |
 | **Catalogue** | All 16 contributing collections with indicator counts read live from the graph, so the page cannot go stale. |
-| **Connect** | The MCP endpoint, its six tools, and how to point an AI assistant at authoritative UN statistics instead of its own recall. |
+| **Connect** | The MCP endpoint: setup for Claude Code, Claude Desktop, VS Code and Cursor; one question traced through the server as JSON-RPC; a real call and response for each of the six tools; and the four failures found by calling it — including that only four of the six tools work on this deployment, and a paste-ready instruction block that steers an assistant around the other two. |
 
 ## The finding that started it
 

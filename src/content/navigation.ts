@@ -169,10 +169,13 @@ export const DESTINATIONS: readonly Destination[] = [
   {
     to: '/connect',
     label: 'Connect an agent',
-    hint: 'MCP: six tools, no key',
+    hint: 'MCP: set it up, and what breaks',
     track: 'technical',
-    time: '5 min',
-    keywords: ['mcp', 'agent', 'tools', 'model context protocol', 'integration'],
+    time: '9 min',
+    keywords: [
+      'mcp', 'agent', 'tools', 'model context protocol', 'integration',
+      'claude desktop', 'cursor', 'vs code', 'assistant', 'jsonrpc',
+    ],
   },
 ] as const;
 
