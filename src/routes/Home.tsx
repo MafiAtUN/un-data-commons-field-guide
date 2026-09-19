@@ -41,7 +41,7 @@ export function Home() {
       {/* ---------- Hero ---------- */}
       <section
         id="top"
-        className="grid items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14"
+        className="grid scroll-mt-24 items-start gap-10 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14"
       >
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-volt">
@@ -72,9 +72,15 @@ export function Home() {
             across all of them at once, with the source and the year still attached.
           </p>
 
+          <p className="mt-6 max-w-xl rounded-r-xl border-l-4 border-volt bg-volt/[0.07] px-5 py-4 text-[1.15rem] leading-relaxed text-ink-primary">
+            <strong className="font-semibold">
+              <span className="text-volt">Free, as UN data has always been</span> — no login,
+              no request form, no licence to negotiate.
+            </strong>
+          </p>
+
           <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-ink-secondary">
-            Free, as UN data has always been — no login, no request form, no licence to
-            negotiate. What's new is that an AI assistant can now fetch from it directly.{' '}
+            What's new is that an AI assistant can now fetch from it directly.{' '}
             <span className="text-ink-muted">It's genuinely brilliant, and almost nobody is
             using it properly yet.</span>
           </p>

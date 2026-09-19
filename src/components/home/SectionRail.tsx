@@ -60,86 +60,42 @@ function useActiveSection(sections: readonly PageSection[]): number {
   return active;
 }
 
-/**
- * A floating index of the page, so its length is visible from the first screen.
- *
- * The front page is between four and eight screens long depending on the
- * device, and nothing from the second section reached above the fold on any of
- * them — so the hero read as the entire page. This is the fix: six dots, fixed
- * to the side, showing at a glance that there is more and roughly how much.
- *
- * On narrow screens there is no room beside the content, so the same
- * information becomes a progress bar under the header instead.
- */
+/** All section labels are visible immediately, including on narrow screens. */
 export function SectionRail({ sections = HOME_SECTIONS }: { sections?: readonly PageSection[] }) {
   const active = useActiveSection(sections);
-  const [ready, setReady] = useState(false);
-
-  // Fade in after first paint, so it does not compete with the headline.
-  useEffect(() => {
-    const timer = window.setTimeout(() => setReady(true), 700);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   return (
-    <>
-      {/* ---------- Desktop: a rail of dots ---------- */}
-      <nav
-        aria-label="Sections of this page"
-        className={`fixed right-5 top-1/2 z-20 hidden -translate-y-1/2 transition-opacity duration-500 xl:block ${
-          ready ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        <ol className="flex flex-col gap-1">
-          {sections.map((section, index) => {
-            const isActive = index === active;
-            const colour = ACCENT_CLASSES[section.accent];
-            return (
-              <li key={section.id}>
-                <button
-                  type="button"
-                  onClick={() => scrollTo(section.id)}
-                  aria-current={isActive ? 'true' : undefined}
-                  className="group flex items-center justify-end gap-2.5 py-1.5"
-                >
-                  <span
-                    className={`whitespace-nowrap rounded border border-hairline bg-surface-1 px-2 py-1 text-[0.7rem] transition-opacity duration-200 ${
-                      isActive
-                        ? 'text-ink-primary opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'
-                        : 'text-ink-secondary opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'
-                    }`}
-                  >
-                    {section.label}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    // The dot wears the chapter's own colour, so the rail is a
-                    // legend for the page rather than a row of identical marks.
-                    className={`block rounded-full transition-all duration-300 ${
-                      isActive
-                        ? `h-5 w-[3px] ${colour.dot}`
-                        : 'h-[3px] w-[3px] bg-ink-muted/50 group-hover:bg-ink-secondary'
-                    }`}
-                  />
-                  <span className="sr-only">{section.label}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-      </nav>
-
-      {/* ---------- Narrow: a progress bar ---------- */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-x-0 top-[3.55rem] z-20 h-px bg-transparent xl:hidden"
-      >
-        <div
-          className={`h-px transition-[width] duration-300 ${ACCENT_CLASSES[sections[active]?.accent ?? 'volt'].dot}`}
-          style={{ width: `${((active + 1) / sections.length) * 100}%` }}
-        />
-      </div>
-    </>
+    <nav
+      aria-label="Sections of this page"
+      className="mb-8 rounded-xl border border-hairline bg-surface-1 p-4"
+    >
+      <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-ink-secondary">
+        On this page
+      </p>
+      <ol className="flex flex-wrap gap-2">
+        {sections.map((section, index) => {
+          const isActive = index === active;
+          const colour = ACCENT_CLASSES[section.accent];
+          return (
+            <li key={section.id}>
+              <a
+                href={`#${section.id}`}
+                aria-current={isActive ? 'location' : undefined}
+                className={`flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-[0.8rem] font-medium transition-colors hover:border-volt/60 hover:text-ink-primary ${
+                  isActive
+                    ? `${colour.border} ${colour.bg} ${colour.text}`
+                    : 'border-hairline text-ink-secondary'
+                }`}
+              >
+                <span aria-hidden="true" className={`size-1.5 shrink-0 rounded-full ${colour.dot}`} />
+                {section.label}
+                <span aria-hidden="true">↓</span>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }
 
