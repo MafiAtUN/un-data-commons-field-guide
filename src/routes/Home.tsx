@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { VideoEmbed } from '../components/VideoEmbed';
-import { publishedVideos } from '../content/videos';
+import { publishedVideos, seriesMinutes } from '../content/videos';
 import { Reveal } from '../components/Reveal';
 import { Chapter } from '../components/home/Chapter';
 import { ChapterIndex } from '../components/home/ChapterIndex';
@@ -40,6 +40,30 @@ export function Home() {
   return (
     <div className="pb-64 sm:pb-40 xl:pb-28">
       <SectionRail />
+
+      <Link
+        to="/watch"
+        className="group mb-8 flex items-center gap-4 rounded-2xl border border-accent-magenta/50 bg-accent-magenta/15 p-4 shadow-[0_8px_40px_rgba(213,81,129,0.12)] transition-colors hover:bg-accent-magenta/25 sm:gap-5 sm:p-5"
+      >
+        <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-accent-magenta-ink text-surface-0 sm:size-14">
+          <svg viewBox="0 0 24 24" className="ml-1 size-6 fill-current"><path d="M8 5v14l11-7z" /></svg>
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent-magenta-ink">
+            Video tutorial series
+          </span>
+          <span className="mt-1 block text-lg font-semibold leading-tight text-ink-primary sm:text-2xl">
+            Watch the UN Data Commons in action
+          </span>
+          <span className="mt-2 block text-[0.8rem] text-ink-secondary">
+            {publishedVideos().length} short videos · {seriesMinutes()} minutes · step-by-step, with transcripts
+          </span>
+        </span>
+        <span className="hidden shrink-0 rounded-full bg-accent-magenta-ink px-5 py-3 text-sm font-bold text-surface-0 sm:block">
+          Watch the series <span aria-hidden="true">↗</span>
+        </span>
+        <span aria-hidden="true" className="text-2xl text-accent-magenta-ink sm:hidden">↗</span>
+      </Link>
 
       {/* ---------- Hero ---------- */}
       <section

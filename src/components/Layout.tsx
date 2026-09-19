@@ -72,7 +72,7 @@ export function Layout({ children }: { children: ReactNode }) {
               onClick={() => setContentsOpen(true)}
               aria-haspopup="dialog"
               aria-expanded={contentsOpen}
-              className="flex items-center gap-2.5 rounded-lg border border-volt/55 bg-volt/10 px-3.5 py-2 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-volt/20"
+              className="relative flex items-center gap-2.5 rounded-lg border border-volt/55 bg-volt/10 px-3.5 py-2 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-volt/20"
             >
               <span aria-hidden="true" className="flex flex-col gap-[3px]">
                 <span className="block h-px w-4 bg-volt" />
@@ -80,6 +80,9 @@ export function Layout({ children }: { children: ReactNode }) {
                 <span className="block h-px w-4 bg-volt" />
               </span>
               Contents
+              <svg aria-hidden="true" viewBox="0 0 40 30" className="pointer-events-none absolute right-3 top-full h-7 w-10 fill-none stroke-volt" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 25C20 28 30 19 29 5M23 11l6-7 6 7" />
+              </svg>
               <kbd className="hidden text-[0.66rem] font-normal text-ink-muted sm:block">
                 {paletteHint()}
               </kbd>
