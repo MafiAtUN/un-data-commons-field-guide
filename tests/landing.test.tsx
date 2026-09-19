@@ -7,6 +7,7 @@ import { GuideContents } from '../src/components/nav/GuideContents';
 import { Home } from '../src/routes/Home';
 import { DESTINATIONS } from '../src/content/navigation';
 import { AUTHOR } from '../src/components/SiteCredit';
+import { NERD_LAB } from '../src/components/NerdLab';
 
 /**
  * The landing page, rendered.
@@ -133,6 +134,22 @@ describe('chrome', () => {
 
   it('still carries the disclaimer the credit sits next to', () => {
     expect(html).toContain('Not an official United Nations publication');
+  });
+
+  it('presents the guide under the lab, top and bottom, the way UNAIVERSE does', () => {
+    // The sibling site says "<mark> presents". Two sites out of one lab that
+    // credit it in two different phrasings read as two labs.
+    expect(html.match(new RegExp(`href="${NERD_LAB.href}"`, 'g'))).toHaveLength(2);
+    expect(html.match(/>\s*presents\s*</g)).toHaveLength(2);
+    expect(html).toContain(NERD_LAB.tagline);
+  });
+
+  it('draws the wordmark rather than spelling the lab out in text', () => {
+    // The mark inherits `currentColor` so one copy serves the volt header and
+    // the dimmed footer. If that is ever swapped for a coloured asset, the
+    // second placement silently stops matching its surroundings.
+    expect(html.match(/stroke="currentColor"/g)).toHaveLength(2);
+    expect(html).toContain(`aria-label="${NERD_LAB.name} presents"`);
   });
 });
 

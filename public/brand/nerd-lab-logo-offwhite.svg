@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 176" role="img" aria-label="Nerd Lab">
+  <title>Nerd Lab</title>
+  <g transform="translate(38,38)" fill="none" stroke="#F4F1EA" stroke-width="24" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M12 100 L12 0 L64 100 L64 0"/>
+    <g transform="translate(90,0)" stroke="none">
+      <rect x="6" y="0" width="56" height="24" fill="#F4F1EA"/>
+      <rect x="20" y="38" width="56" height="24" fill="#F4F1EA"/>
+      <rect x="6" y="76" width="56" height="24" fill="#F4F1EA"/>
+    </g>
+    <path transform="translate(172,0)" d="M12 100 L12 0 M12 12 H40 Q64 12 64 33 Q64 54 40 54 H12 M40 54 L66 100"/>
+    <path transform="translate(264,0)" d="M12 100 L12 0 M12 12 H38 Q66 12 66 50 Q66 88 38 88 H12"/>
+    <path transform="translate(384,0)" d="M12 0 L12 88 L56 88"/>
+    <path transform="translate(458,0)" d="M6 100 L38 0 L70 100 M22 64 H54"/>
+    <path transform="translate(548,0)" d="M12 100 L12 0 M12 12 H36 Q58 12 58 30 Q58 48 36 48 H12 M12 48 H38 Q64 48 64 68 Q64 88 38 88 H12"/>
+  </g>
+</svg>

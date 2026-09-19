@@ -4,12 +4,17 @@ import { DESTINATIONS } from '../content/navigation';
 import { paletteHint, usePaletteHotkey } from '../lib/palette';
 import { SITE_ROOT } from '../lib/undc/config';
 import { GuideContents } from './nav/GuideContents';
+import { NerdLabNavCredit, NerdLabStrip } from './NerdLab';
 import { SiteCredit } from './SiteCredit';
 
 /**
- * Chrome: a wordmark, the way out, and the way in.
+ * Chrome: a credit, a wordmark, the way out, and the way in.
  *
- * Only two controls sit in the header, and both are sized to be seen. The first
+ * The header opens with the Nerd Lab label rather than the site's own initial,
+ * because this guide is one of several things out of that lab and the reader
+ * should be able to get from any page to the rest of them.
+ *
+ * Only two controls sit on the right, and both are sized to be seen. The first
  * is a link off this site entirely — the guide's whole purpose is to get people
  * onto data.un.org, so the platform should never be more than one deliberate
  * click away from any page. The second opens the contents.
@@ -45,21 +50,20 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <header className="sticky top-0 z-30 border-b border-hairline bg-surface-0/92 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="flex min-w-0 shrink items-center gap-2.5">
-            <span
-              aria-hidden="true"
-              className="grid size-7 shrink-0 place-items-center rounded bg-volt text-[0.8rem] font-bold text-surface-0"
+          <div className="flex min-w-0 shrink items-center gap-2.5">
+            <NerdLabNavCredit />
+            <span aria-hidden="true" className="h-7 w-px shrink-0 bg-hairline" />
+            <Link
+              to="/"
+              className="wordmark min-w-0 text-[0.88rem] font-semibold leading-tight text-ink-primary"
             >
-              N
-            </span>
-            <span className="wordmark min-w-0 text-[0.88rem] font-semibold leading-tight text-ink-primary">
               <span className="block truncate">UN Data Commons</span>
               <span className="block truncate font-sans text-[0.7rem] font-normal text-ink-muted">
                 {/* On an inner page the header doubles as a breadcrumb. */}
-                {here ? here.label : 'Field Guide · a Nerd Lab product'}
+                {here ? here.label : 'Field Guide'}
               </span>
-            </span>
-          </Link>
+            </Link>
+          </div>
 
           <div className="flex shrink-0 items-center gap-2">
             <a
@@ -101,10 +105,11 @@ export function Layout({ children }: { children: ReactNode }) {
       <footer className="mt-24 border-t border-hairline">
         <div className="mx-auto max-w-6xl space-y-5 px-4 py-10">
           <div className="space-y-3 text-[0.75rem] leading-relaxed text-ink-muted">
+            {/* The lab's name and tagline are the presenting strip's job, at the
+                foot of this footer. This paragraph is the disclaimer, and a
+                disclaimer that opens with a joke reads as neither. */}
             <p>
-              A{' '}
-              <FooterLink href="https://nerd-factory.github.io/nerd-lab/">Nerd Lab</FooterLink>{' '}
-              product — unnecessarily clever, occasionally useful. An independent guide to the{' '}
+              An independent guide to the{' '}
               <FooterLink href={SITE_ROOT}>UN System Data Commons</FooterLink>. Not an
               official United Nations publication, and not endorsed by the United Nations or
               by Google.
@@ -120,7 +125,9 @@ export function Layout({ children }: { children: ReactNode }) {
               <FooterLink href="https://github.com/MafiAtUN/un-data-commons-field-guide">
                 Source on GitHub
               </FooterLink>
-              <FooterLink href="https://github.com/nerd-factory">More from Nerd Lab</FooterLink>
+              <FooterLink href="https://github.com/nerd-factory">
+                More from the lab on GitHub
+              </FooterLink>
               <FooterLink href="https://data.un.org/undatacommons/docs/getting-started">
                 Official getting-started guide
               </FooterLink>
@@ -131,6 +138,8 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <SiteCredit />
+
+          <NerdLabStrip />
         </div>
       </footer>
     </div>
