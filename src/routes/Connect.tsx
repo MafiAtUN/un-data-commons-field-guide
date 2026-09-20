@@ -8,17 +8,18 @@ const MCP_ENDPOINT = 'https://unsd-datacommons.gcp.un-icc.cloud/mcp';
 /**
  * The MCP surface, exercised rather than described.
  *
- * Re-verified against the live server on 19 September 2026 by calling every
+ * Re-verified against the live server on 20 September 2026 by calling every
  * tool: `initialize` reports "DC MCP Server" v1.3.0, `tools/list` returns six
  * tools, `resources/list` returns six entries (three SKILL.md playbooks and
  * three manifests). Every request and response quoted below is a real one,
  * trimmed only for width.
  *
  * Three things that only turn up by calling it, and that all cost real time:
- * the `Accept` header is mandatory and a missing one is a 406; the `places`
- * argument on `search_indicators` currently 500s on this deployment; and a
- * guessed variable dcid returns success with an empty `data` object rather than
- * an error, which is the single most dangerous response an LLM can be handed.
+ * the `Accept` header is mandatory and a missing one is a 406; a place argument
+ * must be a plain name, because a dcid misses the name index and falls through
+ * to a disabled geocoder that answers 500; and a guessed variable dcid returns
+ * success with an empty `data` object rather than an error, which is the single
+ * most dangerous response an LLM can be handed.
  */
 export function Connect() {
   return (
@@ -235,7 +236,7 @@ claude mcp list`}
 
       <Section
         title="The six tools, with a real call for each"
-        lead="Four work against this deployment today. Two do not, for two different reasons, and both failures are silent until you hit them — so they are marked here."
+        lead="Five work against this deployment today. One does not, and it is marked. The two search tools work only if you hand them place names rather than dcids — the reverse of what the rest of the API teaches."
       >
         <div className="space-y-3">
           {[
@@ -243,14 +244,13 @@ claude mcp list`}
               tool: 'search_indicators',
               what: 'Find statistical variables matching a natural-language query. The discovery step, and the one the server insists you do first.',
               args: `{"query":"maternal mortality","per_search_limit":10,"include_topics":false}`,
-              note: 'Search one concept at a time — the playbook is explicit that "health and unemployment" confuses the index. Do not pass the optional places argument: it 500s on this deployment (trap 3).',
+              note: 'Search one concept at a time — the playbook is explicit that "health and unemployment" confuses the index. The optional places argument works, but only with plain names: places: ["Kenya"] succeeds where places: ["country/KEN"] returns 500 (trap 3).',
             },
             {
               tool: 'search_child_indicators',
               what: 'The same, for variables available at the child-place level inside a parent — the sub-national equivalent.',
-              args: `{"query":"population","parent_place":"africa","sample_child_places":["country/KEN","country/ETH"]}`,
-              note: 'Returns HTTP 500 on this deployment, always. Its parent_place and sample_child_places arguments are required and both go through the broken place-name resolution, so there is no way to call it successfully. Use search_indicators without places, then get_child_observations.',
-              broken: true,
+              args: `{"query":"population","parent_place":"Africa","sample_child_places":["Kenya","Ethiopia"]}`,
+              note: 'Reachable, but only by name. sample_child_places must hold plain names — one dcid anywhere in that list returns 500. parent_place is relaxed and takes either "Africa" or africa. Note also that child_place_type is not a parameter here, unlike get_child_observations; passing it fails validation.',
             },
             {
               tool: 'get_variable_metadata',
@@ -404,8 +404,8 @@ claude mcp list`}
               body: 'Send Accept: application/json, or no Accept header at all, and every request returns 406 Not Acceptable. The transport is streamable HTTP, so the header must be Accept: application/json, text/event-stream. Real clients set it for you; anything hand-rolled, including curl, does not.',
             },
             {
-              title: 'Anything that passes a place to a search tool returns 500',
-              body: 'The server resolves place names through a Google Maps legacy API that is not enabled on this project, so every search call carrying places fails with HTTP 500 — whether you pass country dcids, wikidataId dcids or plain names. search_indicators works perfectly once you drop the optional places argument. search_child_indicators cannot: both of its place arguments are required, so the whole tool is unreachable here. The practical workaround is to search without places and then use get_child_observations, which resolves containment inside the graph and does not touch the geocoder.',
+              title: 'A place argument must be a name, never a dcid',
+              body: 'The search tools look a place up in a name index first, and a miss falls through to a geocoder — a Google Maps legacy API that is not enabled on this project. So a value the index does not recognise comes back as HTTP 500 rather than as an empty result — a server error standing in for "no match". Plain names work: places: ["Kenya"] and sample_child_places: ["Kenya","Ethiopia"] both return SUCCESS. Dcids do not: country/KEN and wikidataId/Q114 both 500, and a single dcid anywhere in the list fails the whole call. This inverts the rule the REST surface teaches, where the dcid is always the safe form. The same fallback sits behind /core/api/v2/resolve, where one typo — Kenyaa — also answers 500 instead of returning no candidates.',
             },
             {
               title: 'A line break in the body returns 403',
@@ -569,10 +569,11 @@ mcp '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_observa
             every time, and you convert a silent emptiness into a stated one.
           </Takeaway>
           <Takeaway>
-            <strong className="text-ink-primary">Four tools, not six.</strong>{' '}
-            <code>search_child_indicators</code> cannot be called at all here, and{' '}
-            <code>get_multi_entity_observations</code> has no data behind it. Knowing that
-            now is cheaper than discovering it mid-conversation with a colleague watching.
+            <strong className="text-ink-primary">Five tools, not six — and name your places.</strong>{' '}
+            <code>get_multi_entity_observations</code> has no data behind it. The other five
+            work, but the two search tools take place <em>names</em> and answer 500 to a dcid,
+            which is the opposite of the rule everywhere else. Knowing that now is cheaper
+            than discovering it mid-conversation with a colleague watching.
           </Takeaway>
         </div>
       </Section>

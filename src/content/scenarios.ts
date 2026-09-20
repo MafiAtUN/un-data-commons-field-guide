@@ -11,8 +11,16 @@
  * too late, that the two series you joined do not cover the same countries.
  *
  * Every number, response and dead end below was produced against the live
- * deployment on 19 September 2026. The dead ends are kept deliberately: a
- * discovery trail with the failures edited out teaches nobody how to search.
+ * deployment on 19 September 2026, and the resolver steps were re-checked on
+ * 20 September. The dead ends are kept deliberately: a discovery trail with the
+ * failures edited out teaches nobody how to search.
+ *
+ * Note that resolver *ranking* is the one thing here that moves: on 19 September
+ * the variable this scenario wants came back eighth, and a day later it came
+ * back first. The identifiers and the coverage counts have not moved at all.
+ * That asymmetry is the argument the scenario is making, so if a rank quoted
+ * below no longer matches, the narrative still holds — rewrite the rank, not
+ * the lesson.
  */
 
 import type { RecipeSpec, Shape } from '../lib/undc/recipes';
@@ -73,13 +81,13 @@ export const SCENARIOS: readonly Scenario[] = [
         call: `curl -s -X POST '${API}/api/explore/detect-and-fulfill?q=GDP%20per%20capita' \\
   -H 'Content-Type: application/json' -d '{}'`,
         result:
-          'Eleven variables, and the one you want is eighth. Above it: real GDP per worker at PPP (ILO), gross national income per capita (UNDP), gross domestic product at current prices (UNIDO — a total, not a per-capita), and the HDI itself. The resolver also silently committed to the United States, because the question named no place.',
+          'Eleven variables. Today the one you want happens to be first — but nothing on the page tells you that, and the ten beneath it are a minefield: an annual growth rate rather than a level (WHO), gross national income rather than GDP and silently sliced to Sex=Male (UNDP), gross domestic product at current prices (UNIDO — a total, not a per-capita), the HDI itself, and real GDP per worker at PPP (ILO), which is per worker and not per head. A day earlier this same query put the right answer eighth. The resolver also silently committed to the United States, because the question named no place.',
         outcome: 'near-miss',
       },
       {
-        action: 'Read the list rather than taking the top hit. The name you need is spelled out in full.',
+        action: 'Read what the top hit actually is, rather than trusting that it is top. The full name is the only thing that settles it.',
         result:
-          'undata/unicef/SPP_GDPPC — "Gross Domestic Product (GDP) per capita (current United States dollars)". Published inside the UNICEF collection, which is not where anyone would have looked for it.',
+          'undata/unicef/SPP_GDPPC — "Gross Domestic Product (GDP) per capita (current United States dollars)". Published inside the UNICEF collection, which is not where anyone would have looked for it. Rank is the part that moves between days; the name and the dcid are the parts that do not.',
         outcome: 'found',
       },
       {

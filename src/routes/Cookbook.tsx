@@ -222,8 +222,50 @@ curl -s -G \\
         />
       </Section>
 
+      <Section title="Recipe 6 — Turn a name into a dcid, and read the ambiguity">
+        <Recipe
+          when="You have a place name from a colleague, a spreadsheet or a filename, and you need the identifier the API actually takes."
+          code={`curl -s -G \\
+  'https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/resolve' \\
+  --data-urlencode 'nodes=Kenya' \\
+  --data-urlencode 'property=<-description->dcid'`}
+          notes={[
+            'Returns `{"entities":[{"node":"Kenya","candidates":[{"dcid":"country/KEN"}]}]}`. ISO codes work too — `KEN` resolves to the same thing — and `<-wikidataId->dcid` takes `Q114`.',
+            'The `property` expression must have two parts, an incoming and an outgoing arc. A one-part expression like `->dcid` returns 400 with a message that says so.',
+            'Read `candidates` as a list, not a value. `Georgia` returns three, and `geoId/13` — the US state — ranks *above* `country/GEO`. Same default-to-America bias the search box has.',
+            'A 500 here means "not in the index", not "server broken": a miss falls through to a geocoder that is disabled on this deployment. One typo — `Kenyaa` — answers 500, and so does passing a dcid instead of a name.',
+            'One unresolvable name fails the whole batch, so resolve names one at a time if any of them are user-supplied.',
+          ]}
+        />
+      </Section>
+
+      <Section title="Recipe 7 — Page past the first 500 results">
+        <Recipe
+          when="Any time you walk the graph to find out how much of something exists. This is the quietest wrong answer in the API."
+          code={`# page 1 — returns 500 nodes and a nextToken
+curl -s -G \\
+  'https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/node' \\
+  --data-urlencode 'nodes=africa' \\
+  --data-urlencode 'property=<-containedInPlace'
+
+# page 2 — hand the token straight back
+curl -s -G \\
+  'https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/node' \\
+  --data-urlencode 'nodes=africa' \\
+  --data-urlencode 'property=<-containedInPlace' \\
+  --data-urlencode 'nextToken=PASTE_THE_TOKEN_HERE'`}
+          notes={[
+            'A node query is capped at 500 results. There is no error, no warning and no total — just a `nextToken` at the top level of the response that nothing obliges you to read.',
+            'Everything inside Africa is 2,739 nodes across 6 pages. Stop at page one and you have 500, which is not a sample of anything: it is whatever the index returned first.',
+            'Loop until `nextToken` is absent. That absence is the only end-of-results signal you get.',
+            'Some walks are much larger than they look. `nodes=Earth` with the same property was still returning full pages after 12 requests, so bound the loop and hold the result rather than paging interactively.',
+            'The observation endpoints are not capped this way — a containment query like Recipe 2 returns every country in one response. It is the *node* walk that truncates.',
+          ]}
+        />
+      </Section>
+
       <Section
-        title="Six things that will trip you up"
+        title="Eight things that will trip you up"
         lead="Collected from working against this deployment; each one cost real debugging time."
       >
         <ol className="space-y-3">
@@ -251,6 +293,14 @@ curl -s -G \\
             {
               title: 'Disaggregations exclude "unknown"',
               body: 'Age and sex slices omit the unknown category, which is carried separately (`.AGE--_U`). Summing the named bands will not reproduce the total.',
+            },
+            {
+              title: 'There is no sub-national data, and the query for it still works',
+              body: 'Ask for `{typeOf:AdministrativeArea1}` inside Earth and you get 13 places — every one of them a `country/` dcid. They are dependent territories double-classified as both Country and AdministrativeArea1: Hong Kong, Greenland, Guam, Bermuda, Gibraltar, Macau, the Caymans. All 13 report exactly 100% electricity access, so the chart you get is a flat line of small wealthy territories. Scope it to one country — `country/IND<-containedInPlace+{typeOf:AdministrativeArea1}` — and the response is an empty success. This is a country-level platform; treat any sub-national result as a classification artefact.',
+            },
+            {
+              title: 'The same indicator under two agencies is one source, not two',
+              body: 'Maternal mortality appears as `undata/sdg/SH_STA_MORT.SEX--F` and as `undata/unicef/MNCH_MMR.SEX--F`, under different agencies with different provenance URLs. Across all 195 countries they carry identical coverage, identical years and identical values — 378.79578 against 378.8 for Kenya in 2023, the same estimate rounded differently. Finding an indicator twice is not corroboration, averaging the pair is circular, and joining them introduces variance that is pure rounding.',
             },
           ].map((item, index) => (
             <li key={item.title} className="flex gap-4 rounded-lg border border-hairline bg-surface-1 p-4">

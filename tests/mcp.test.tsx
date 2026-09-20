@@ -7,19 +7,21 @@ import { ENDPOINTS } from '../src/lib/undc/config';
 /**
  * The MCP page, which is mostly claims about a server that can change.
  *
- * Everything here was verified by calling the live server on 19 September 2026.
- * Three of those claims are the ones a reader will act on and be hurt by if
- * they rot, so they are pinned:
+ * Everything here was verified by calling the live server, most recently on
+ * 20 September 2026. Three of those claims are the ones a reader will act on
+ * and be hurt by if they rot, so they are pinned:
  *
- *  - which tools actually work (four of six, and the two that do not fail for
- *    two different reasons);
+ *  - which tools actually work (five of six), and the place-argument rule:
+ *    a plain name resolves, a dcid falls through to a disabled geocoder and
+ *    answers 500;
  *  - the Accept header, without which every request is a 406;
  *  - that a wrong dcid returns success with an empty data object rather than an
  *    error, which is the failure mode that makes an assistant confabulate.
  *
- * If the deployment fixes its geocoder these assertions should be updated
- * deliberately, by someone who has re-run the calls — which is the point of
- * writing them down rather than leaving them in prose.
+ * The page previously claimed places always 500s and that search_child_indicators
+ * was unreachable. Both were wrong — plain names work on both search tools — and
+ * the regression test below exists so that wording cannot come back without
+ * someone re-running the calls.
  */
 const html = renderToStaticMarkup(
   <MemoryRouter>
@@ -65,17 +67,30 @@ describe('the tool reference is honest about what works', () => {
     }
   });
 
-  it('marks the two that cannot be used on this deployment', () => {
-    // Rendered twice: once per broken tool badge.
-    expect(html.match(/No data here/g)?.length).toBe(2);
-    expect(html).toContain('Four tools, not six');
+  it('marks the one that cannot be used on this deployment', () => {
+    // Rendered once: get_multi_entity_observations is the only dead tool here.
+    // search_child_indicators was marked broken until 20 September 2026, when
+    // calling it with plain place names turned out to work; see the geocoder test.
+    expect(html.match(/No data here/g)?.length).toBe(1);
+    expect(html).toContain('Five tools, not six');
   });
 
   it('explains the geocoder failure and gives the way around it', () => {
     expect(html).toContain('500');
     expect(html.toLowerCase()).toContain('geocoder');
-    // The workaround is the part that makes the trap actionable.
-    expect(html).toContain('get_child_observations');
+    // The rule is the part that makes the trap actionable, and it is the
+    // inverse of the REST rule: a name works where a dcid does not.
+    expect(html).toContain('country/KEN');
+    expect(html).toContain('Kenya');
+  });
+
+  it('does not tell readers to drop the places argument', () => {
+    // The page said "do not pass places" and "search_child_indicators is
+    // unreachable" until both were shown to be false. Guard the regression:
+    // plain names work on both search tools.
+    expect(html).not.toContain('Four tools, not six');
+    expect(html).not.toMatch(/drop the optional places argument/i);
+    expect(html).not.toMatch(/unreachable here/i);
   });
 });
 
