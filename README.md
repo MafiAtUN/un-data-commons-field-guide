@@ -47,11 +47,11 @@ table to an AI assistant. No identifiers required, no reading required.
 
 ### The navigation
 
-One full-screen table of contents, set in display type: twelve numbered chapters grouped
+One full-screen table of contents, set in display type: sixteen numbered chapters grouped
 by track, each carrying what it is for and how long it takes, with the page you are on
 marked. It opens from a labelled **Contents** button in the header and from ⌘K, typing
 filters it, and the last row always offers the query to data.un.org itself — this guide
-has twelve pages and the platform has about 85,000 indicators, so the honest answer is
+has sixteen pages and the platform has about 85,000 indicators, so the honest answer is
 often "not here, out there".
 
 It is full-screen at every width, so the small-screen and large-screen navigation are the
@@ -142,14 +142,51 @@ Second-order consequences worth knowing: `curl -d @body.json` is safe because cu
 newlines, `curl --data-binary @body.json` is not; `requests.post(url, json=payload)` is safe,
 `json.dumps(payload, indent=2)` is not.
 
+## The finding that is easiest to miss
+
+Every graph walk is capped at **500 results**. No error, no warning, no total — just a
+`nextToken` at the top of the response that nothing obliges you to read.
+
+```
+GET /core/api/v2/node?nodes=africa&property=<-containedInPlace
+→ 500 nodes + a nextToken        ← looks complete, and is not
+→ follow the token: 2,739 nodes across 6 pages
+```
+
+Stop at page one and you have 500 of 2,739 — not a sample of anything, just whatever the
+index returned first. Recipe 7 in the cookbook walks the loop; the token's absence is the
+only end-of-results signal there is. Observation queries are *not* capped this way, so a
+containment expression still returns every country in one response.
+
+Two more behave the same way — succeeding while returning something other than what they
+appear to:
+
+- **A place argument on the MCP search tools must be a plain name.** `"Kenya"` resolves;
+  `country/KEN` and `wikidataId/Q114` answer **500**, and one dcid anywhere in a list fails
+  the whole call. The tools check a name index first, and a miss falls through to a
+  geocoder that is disabled on this deployment — so a 500 stands in for "no match". This
+  inverts the rule the REST surface teaches, where the dcid is always the safe form. The
+  same fallback sits behind `/core/api/v2/resolve`, where the single typo `Kenyaa` also
+  answers 500 instead of returning no candidates.
+- **The same indicator under two agencies is one source, not two.** Maternal mortality is
+  published as `undata/sdg/SH_STA_MORT.SEX--F` and as `undata/unicef/MNCH_MMR.SEX--F`, with
+  different provenance URLs. Across all 195 countries the coverage, the years and the
+  values are identical — 378.79578 against 378.8 for Kenya in 2023, one estimate rounded
+  twice. Finding an indicator twice is not corroboration, and joining the pair introduces
+  variance that is pure rounding.
+
+`tests/cookbook.test.tsx` and `tests/mcp.test.tsx` pin all three, the latter with a
+regression test so the earlier — and wrong — wording cannot come back without someone
+re-running the calls.
+
 ## The three ways in
 
-Verified against the live deployment on 18 September 2026. None requires credentials.
+Verified against the live deployment on 21 September 2026. None requires credentials.
 
 ```
 Ask       https://data.un.org/search?q=…                          deep-linkable
 Query     https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2   CORS: *
-Delegate  https://unsd-datacommons.gcp.un-icc.cloud/mcp           6 tools, 3 playbooks
+Delegate  https://unsd-datacommons.gcp.un-icc.cloud/mcp           6 tools (5 usable), 3 playbooks
 ```
 
 The REST surface answers with `Access-Control-Allow-Origin: *`, which is the architectural
@@ -300,7 +337,9 @@ about. When it does load it points at `youtube-nocookie.com`, and there is no
 in the resting markup.
 
 Recordings are uploaded by hand and the eleven-character id pasted into
-`src/content/tutorials.ts`. That is not laziness about automation: videos
+`src/content/videos.ts` (and `src/content/tutorials.ts` for a walkthrough's own
+clip). An unpublished entry carries `id: ''`, which renders as a still and a
+transcript rather than a broken player. That is not laziness about automation: videos
 uploaded through an unaudited YouTube Data API project are
 [forced to private on arrival](https://developers.google.com/youtube/v3/revision_history),
 so the API would buy a locked video and a quota ceiling of about six uploads a
@@ -320,12 +359,12 @@ src/
 ├── routes/            one file per page
 └── data/              snapshot-data.json — the committed fallback
 scripts/               snapshot recorder, Pages postbuild
-tests/                 138 tests, no network
+tests/                 240 tests, no network
 ```
 
 ## Tests
 
-138 tests, no network access, run against the committed payloads.
+240 tests across 19 files, no network access, run against the committed payloads.
 
 ```
 tests/dcid.test.ts        the identifier grammar, including round-tripping
@@ -338,6 +377,15 @@ tests/navigation.test.ts  the depth axis: contiguous tracks, findable by the obv
 tests/landing.test.tsx    the front page rendered, and that it fetches nothing
 tests/content.test.ts     every curated indicator and preset country actually exists
 tests/export.test.ts      CSV quoting and provenance; citations name the agency first
+tests/curl-samples.test.ts  no line break in any POST body on the site — that is a 403
+tests/cookbook.test.tsx   the REST claims: the 500-result cap, resolve, the two lying queries
+tests/mcp.test.tsx        which MCP tools work, and that the old wrong wording cannot return
+tests/recipes.test.ts     every generator × shape emits runnable code with nothing undefined
+tests/video.test.tsx      no player, and no youtube domain, in the resting markup
+tests/scenarios.test.tsx  the worked scenarios and their discovery trails
+tests/integrations.test.tsx  the Power BI / Tableau / notebook contract
+tests/timeline.test.ts    the platform history entries
+tests/sectionrail.test.ts the in-page section rail
 ```
 
 `snapshots.test.ts` matters because the recorder is plain Node and the app is TypeScript,
