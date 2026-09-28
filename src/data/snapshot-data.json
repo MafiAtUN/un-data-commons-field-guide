@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T14:43:22.457Z",
+  "generatedAt": "2026-09-28T12:11:05.860Z",
   "records": {
     "catalogue.collections": {
       "request": {
@@ -10,7 +10,7 @@
           "entities": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:19.802Z",
+      "fetchedAt": "2026-09-28T12:10:58.235Z",
       "payload": {
         "absoluteName": "UN System Data Commons",
         "childStatVarGroups": [
@@ -123,7 +123,7 @@
           "entities": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:19.905Z",
+      "fetchedAt": "2026-09-28T12:10:58.657Z",
       "payload": {
         "absoluteName": "12 UN Data Thematic Areas",
         "childStatVarGroups": [
@@ -214,7 +214,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:19.965Z",
+      "fetchedAt": "2026-09-28T12:10:58.786Z",
       "payload": {
         "data": {
           "undata/sdg/VC_DTH_TOTN": {
@@ -425,7 +425,7 @@
           }
         },
         "mixer_response_ids": [
-          "502fe327-51ce-4543-8583-d00fea7bf63f"
+          "7781cd4c-3ec0-4732-9cbc-d0d2f98eb1b9"
         ]
       }
     },
@@ -444,7 +444,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.029Z",
+      "fetchedAt": "2026-09-28T12:10:58.909Z",
       "payload": {
         "data": {
           "undata/sdg/VC_DTH_TOTN.AGE--Y0T17": {
@@ -654,7 +654,7 @@
           }
         },
         "mixer_response_ids": [
-          "4c7372f6-e611-4a0d-83b3-e4217dd5972d"
+          "2b3a1bc5-62e8-48cf-ba6f-66435385718d"
         ]
       }
     },
@@ -673,7 +673,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.210Z",
+      "fetchedAt": "2026-09-28T12:10:59.064Z",
       "payload": {
         "data": {
           "undata/sdg/VC_DTH_TOCVN": {
@@ -793,7 +793,7 @@
           }
         },
         "mixer_response_ids": [
-          "d4c96bff-b337-4333-b6ec-b9d48bdda15e"
+          "19462a61-d467-4e27-a934-d337f4aa2101"
         ]
       }
     },
@@ -802,63 +802,11 @@
         "method": "GET",
         "url": "https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation?date=LATEST&variable.dcids=undata%2Funodc%2FVIC_HOM_RT&entity.expression=africa%3C-containedInPlace%2B%7BtypeOf%3ACountry%7D&select=date&select=value&select=variable&select=entity"
       },
-      "fetchedAt": "2026-09-18T14:43:20.365Z",
+      "fetchedAt": "2026-09-28T12:10:59.224Z",
       "payload": {
         "byVariable": {
           "undata/unodc/VIC_HOM_RT": {
             "byEntity": {
-              "country/RWA": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2020",
-                        "value": 3.61
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/LBR": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2012",
-                        "value": 3.09
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/ERI": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2012",
-                        "value": 15.61
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/MRT": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2020",
-                        "value": 1
-                      }
-                    ]
-                  }
-                ]
-              },
               "country/MUS": {
                 "orderedFacets": [
                   {
@@ -867,110 +815,6 @@
                       {
                         "date": "2024",
                         "value": 2.67
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/DZA": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2024",
-                        "value": 1.38
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/UGA": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2024",
-                        "value": 8.82
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/ETH": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2012",
-                        "value": 8.51
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/GNB": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2017",
-                        "value": 1.12
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/ZMB": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2015",
-                        "value": 5.2
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/AGO": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2016",
-                        "value": 4.1
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/SSD": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2012",
-                        "value": 13.98
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/SHN": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2009",
-                        "value": 0
                       }
                     ]
                   }
@@ -989,183 +833,27 @@
                   }
                 ]
               },
-              "country/ZWE": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2022",
-                        "value": 6.76
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/NAM": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2025",
-                        "value": 8.41
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/MAR": {
+              "country/DZA": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
                         "date": "2024",
-                        "value": 1.67
+                        "value": 1.38
                       }
                     ]
                   }
                 ]
               },
-              "country/CPV": {
+              "country/RWA": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
                         "date": "2020",
-                        "value": 6.99
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/TUN": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2020",
-                        "value": 4.69
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/SYC": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2022",
-                        "value": 7.97
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/SWZ": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2024",
-                        "value": 13.68
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/MOZ": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2011",
-                        "value": 3.59
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/REU": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2009",
-                        "value": 1.79
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/NER": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2012",
-                        "value": 4.42
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/BWA": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2023",
-                        "value": 12.98
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/MYT": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2009",
-                        "value": 5.94
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/SLE": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2020",
-                        "value": 2.22
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/LSO": {
-                "orderedFacets": [
-                  {
-                    "facetId": "5181773110054467647",
-                    "observations": [
-                      {
-                        "date": "2024",
-                        "value": 22.2
+                        "value": 3.61
                       }
                     ]
                   }
@@ -1184,79 +872,105 @@
                   }
                 ]
               },
-              "country/EGY": {
+              "country/GNB": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
                         "date": "2017",
-                        "value": 1.31
+                        "value": 1.12
                       }
                     ]
                   }
                 ]
               },
-              "country/TZA": {
+              "country/MAR": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
                         "date": "2024",
-                        "value": 3.3
+                        "value": 1.67
                       }
                     ]
                   }
                 ]
               },
-              "country/ZAF": {
+              "country/MYT": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
-                        "date": "2024",
-                        "value": 39.72
+                        "date": "2009",
+                        "value": 5.94
                       }
                     ]
                   }
                 ]
               },
-              "country/MWI": {
+              "country/TUN": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
-                        "date": "2012",
-                        "value": 1.78
+                        "date": "2020",
+                        "value": 4.69
                       }
                     ]
                   }
                 ]
               },
-              "country/STP": {
+              "country/MRT": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/CPV": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 6.99
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MOZ": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
                         "date": "2011",
-                        "value": 3.23
+                        "value": 3.59
                       }
                     ]
                   }
                 ]
               },
-              "country/KEN": {
+              "country/NER": {
                 "orderedFacets": [
                   {
                     "facetId": "5181773110054467647",
                     "observations": [
                       {
-                        "date": "2024",
-                        "value": 4.65
+                        "date": "2012",
+                        "value": 4.42
                       }
                     ]
                   }
@@ -1275,6 +989,188 @@
                   }
                 ]
               },
+              "country/BWA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 12.98
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/KEN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 4.65
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/REU": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2009",
+                        "value": 1.79
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ERI": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 15.61
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZMB": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2015",
+                        "value": 5.2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/UGA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 8.82
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/EGY": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2017",
+                        "value": 1.31
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ETH": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 8.51
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZAF": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 39.72
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/NAM": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2025",
+                        "value": 8.41
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SSD": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 13.98
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/MWI": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 1.78
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/AGO": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2016",
+                        "value": 4.1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SHN": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2009",
+                        "value": 0
+                      }
+                    ]
+                  }
+                ]
+              },
               "country/GHA": {
                 "orderedFacets": [
                   {
@@ -1283,6 +1179,110 @@
                       {
                         "date": "2022",
                         "value": 1.83
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SLE": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2020",
+                        "value": 2.22
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/LBR": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2012",
+                        "value": 3.09
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/ZWE": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 6.76
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SYC": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2022",
+                        "value": 7.97
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/TZA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 3.3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/STP": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2011",
+                        "value": 3.23
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/SWZ": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 13.68
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/LSO": {
+                "orderedFacets": [
+                  {
+                    "facetId": "5181773110054467647",
+                    "observations": [
+                      {
+                        "date": "2024",
+                        "value": 22.2
                       }
                     ]
                   }
@@ -1317,7 +1317,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.423Z",
+      "fetchedAt": "2026-09-28T12:10:59.390Z",
       "payload": {
         "data": {
           "undata/sdg/SM_POP_REFG_OR": {
@@ -1781,7 +1781,7 @@
           }
         },
         "mixer_response_ids": [
-          "03dc5742-f596-4667-8e9d-40c4cff3b075"
+          "244b20d9-4593-435f-a1e2-3182095f2fb7"
         ]
       }
     },
@@ -1801,7 +1801,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.479Z",
+      "fetchedAt": "2026-09-28T12:10:59.528Z",
       "payload": {
         "data": {
           "undata/sdg/SI_POV_DAY1": {
@@ -1953,7 +1953,7 @@
           }
         },
         "mixer_response_ids": [
-          "62063dab-7c66-430c-a0f0-1299a12c5f46"
+          "217af637-3ffd-4c69-afe1-2019ed127076"
         ]
       }
     },
@@ -1962,11 +1962,24 @@
         "method": "GET",
         "url": "https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation?date=LATEST&variable.dcids=undata%2Fundphdro%2FHDI_hdi&entity.expression=SouthernAsia%3C-containedInPlace%2B%7BtypeOf%3ACountry%7D&select=date&select=value&select=variable&select=entity"
       },
-      "fetchedAt": "2026-09-18T14:43:20.615Z",
+      "fetchedAt": "2026-09-28T12:10:59.686Z",
       "payload": {
         "byVariable": {
           "undata/undphdro/HDI_hdi": {
             "byEntity": {
+              "country/LKA": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.776
+                      }
+                    ]
+                  }
+                ]
+              },
               "country/BGD": {
                 "orderedFacets": [
                   {
@@ -1975,45 +1988,6 @@
                       {
                         "date": "2023",
                         "value": 0.685
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/AFG": {
-                "orderedFacets": [
-                  {
-                    "facetId": "9235035198795760647",
-                    "observations": [
-                      {
-                        "date": "2023",
-                        "value": 0.496
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/IND": {
-                "orderedFacets": [
-                  {
-                    "facetId": "9235035198795760647",
-                    "observations": [
-                      {
-                        "date": "2023",
-                        "value": 0.685
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/MDV": {
-                "orderedFacets": [
-                  {
-                    "facetId": "9235035198795760647",
-                    "observations": [
-                      {
-                        "date": "2023",
-                        "value": 0.766
                       }
                     ]
                   }
@@ -2045,6 +2019,45 @@
                   }
                 ]
               },
+              "country/MDV": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.766
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/AFG": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.496
+                      }
+                    ]
+                  }
+                ]
+              },
+              "country/IND": {
+                "orderedFacets": [
+                  {
+                    "facetId": "9235035198795760647",
+                    "observations": [
+                      {
+                        "date": "2023",
+                        "value": 0.685
+                      }
+                    ]
+                  }
+                ]
+              },
               "country/IRN": {
                 "orderedFacets": [
                   {
@@ -2066,19 +2079,6 @@
                       {
                         "date": "2023",
                         "value": 0.698
-                      }
-                    ]
-                  }
-                ]
-              },
-              "country/LKA": {
-                "orderedFacets": [
-                  {
-                    "facetId": "9235035198795760647",
-                    "observations": [
-                      {
-                        "date": "2023",
-                        "value": 0.776
                       }
                     ]
                   }
@@ -2113,7 +2113,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.675Z",
+      "fetchedAt": "2026-09-28T12:10:59.873Z",
       "payload": {
         "data": {
           "undata/sdg/EG_ACS_ELEC": {
@@ -2533,7 +2533,7 @@
           }
         },
         "mixer_response_ids": [
-          "6cbeecc9-0fce-495e-9885-0a8543ad8ae1"
+          "803d82e3-b142-40b5-b0ec-2b5a4a917f13"
         ]
       }
     },
@@ -2552,7 +2552,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.732Z",
+      "fetchedAt": "2026-09-28T12:11:00.016Z",
       "payload": {
         "data": {
           "undata/sdg/IT_USE_ii99": {
@@ -2896,7 +2896,7 @@
           }
         },
         "mixer_response_ids": [
-          "386e1a22-712b-4776-ae57-e56ff62871ed"
+          "f027dc11-bab5-4f6f-83a7-5cf4b71a15bc"
         ]
       }
     },
@@ -2915,7 +2915,7 @@
           ]
         }
       },
-      "fetchedAt": "2026-09-18T14:43:20.788Z",
+      "fetchedAt": "2026-09-28T12:11:00.146Z",
       "payload": {
         "data": {
           "undata/sdg/SH_STA_MORT.SEX--F": {
@@ -3243,7 +3243,7 @@
           }
         },
         "mixer_response_ids": [
-          "b544e748-ebed-4d47-9321-2c676dec3157"
+          "c4acf071-ecae-4f86-8018-32a0297f3d9f"
         ]
       }
     },
@@ -3255,7 +3255,7 @@
           "contextHistory": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:21.859Z",
+      "fetchedAt": "2026-09-28T12:11:01.605Z",
       "payload": {
         "place": {
           "dcid": "country/USA",
@@ -3497,7 +3497,7 @@
           "contextHistory": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:22.103Z",
+      "fetchedAt": "2026-09-28T12:11:03.273Z",
       "payload": {
         "place": {
           "dcid": "country/SSD",
@@ -3737,7 +3737,7 @@
           "contextHistory": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:22.295Z",
+      "fetchedAt": "2026-09-28T12:11:04.500Z",
       "payload": {
         "place": {
           "dcid": "africa",
@@ -3987,7 +3987,7 @@
           "contextHistory": []
         }
       },
-      "fetchedAt": "2026-09-18T14:43:22.456Z",
+      "fetchedAt": "2026-09-28T12:11:05.859Z",
       "payload": {
         "place": {
           "dcid": "country/SSD",
