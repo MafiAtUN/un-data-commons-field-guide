@@ -9,6 +9,7 @@ import { ResolverFilm } from '../components/home/ResolverFilm';
 import { TheWand } from '../components/home/TheWand';
 import { Timeline } from '../components/home/Timeline';
 import { WaysIn } from '../components/home/WaysIn';
+import { PythonPackage } from '../components/home/PythonPackage';
 import { ScrollCue, SectionRail } from '../components/home/SectionRail';
 import { HOME_SECTIONS } from '../content/sections';
 import { timelineSpan } from '../content/timeline';
@@ -243,6 +244,7 @@ export function Home() {
         }
       >
         <WaysIn />
+        <PythonPackage />
       </Chapter>
 
       {/* ---------- The guide ---------- */}

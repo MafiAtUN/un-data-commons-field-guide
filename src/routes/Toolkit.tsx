@@ -70,6 +70,15 @@ export function Toolkit() {
             </Link>{' '}
             shows all sixteen contributing collections and what each is good for.
           </p>
+          <p>
+            Working in Python? The{' '}
+            <Link to="/notebooks#undata" className="text-volt underline decoration-volt/30 underline-offset-2">
+              undata package
+            </Link>{' '}
+            searches all of them by plain words (<code>un.search("maternal mortality")</code>)
+            and fetches any of them by country, region or SDG number, with the same
+            citation and source details this page gives you.
+          </p>
         </div>
       </Section>
     </>

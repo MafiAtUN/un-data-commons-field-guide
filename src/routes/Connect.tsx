@@ -135,6 +135,85 @@ claude mcp list`}
       </Section>
 
       <Section
+        id="undata"
+        title="A second connector, for when you want the analysis too"
+        lead="The platform's endpoint searches and fetches. undata's connector adds the UN's country groups, the SDG progress method and charts. You can connect both."
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="rounded-lg border border-hairline bg-surface-1 p-4">
+            <h3 className="text-[0.88rem] font-semibold text-ink-primary">What it adds</h3>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[0.82rem] leading-relaxed text-ink-secondary">
+              <li>
+                Places by name, including UN M49 regions and the current LDC, LLDC and SIDS
+                lists, with official UN names in the answer.
+              </li>
+              <li>
+                Progress towards a 2030 target by the UN Statistics Division's published
+                method, country profiles against region and world, and gaps between groups
+                (women and men, rural and urban) compared in the same year.
+              </li>
+              <li>
+                Every answer carries the source, the year of each value and the countries
+                with no data; analysis tools can return a chart as an image.
+              </li>
+            </ul>
+            <p className="mt-3 text-[0.78rem] leading-relaxed text-ink-muted">
+              Fourteen read-only tools, no key. It runs on your machine and needs{' '}
+              <a
+                href="https://docs.astral.sh/uv/getting-started/installation/"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-volt underline decoration-volt/30 underline-offset-2"
+              >
+                uv
+              </a>
+              , which installs it on first use. Unofficial, by the author of this guide, and
+              part of the{' '}
+              <Link to="/notebooks#undata" className="text-volt underline decoration-volt/30 underline-offset-2">
+                undata Python package
+              </Link>
+              .
+            </p>
+          </div>
+          <div className="space-y-4">
+            <CodeBlock
+              label="Claude Code — one command"
+              code={`claude mcp add undata -- uvx --from "undata[mcp]" undata-mcp`}
+            />
+            <CodeBlock
+              label="Claude Desktop — add to claude_desktop_config.json"
+              language="json"
+              code={`{
+  "mcpServers": {
+    "undata": {
+      "command": "uvx",
+      "args": ["--from", "undata[mcp]", "undata-mcp"]
+    }
+  }
+}`}
+            />
+          </div>
+        </div>
+        <p className="mt-4 text-[0.82rem] leading-relaxed text-ink-secondary">
+          Then ask:{' '}
+          <em>
+            “Which least developed countries are on track to bring maternal mortality below
+            70 by 2030? Show me a chart.”
+          </em>{' '}
+          The full tool list is in the{' '}
+          <a
+            href="https://nerd-factory.github.io/undata/reference/connector.html"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-volt underline decoration-volt/30 underline-offset-2"
+          >
+            undata reference ↗
+          </a>
+          .
+        </p>
+      </Section>
+
+      <Section
         title="What actually happens when you ask"
         lead="One question, traced through the server. This is the sequence the playbooks tell the model to follow, and it is the same discipline the rest of this guide argues for by hand."
       >

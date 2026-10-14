@@ -9,15 +9,21 @@ import { SiteCredit } from './SiteCredit';
 
 /** Shared navigation keeps Home and every guide chapter within reach. */
 export function Layout({ children }: { children: ReactNode }) {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const [contentsOpen, setContentsOpen] = useState(false);
 
   usePaletteHotkey(useCallback(() => setContentsOpen(true), []));
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
     setContentsOpen(false);
-  }, [pathname]);
+    // A link to /page#section lands on the section; any other navigation starts at the top.
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    if (target) {
+      target.scrollIntoView();
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+  }, [pathname, hash]);
 
   const here = DESTINATIONS.find((destination) => destination.to === pathname);
   const position = DESTINATIONS.findIndex((destination) => destination.to === pathname);

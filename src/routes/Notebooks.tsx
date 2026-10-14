@@ -335,21 +335,83 @@ hom["date"].unique()          # 11 distinct years, 2009–2025 — a ranking, no
           </div>
         </div>
 
+        <div id="undata" className="mt-6 scroll-mt-24 rounded-lg border border-volt/30 bg-volt/5 p-5">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-volt">
+            Or let a package do the plumbing
+          </p>
+          <h3 className="mt-2 text-[1.05rem] font-semibold text-ink-primary">
+            undata: the same contract, already written
+          </h3>
+          <p className="mt-2 text-[0.86rem] leading-relaxed text-ink-secondary">
+            <code className="text-volt">undata</code> is a Python package built on
+            everything this guide found: it routes around the firewall, knows the UN M49
+            countries, regions and groups by name, takes SDG numbers, keeps the source and
+            year on every row, and reports missing countries and mixed years as warnings
+            instead of dropping them. It also runs the SDG progress assessment, draws
+            publication-ready charts, and ships an MCP connector. It is unofficial, written
+            by the author of this guide.
+          </p>
+          <div className="mt-3">
+            <CodeBlock
+              label="python — pip install undata"
+              language="python"
+              code={`import undata as un
+
+table = un.latest("3.1.1", "Southern Asia")   # an SDG number, a region by name
+print(un.describe(table))                     # the finding in words, years included
+un.save(table, "maternal-mortality.xlsx")     # sources and gaps on their own sheets
+
+un.progress("3.1.1", "LDCs", better="lower", target=70)   # on track for 2030?`}
+            />
+          </div>
+          <p className="mt-3 text-[0.82rem] leading-relaxed text-ink-secondary">
+            <a
+              href="https://pypi.org/project/undata/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-volt underline decoration-volt/30 underline-offset-2"
+            >
+              PyPI ↗
+            </a>
+            {' · '}
+            <a
+              href="https://nerd-factory.github.io/undata/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-volt underline decoration-volt/30 underline-offset-2"
+            >
+              Twelve use cases with real output ↗
+            </a>
+            {' · '}
+            <a
+              href="https://nerd-factory.github.io/undata/reference/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-volt underline decoration-volt/30 underline-offset-2"
+            >
+              API reference ↗
+            </a>
+          </p>
+        </div>
+
         <div className="mt-6">
-          <Expander question="Is there an official Python client?" time="30 seconds">
+          <Expander question="Why not use the official Python client?" time="30 seconds">
             <p>
-              Yes — <code className="text-volt">datacommons-client</code> on PyPI,
-              maintained by Data Commons, requiring Python 3.10 or newer. It understands
-              custom deployments like this one, and gives you a DataFrame directly.
+              There is — <code className="text-volt">datacommons-client</code> on PyPI,
+              maintained by Data Commons — but{' '}
+              <strong className="text-ink-primary">it does not work against this deployment</strong>.
+              The client is created without complaint, because its startup check is a node
+              lookup the platform answers. Its first data request is then refused by the
+              platform's firewall with <code className="text-volt">403 Forbidden</code>.
             </p>
             <div className="mt-3">
               <CodeBlock
-                label="python"
+                label="python — run against the live platform on 14 October 2026"
                 language="python"
                 code={`# pip install "datacommons-client[Pandas]"
 from datacommons_client.client import DataCommonsClient
 
-client = DataCommonsClient(dc_instance="unsd-datacommons.gcp.un-icc.cloud")
+client = DataCommonsClient(dc_instance="unsd-datacommons.gcp.un-icc.cloud")   # fine
 
 frame = client.observations_dataframe(
     variable_dcids="undata/undphdro/HDI_hdi",
@@ -357,17 +419,21 @@ frame = client.observations_dataframe(
     entity_dcids="all",
     parent_entity="SouthernAsia",
     entity_type="Country",
-)`}
+)
+# APIError: Status Code: 403
+# Request URL: https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation`}
               />
             </div>
             <p className="mt-3">
-              The client resolves a custom instance to{' '}
-              <code className="text-volt">https://&lt;host&gt;/core/api/v2</code> and
-              validates it on construction with a node lookup, which this deployment
-              answers — so no API key and no further configuration. The trade is that you
-              inherit its choices about which facet to keep and how to name columns. The
-              plain-requests version above is longer precisely because those decisions are
-              visible in it.
+              The firewall rejects request bodies that contain the word{' '}
+              <code className="text-volt">select</code>, and the client puts its{' '}
+              <code className="text-volt">select</code> list in the body of every
+              observation request. Use the plain-requests module above, which sends those
+              fields as query parameters, or{' '}
+              <a href="#undata" className="text-volt underline decoration-volt/30 underline-offset-2">
+                undata
+              </a>
+              , which fetches through the routes the firewall allows.
             </p>
           </Expander>
         </div>

@@ -386,6 +386,11 @@ Explain each step in plain language as a comment. I am not a programmer.`}
               <Link to="/connect" className="text-volt underline decoration-volt/30 underline-offset-2">
                 Connect
               </Link>
+              . For an assistant that also runs the SDG progress assessment and draws the
+              chart, add{' '}
+              <Link to="/connect#undata" className="text-volt underline decoration-volt/30 underline-offset-2">
+                undata's connector
+              </Link>
               .
             </p>
           </div>
