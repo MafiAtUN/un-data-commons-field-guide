@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import LessonCard from '../../components/lesson/LessonCard.astro';
+import { COURSES, TOOLS } from '../../content/courses';
+import { allLessons, isPlayable, totalMinutes } from '../../lib/lessons';
+
+/**
+ * Every video in one place, for someone who knows what they want. The filters
+ * and the search run in the browser over what is already on the page,
+ * including every word said in the videos, so there is nothing to wait for.
+ * A link can preset them: /videos/?course=analyse or /videos/?q=undata.
+ */
+const lessons = await allLessons();
+const tools = Object.entries(TOOLS).filter(([key]) => lessons.some((l) => l.data.tools.includes(key as never)));
+const soon = lessons.filter((l) => !isPlayable(l)).length;
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+---
+<Base title="Every video" description={`All ${lessons.length} video lessons on UN data, ${totalMinutes(lessons)} minutes in all. Filter by course or by the tool you work in, and search everything said in them.`} section="videos">
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h1 class="font-display text-h1 font-semibold text-ink-primary sm:text-display">Every video</h1>
+      <p class="text-meta text-ink-muted tnum">{lessons.length} videos · {totalMinutes(lessons)} minutes · captions in every video</p>
+    </div>
+
+    <div class="mt-6 grid gap-4" data-pagefind-ignore>
+      <label class="relative block">
+        <span class="sr-only">Search the videos</span>
+        <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-ink-muted" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input
+          type="search"
+          data-library-search
+          placeholder="Search titles and everything said in the videos"
+          class="h-13 w-full rounded-xl border border-field bg-surface-1 pl-12 pr-4 text-body text-ink-primary placeholder:text-ink-muted"
+        />
+      </label>
+      <div class="grid gap-2.5">
+        <div class="flex items-center gap-2 sm:flex-wrap" role="group" aria-label="Filter by course">
+          <span class="w-16 shrink-0 text-meta font-semibold text-ink-muted">Course</span>
+          <div class="no-scrollbar -mr-4 flex gap-2 overflow-x-auto pr-4 sm:mr-0 sm:flex-wrap sm:overflow-visible sm:pr-0">
+            <button type="button" data-filter-course="" aria-pressed="true" class="chip">All</button>
+            {COURSES.map((c) => <button type="button" data-filter-course={c.slug} aria-pressed="false" class="chip">{c.short}</button>)}
+          </div>
+        </div>
+        <div class="flex items-center gap-2 sm:flex-wrap" role="group" aria-label="Filter by tool">
+          <span class="w-16 shrink-0 text-meta font-semibold text-ink-muted">Tool</span>
+          <div class="no-scrollbar -mr-4 flex gap-2 overflow-x-auto pr-4 sm:mr-0 sm:flex-wrap sm:overflow-visible sm:pr-0">
+            <button type="button" data-filter-tool="" aria-pressed="true" class="chip">Any</button>
+            {tools.map(([key, label]) => <button type="button" data-filter-tool={key} aria-pressed="false" class="chip">{label}</button>)}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-6 text-meta text-ink-muted" role="status" data-library-count>
+      Showing all {lessons.length}.{soon > 0 && ` ${WORDS[soon] ?? soon} aren’t on YouTube yet; their lesson pages already have the full transcript.`}
+    </p>
+
+    <ul class="mt-5 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4" data-pagefind-ignore>
+      {lessons.map((lesson, i) => (
+        <li data-library-item>
+          <LessonCard lesson={lesson} searchable eager={i < 4} priority={i === 0} />
+        </li>
+      ))}
+    </ul>
+    <div hidden data-library-empty class="mt-8 rounded-2xl border border-hairline bg-surface-1 p-6 text-center text-body text-ink-secondary">
+      <p>No video matches.</p>
+      <button type="button" data-library-clear class="mt-3 inline-flex h-10 items-center rounded-xl border border-field px-4 text-meta font-semibold text-ink-primary hover:bg-surface-2">Clear the search and filters</button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .chip {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    height: 2.5rem;
+    padding: 0 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-field);
+    background: var(--color-surface-1);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    color: var(--color-ink-secondary);
+  }
+  .chip:hover { border-color: var(--color-ink-muted); color: var(--color-ink-primary); }
+  .chip[aria-pressed='true'] { background: var(--color-ink-primary); border-color: var(--color-ink-primary); color: var(--color-surface-0); }
+</style>
+
+<script>
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-library-item]'));
+  const search = document.querySelector<HTMLInputElement>('[data-library-search]');
+  const count = document.querySelector<HTMLElement>('[data-library-count]');
+  const empty = document.querySelector<HTMLElement>('[data-library-empty]');
+  const courseButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-course]'));
+  const toolButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-tool]'));
+  const state = { course: '', tool: '', words: [] as string[] };
+
+  function apply() {
+    let shown = 0;
+    for (const item of items) {
+      const card = item.querySelector<HTMLElement>('[data-card]');
+      const courses = (card?.dataset.course ?? '').split(' ');
+      const tools = (card?.dataset.tools ?? '').split(' ');
+      const text = card?.dataset.text ?? '';
+      const visible =
+        (!state.course || courses.includes(state.course)) &&
+        (!state.tool || tools.includes(state.tool)) &&
+        state.words.every((w) => text.includes(w));
+      item.hidden = !visible;
+      if (visible) shown++;
+    }
+    if (count) count.textContent = shown === items.length ? `Showing all ${items.length}.` : `Showing ${shown} of ${items.length}.`;
+    if (empty) empty.hidden = shown > 0;
+  }
+
+  function choose(buttons: HTMLButtonElement[], key: 'course' | 'tool', value: string) {
+    state[key] = value;
+    for (const b of buttons) b.setAttribute('aria-pressed', String((key === 'course' ? b.dataset.filterCourse : b.dataset.filterTool) === value));
+  }
+
+  courseButtons.forEach((b) => b.addEventListener('click', () => { choose(courseButtons, 'course', b.dataset.filterCourse ?? ''); apply(); }));
+  toolButtons.forEach((b) => b.addEventListener('click', () => { choose(toolButtons, 'tool', b.dataset.filterTool ?? ''); apply(); }));
+
+  function setWords(value: string) {
+    state.words = value.toLowerCase().split(/\s+/).filter(Boolean);
+  }
+  search?.addEventListener('input', () => {
+    setWords(search.value);
+    apply();
+  });
+
+  document.querySelector('[data-library-clear]')?.addEventListener('click', () => {
+    if (search) search.value = '';
+    setWords('');
+    choose(courseButtons, 'course', '');
+    choose(toolButtons, 'tool', '');
+    apply();
+    search?.focus();
+  });
+
+  // A link can preset the view: ?course=analyse, ?tool=excel, ?q=undata.
+  const params = new URLSearchParams(location.search);
+  const presetCourse = params.get('course');
+  const presetTool = params.get('tool');
+  const presetQuery = params.get('q');
+  if (presetCourse && courseButtons.some((b) => b.dataset.filterCourse === presetCourse)) choose(courseButtons, 'course', presetCourse);
+  if (presetTool && toolButtons.some((b) => b.dataset.filterTool === presetTool)) choose(toolButtons, 'tool', presetTool);
+  if (presetQuery && search) {
+    search.value = presetQuery;
+    setWords(presetQuery);
+  }
+  if (presetCourse || presetTool || presetQuery) apply();
+</script>

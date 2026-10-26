@@ -83,7 +83,7 @@ export function Catalogue() {
               aria-pressed={pillar === filter.id}
               className={`rounded-full border px-3 py-1.5 text-[0.75rem] font-medium transition-colors ${
                 pillar === filter.id
-                  ? 'border-volt/60 bg-volt/10 text-ink-primary'
+                  ? 'border-ink-primary bg-ink-primary text-surface-0'
                   : 'border-hairline text-ink-secondary hover:border-ink-muted hover:text-ink-primary'
               }`}
             >

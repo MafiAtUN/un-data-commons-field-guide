@@ -1,0 +1,105 @@
+{
+  "title": "An animated chart, in Flourish",
+  "idea": "Women in parliament since 2000, as a bar chart race.",
+  "summary": "Make an animated chart in Flourish from official UN data: one Python call for every country and year, one pivot into the shape Flourish wants, then upload.",
+  "course": "present",
+  "order": 2,
+  "series": {
+    "name": "undata",
+    "number": 8
+  },
+  "youtube": {
+    "id": "RVUozHIpvms",
+    "status": "private"
+  },
+  "seconds": 133,
+  "recorded": "2026-10-16",
+  "captions": "burned-in",
+  "poster": "undata-08-flourish-race.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 13,
+      "label": "The product"
+    },
+    {
+      "at": 23,
+      "label": "un.get + one pivot"
+    },
+    {
+      "at": 44,
+      "label": "The shape Flourish wants"
+    },
+    {
+      "at": 60,
+      "label": "In Flourish"
+    },
+    {
+      "at": 81,
+      "label": "Reading the race"
+    },
+    {
+      "at": 112,
+      "label": "Before you publish"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "Some stories are about change over time, and they land best in motion. Here is how to turn official UN data into an animated chart in Flourish, without writing any code for the chart itself."
+    },
+    {
+      "at": 13,
+      "text": "This is the product: the share of seats held by women in national parliaments, country by country, from 2000 to 2026. One table made it."
+    },
+    {
+      "at": 23,
+      "text": "First, the data. un.get with World fetches every country, from 2000 to 2026. Flourish wants one row per country and one column per year, and pandas’ pivot does exactly that. Add each country’s region, to colour the bars, and save a CSV. The last line prints the citation, for the chart’s footer."
+    },
+    {
+      "at": 44,
+      "text": "Here is the file: 193 countries. A label column, a category column, and one value column per year, 27 of them. Get the shape right, and the template does the rest. Where a country did not report, the cell is empty, not zero."
+    },
+    {
+      "at": 60,
+      "text": "In Flourish, start a new visualisation and choose the bar chart race template. On the Data tab, upload the CSV. Set the label to column A, the categories to column B, and the values to columns C to AC. In the footer settings, paste the citation as the source. Then preview it, and publish or download it."
+    },
+    {
+      "at": 81,
+      "text": "In 2000, Sweden led, with 43 percent of seats held by women, and only one country had reached forty. Now watch Rwanda, in orange, as the years run forward. In 2009, it became the first country where women held more than half the seats. Others followed, year after year, from Latin America, Africa and Europe. By 2026, 30 countries are at forty percent or more, and the world average has doubled, from 13 percent to 27."
+    },
+    {
+      "at": 112,
+      "text": "One caution. Publishing from Flourish puts the chart on the public web, so follow your office’s rules for public content. Keep the source in the footer, and for print, download it as an image."
+    },
+    {
+      "at": 123,
+      "text": "One table, the right shape, and the chart moves on its own. Next: a one-slide briefing, in PowerPoint."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "table = un.get(\"undata/sdg/SG_GEN_PARL.SEX--F\", \"World\", years=(2000, 2026))\nflourish = table.pivot(index=\"country\", columns=\"year\", values=\"value\")\nflourish.insert(0, \"region\", un.countries().set_index(\"country\").region)\nflourish.to_csv(\"women-in-parliament.csv\")\nprint(un.cite(table))"
+    },
+    {
+      "kind": "link",
+      "href": "https://app.flourish.studio/@flourish/bar-chart-race",
+      "label": "Flourish's bar chart race template"
+    }
+  ],
+  "keep": "A blank cell stays blank. A year with no data must never become zero.",
+  "tools": [
+    "python",
+    "flourish"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/charts/",
+      "label": "Make a chart that stays honest"
+    }
+  ]
+}

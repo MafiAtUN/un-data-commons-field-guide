@@ -1,0 +1,43 @@
+---
+import Base from './Base.astro';
+import { guide } from '../content/guides';
+import { url } from '../lib/paths';
+
+/**
+ * A reference page or a tool, inside the site's one navigation. Tools sit
+ * under Guides in the header, so their breadcrumb says so too.
+ *
+ * `.guide` gives the older pages a readable line length and the new corners
+ * (see theme.css) until each is restyled.
+ */
+interface Props {
+  path: string;
+}
+const page = guide(Astro.props.path);
+const tool = page.group === 'Tools';
+---
+<Base
+  title={page.title}
+  description={page.description}
+  section="guides"
+  kind={tool ? 'Tool' : 'Guide'}
+  where={page.group}
+  searchTitle={page.title}
+>
+  <div class="guide mx-auto max-w-6xl px-4 pb-6 pt-5 sm:px-6 sm:pt-7 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-6 text-meta text-ink-muted" data-pagefind-ignore>
+      <ol class="flex flex-wrap items-center gap-x-2">
+        <li><a href={url('/guides/')} class="hover:text-ink-primary">Guides</a></li>
+        <li aria-hidden="true">/</li>
+        {tool && (
+          <>
+            <li><a href={url('/tools/')} class="hover:text-ink-primary">Tools</a></li>
+            <li aria-hidden="true">/</li>
+          </>
+        )}
+        <li aria-current="page" class="text-ink-primary">{page.title}</li>
+      </ol>
+    </nav>
+    <slot />
+  </div>
+</Base>

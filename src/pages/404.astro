@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/paths';
+---
+<Base title="Page not found" description="This address isn't part of the UN Data Commons Field Guide." noindex>
+  <div class="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
+    <p class="font-mono text-[0.85rem] text-ink-muted">404</p>
+    <h1 class="mt-2 text-[2.2rem] font-semibold text-ink-primary">This page isn't here</h1>
+    <p class="mt-3 text-[1.05rem] text-ink-secondary">It may have moved when the guide was rebuilt around its videos. Search for it, or start from one of these.</p>
+    <div class="mt-6 flex flex-wrap justify-center gap-3">
+      <button type="button" data-search-open class="inline-flex h-11 items-center rounded-xl bg-volt px-5 font-semibold text-on-volt">Search the guide</button>
+      <a href={url('/courses/')} class="inline-flex h-11 items-center rounded-xl border border-hairline-strong px-5 font-semibold text-ink-primary">Courses</a>
+      <a href={url('/videos/')} class="inline-flex h-11 items-center rounded-xl border border-hairline-strong px-5 font-semibold text-ink-primary">Every video</a>
+    </div>
+  </div>
+</Base>

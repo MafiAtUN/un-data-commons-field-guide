@@ -1,0 +1,81 @@
+---
+import { url } from '../../lib/paths';
+import BrandMark from './BrandMark.astro';
+import { COURSES } from '../../content/courses';
+import { SiteCredit } from '../SiteCredit';
+import { NerdLabStrip } from '../NerdLab';
+
+const learn = [
+  { label: 'Courses', href: url('/courses/') },
+  { label: 'Every video', href: url('/videos/') },
+  { label: 'undata, the Python package', href: url('/undata/') },
+  { label: 'Guides', href: url('/guides/') },
+  { label: 'Tools', href: url('/tools/') },
+  { label: 'About this guide', href: url('/about/') },
+];
+
+const elsewhere = [
+  { label: 'data.un.org', href: 'https://data.un.org' },
+  { label: 'The videos on YouTube', href: 'https://www.youtube.com/@MafizulIslamIT' },
+  { label: 'undata on PyPI', href: 'https://pypi.org/project/undata/' },
+  { label: 'undata API reference', href: 'https://nerd-factory.github.io/undata/reference/' },
+  { label: 'Source on GitHub', href: 'https://github.com/MafiAtUN/un-data-commons-field-guide' },
+  { label: 'Platform terms of use', href: 'https://data.un.org/undatacommons/terms-of-use' },
+];
+---
+<footer class="mt-24 border-t border-hairline bg-surface-1" data-pagefind-ignore>
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div class="max-w-xs">
+        <a href={url('/')} class="flex items-center gap-2.5 text-ink-primary">
+          <BrandMark class="size-6" />
+          <span class="font-semibold">UN Data Commons <span class="font-medium text-ink-muted">Field Guide</span></span>
+        </a>
+        <p class="mt-3 text-meta leading-relaxed text-ink-secondary">
+          Short video lessons for data.un.org and the undata Python package. Free, unofficial, no sign-up.
+        </p>
+      </div>
+      <nav aria-label="Learn">
+        <p class="text-meta font-semibold text-ink-primary">Learn</p>
+        <ul class="mt-3 grid gap-2 text-meta">
+          {learn.map((l) => <li><a class="text-ink-secondary hover:text-ink-primary" href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+      <nav aria-label="Courses">
+        <p class="text-meta font-semibold text-ink-primary">Courses</p>
+        <ul class="mt-3 grid gap-2 text-meta">
+          {COURSES.map((c) => <li><a class="text-ink-secondary hover:text-ink-primary" href={url(`/courses/${c.slug}/`)}>{c.title}</a></li>)}
+        </ul>
+      </nav>
+      <nav aria-label="Elsewhere">
+        <p class="text-meta font-semibold text-ink-primary">Elsewhere</p>
+        <ul class="mt-3 grid gap-2 text-meta">
+          {elsewhere.map((l) => (
+            <li><a class="text-ink-secondary hover:text-ink-primary" href={l.href} target="_blank" rel="noreferrer noopener">{l.label} <span aria-hidden="true">↗</span></a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-10 max-w-3xl space-y-3 text-meta leading-relaxed text-ink-muted">
+      <p>
+        An independent guide to the <a class="link" href="https://data.un.org" target="_blank" rel="noreferrer noopener">UN System Data Commons</a>.
+        Not an official United Nations publication, and not endorsed by the United Nations or by Google.
+      </p>
+      <p>
+        Charts fetch their figures from data.un.org as the page loads, or from a snapshot stored with this site when the
+        platform can't be reached, and each says which. Every statistic keeps its own source and terms of use.
+      </p>
+      <p>
+        This site sets no cookies. Videos load from YouTube only when you press play, and YouTube's privacy-enhanced player
+        may then store its own. Your progress through the lessons is kept in this browser and nowhere else.
+        <button type="button" data-progress-clear class="link">Clear my progress</button>
+      </p>
+    </div>
+
+    <div class="mt-8 space-y-6">
+      <SiteCredit />
+      <NerdLabStrip />
+    </div>
+  </div>
+</footer>

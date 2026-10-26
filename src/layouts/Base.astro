@@ -1,0 +1,169 @@
+---
+import '../styles/theme.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jost';
+import '@fontsource-variable/jetbrains-mono';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import jostLatin from '@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url';
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import Header from '../components/site/Header.astro';
+import Footer from '../components/site/Footer.astro';
+import Search from '../components/site/Search.astro';
+import siteCard from '../assets/site-card.jpg';
+
+/**
+ * Every page: its own title, description, preview image and canonical address,
+ * so a link pasted into LinkedIn, Teams or Slack shows what it points to.
+ */
+interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata | undefined;
+  imageAlt?: string | undefined;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[] | undefined;
+  section?: 'home' | 'courses' | 'videos' | 'undata' | 'guides' | 'about' | undefined;
+  /** What search results call this page: Lesson, Guide, Tool or Page. */
+  kind?: 'Lesson' | 'Guide' | 'Tool' | 'Page';
+  /** A short location shown beside the title in search results. */
+  where?: string | undefined;
+  /** The name search results show, when it should differ from the page's h1. */
+  searchTitle?: string | undefined;
+  ogType?: 'website' | 'video.other' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = siteCard,
+  imageAlt = 'UN Data Commons Field Guide: learn to use UN data in two-minute videos',
+  jsonLd,
+  section,
+  kind = 'Page',
+  where,
+  searchTitle,
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = section === 'home' ? title : `${title} · UN Data Commons Field Guide`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const card = await getImage({ src: image, width: 1200, format: 'jpg', quality: 82 });
+const cardUrl = new URL(card.src, Astro.site);
+const base = import.meta.env.BASE_URL;
+// Structured data goes inside a <script>; "<" is escaped so no text in it
+// (a transcript, a title) can ever close that script early.
+const structured = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical.href} />}
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jostLatin} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="UN Data Commons Field Guide" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical.href} />}
+    <meta property="og:image" content={cardUrl.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="author" content="Mafizul Islam" />
+    <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141419" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="sitemap" href={`${base}sitemap-index.xml`} />
+    <script is:inline>
+      // Resolve the theme before first paint: a stored choice, else the device.
+      (() => {
+        const root = document.documentElement;
+        const media = matchMedia('(prefers-color-scheme: dark)');
+        let stored = null;
+        try { stored = localStorage.getItem('fg-theme'); } catch (e) { stored = null; }
+        const apply = () => {
+          root.dataset.theme = stored === 'light' || stored === 'dark' ? stored : media.matches ? 'dark' : 'light';
+          document.dispatchEvent(new CustomEvent('fg:theme'));
+        };
+        apply();
+        media.addEventListener('change', () => { if (stored !== 'light' && stored !== 'dark') apply(); });
+        window.fgTheme = (value) => {
+          stored = value;
+          try { localStorage.setItem('fg-theme', value); } catch (e) { /* not remembered */ }
+          apply();
+        };
+      })();
+    </script>
+    {structured && <script type="application/ld+json" set:html={structured} />}
+  </head>
+  <body class="min-h-screen bg-surface-0 text-ink-secondary">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-volt focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-on-volt"
+    >
+      Skip to content
+    </a>
+    <Header section={section} />
+    <main id="main" data-pagefind-body={noindex ? undefined : ''}>
+      {!noindex && <span hidden data-pagefind-meta={`kind:${kind}`}></span>}
+      {where && <span hidden data-pagefind-meta={`where:${where}`}></span>}
+      {searchTitle && <span hidden data-pagefind-meta={`title:${searchTitle}`}></span>}
+      <slot />
+    </main>
+    <Footer />
+    <Search />
+    <p id="fg-status" role="status" class="sr-only"></p>
+
+    <script>
+      import { clear, paint } from '../scripts/progress';
+
+      declare global {
+        interface Window {
+          fgTheme?: (value: 'light' | 'dark') => void;
+        }
+      }
+
+      const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+      const label = () => {
+        const dark = document.documentElement.dataset.theme === 'dark';
+        toggle?.setAttribute('aria-label', dark ? 'Switch to the light theme' : 'Switch to the dark theme');
+        toggle?.querySelector('[data-icon="sun"]')?.classList.toggle('hidden', !dark);
+        toggle?.querySelector('[data-icon="moon"]')?.classList.toggle('hidden', dark);
+      };
+      label();
+      document.addEventListener('fg:theme', label);
+      toggle?.addEventListener('click', () => {
+        window.fgTheme?.(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+      });
+
+      // The phone menu closes on Escape, on a tap elsewhere, and when focus leaves it.
+      const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
+      const closeMenu = (refocus: boolean) => {
+        if (!menu?.open) return;
+        menu.open = false;
+        if (refocus) menu.querySelector('summary')?.focus();
+      };
+      document.addEventListener('click', (event) => {
+        if (menu?.open && !menu.contains(event.target as Node)) closeMenu(false);
+      });
+      menu?.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu(true);
+      });
+      menu?.addEventListener('focusout', (event) => {
+        if (!menu.contains(event.relatedTarget as Node | null)) closeMenu(false);
+      });
+
+      document.querySelectorAll('[data-progress-clear]').forEach((button) =>
+        button.addEventListener('click', () => clear()),
+      );
+      paint();
+    </script>
+  </body>
+</html>

@@ -30,7 +30,7 @@ export function OriginBadge({ origin, retrievedAt, liveError }: OriginBadgeProps
   return (
     <span
       title={liveError ? `Live request failed: ${liveError}` : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[0.68rem] font-medium ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[0.75rem] font-medium ${
         isLive
           ? 'border-status-good/35 bg-status-good/10 text-status-good'
           : 'border-hairline bg-surface-2 text-ink-muted'
@@ -41,7 +41,7 @@ export function OriginBadge({ origin, retrievedAt, liveError }: OriginBadgeProps
         className={`size-1.5 rounded-full ${isLive ? 'bg-status-good' : 'bg-ink-muted'}`}
       />
       {label}
-      {detail && <span className="font-normal opacity-75">· {detail}</span>}
+      {detail && <span className="font-normal">· {detail}</span>}
     </span>
   );
 }

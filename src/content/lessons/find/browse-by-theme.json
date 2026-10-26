@@ -1,0 +1,97 @@
+{
+  "title": "Browse by theme",
+  "idea": "Search picks one indicator. Browsing shows the choice.",
+  "summary": "When you can't yet phrase the question, the Explore tab opens the whole catalogue as 12 thematic areas, and shows every version of an indicator.",
+  "course": "find",
+  "order": 9,
+  "series": {
+    "name": "data.un.org",
+    "number": 9
+  },
+  "youtube": {
+    "id": "hHcVwXKtCeo",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 72,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "09-browse-by-theme.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "When you only know the topic"
+    },
+    {
+      "at": 5,
+      "label": "The Explore tab"
+    },
+    {
+      "at": 14,
+      "label": "Three filters"
+    },
+    {
+      "at": 26,
+      "label": "752 health indicators"
+    },
+    {
+      "at": 35,
+      "label": "Sub-themes"
+    },
+    {
+      "at": 45,
+      "label": "Four agencies, one indicator"
+    },
+    {
+      "at": 62,
+      "label": "Search or browse?"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "Search is for when you know the question. This is for when you only know the topic."
+    },
+    {
+      "at": 5.95,
+      "text": "The Explore tab opens the whole catalogue as twelve thematic areas, rather than a search box waiting for a question you cannot phrase yet."
+    },
+    {
+      "at": 14.9,
+      "text": "Three filters narrow it: a location, a thematic area, and the UN body that published it. That last one is useful when you already trust a particular agency."
+    },
+    {
+      "at": 26.78,
+      "text": "Open Health and the scale becomes obvious. Seven hundred and fifty-two indicators sit under this one heading."
+    },
+    {
+      "at": 35.03,
+      "text": "So it breaks down again, into sub-themes with their own counts. Infectious diseases, mental health, reproductive and maternal health."
+    },
+    {
+      "at": 45.61,
+      "text": "And here is the reason to browse rather than search. Adolescent birth rate appears four times, from W H O, UNICEF, the S D G database and U N D P. Browsing shows you the choice. Searching just picks one."
+    },
+    {
+      "at": 62.43,
+      "text": "Use search when you know what you want. Use Explore when the real question is which indicator you should be using at all."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "link",
+      "href": "https://data.un.org/undatacommons/areas",
+      "label": "Explore, by thematic area"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/catalogue/",
+      "label": "The catalogue: all 16 collections, counted live"
+    }
+  ],
+  "keep": "Why browse at all: four UN bodies publish “adolescent birth rate”."
+}

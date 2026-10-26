@@ -1,0 +1,96 @@
+{
+  "title": "A one-slide briefing, in PowerPoint",
+  "idea": "Hunger since 2015 on one slide, finding first.",
+  "summary": "Build a one-slide briefing from official UN data: the finding as the headline, a dumbbell chart as in the World Bank's Atlas of Sustainable Development Goals, and speaker notes written from the numbers.",
+  "course": "present",
+  "order": 3,
+  "series": {
+    "name": "undata",
+    "number": 9
+  },
+  "youtube": {
+    "id": "tgCRllGjaHk",
+    "status": "private"
+  },
+  "seconds": 95,
+  "recorded": "2026-10-16",
+  "captions": "burned-in",
+  "poster": "undata-09-powerpoint-briefing.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 9,
+      "label": "The product"
+    },
+    {
+      "at": 20,
+      "label": "un.benchmark · un.chart · un.describe"
+    },
+    {
+      "at": 34,
+      "label": "The chart · an Atlas-style dumbbell"
+    },
+    {
+      "at": 55,
+      "label": "In PowerPoint"
+    },
+    {
+      "at": 74,
+      "label": "Headline rules"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "Ten minutes before a meeting, someone asks for one slide on hunger. Here is how to make it from official data, with every number traceable to its source."
+    },
+    {
+      "at": 9,
+      "text": "This is the slide. The headline is the finding, not the topic. The chart sets every region’s figure for 2015 beside the latest, and the speaker notes already hold the numbers, in sentences."
+    },
+    {
+      "at": 20,
+      "text": "un.benchmark takes the figures each agency publishes for regions: the official regional totals, not an average that undata makes up. un.chart draws them for slides, and un.describe writes the sentences."
+    },
+    {
+      "at": 34,
+      "text": "It is a dumbbell chart, a favourite of the Atlas: a hollow circle for 2015, a solid one for the latest year. In Sub-Saharan Africa, the share of people who are undernourished rose from 18.5 to 22.2 percent. Northern Africa, Western Asia and Oceania rose too, while Southern Asia fell by about a third."
+    },
+    {
+      "at": 55,
+      "text": "In PowerPoint, choose the Title Only layout. Type the finding as the headline. Insert the chart. It is saved at three hundred dots per inch, so it stays sharp on a projector. Save it as SVG instead, and Convert to Shape lets you recolour it. Then paste the un.describe text into the speaker notes."
+    },
+    {
+      "at": 74,
+      "text": "A topic as the headline tells people what the slide is about. A finding tells them what to remember. And because the finding came from the table, anyone in the room can check it."
+    },
+    {
+      "at": 84,
+      "text": "One finding, one chart, one source, and notes the speaker can trust. Next: a first draft, with Copilot."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "regions = [\"World\", \"Sub-Saharan Africa\", \"Western Asia\", \"Northern Africa\",\n           \"Southern Asia\", \"Oceania\", \"South-eastern Asia\", \"Central Asia\",\n           \"Latin America and the Caribbean\", \"Eastern Asia\", \"Europe\"]\ntable = un.benchmark(\"undata/sdg/SN_ITK_DEFC\", regions)   # hunger, SDG 2.1.1\nun.chart(table, \"hunger.png\", context=\"slides\")\nprint(un.describe(table))"
+    }
+  ],
+  "keep": "Make the finding the headline, not the topic. The numbers go in the speaker notes.",
+  "tools": [
+    "python",
+    "powerpoint"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/charts.html",
+      "label": "API reference: the chart catalogue"
+    },
+    {
+      "href": "/guides/charts/",
+      "label": "Make a chart that stays honest"
+    }
+  ]
+}

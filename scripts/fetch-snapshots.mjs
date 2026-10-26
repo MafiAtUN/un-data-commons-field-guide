@@ -14,7 +14,7 @@ import { writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const API_ROOT = process.env.VITE_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
+const API_ROOT = process.env.PUBLIC_UNDC_API_ROOT ?? process.env.VITE_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(HERE, '../src/data/snapshot-data.json');
 

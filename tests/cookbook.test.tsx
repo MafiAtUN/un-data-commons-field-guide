@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter } from 'react-router-dom';
 import { Cookbook } from '../src/routes/Cookbook';
 
 /**
@@ -13,10 +12,10 @@ import { Cookbook } from '../src/routes/Cookbook';
  * noticing, because nothing errors.
  */
 const html = renderToStaticMarkup(
-  <MemoryRouter>
-    <Cookbook />
-  </MemoryRouter>,
+  <Cookbook />,
 );
+/** What a reader sees: the markup without its tags. */
+const text = html.replace(/<[^>]+>/g, '');
 
 describe('recipe 6 — name to dcid', () => {
   it('uses the resolve endpoint with a two-part relation expression', () => {
@@ -46,7 +45,7 @@ describe('recipe 7 — pagination', () => {
   });
 
   it('says the absence of a token is the only end signal', () => {
-    expect(html).toMatch(/until .{0,20}nextToken.{0,20} is absent/i);
+    expect(text).toMatch(/until nextToken is absent/i);
   });
 
   it('scopes the cap to node walks, not observation queries', () => {

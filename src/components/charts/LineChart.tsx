@@ -130,7 +130,7 @@ export function LineChart({
               y={y(tick)}
               textAnchor="end"
               dominantBaseline="middle"
-              className="tnum fill-ink-muted text-[10px]"
+              className="tnum fill-ink-muted text-[12px]"
             >
               {formatValue(tick)}
             </text>
@@ -144,7 +144,7 @@ export function LineChart({
               x={x(index)}
               y={height - PADDING.bottom + 16}
               textAnchor="middle"
-              className="tnum fill-ink-muted text-[10px]"
+              className="tnum fill-ink-muted text-[12px]"
             >
               {year}
             </text>
@@ -198,7 +198,7 @@ export function LineChart({
                   x={x(years.indexOf(last.date)) + 9}
                   y={y(last.value)}
                   dominantBaseline="middle"
-                  className="tnum fill-ink-secondary text-[10px]"
+                  className="tnum fill-ink-secondary text-[12px]"
                 >
                   {formatValue(last.value)}
                 </text>

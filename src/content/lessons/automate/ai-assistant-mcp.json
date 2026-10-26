@@ -1,0 +1,121 @@
+{
+  "title": "Point an AI assistant at data.un.org",
+  "idea": "Connect it, ask, and watch it fetch rather than recall.",
+  "summary": "Never ask a chatbot what a statistic is. Connect it to the UN System Data Commons MCP server and let it fetch the figure, with its unit and publisher.",
+  "course": "automate",
+  "order": 2,
+  "series": {
+    "name": "data.un.org",
+    "number": 12
+  },
+  "youtube": {
+    "id": "",
+    "status": "not-uploaded"
+  },
+  "seconds": 84,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "12-ai-assistant-mcp.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Chatbots invent numbers"
+    },
+    {
+      "at": 6,
+      "label": "Let it fetch instead"
+    },
+    {
+      "at": 16,
+      "label": "Find the address"
+    },
+    {
+      "at": 24,
+      "label": "Connect it once"
+    },
+    {
+      "at": 33,
+      "label": "Ask"
+    },
+    {
+      "at": 45,
+      "label": "It fetches the figure"
+    },
+    {
+      "at": 55,
+      "label": "Same as by hand"
+    },
+    {
+      "at": 65,
+      "label": "Check it anyway"
+    },
+    {
+      "at": 73,
+      "label": "The habit"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "Ask a chatbot for a UN statistic and it will give you a confident, plausible, invented number."
+    },
+    {
+      "at": 6.62,
+      "text": "Pasting the table fixes that. Better still, let it fetch the figure itself — which is what the Commons publishes an M C P server for."
+    },
+    {
+      "at": 16.53,
+      "text": "The address is on the Connect page under Build. No key, no account, no registration."
+    },
+    {
+      "at": 24.23,
+      "text": "In Claude Code it is one command. In any other M C P client it is three lines of config. You do this once."
+    },
+    {
+      "at": 33.97,
+      "text": "Then you just ask. It searches the corpus and comes back with candidate indicators and their identifiers — including, here, that two agencies measure this."
+    },
+    {
+      "at": 45.41,
+      "text": "Then it fetches the observation. One hundred and fifteen point one one, for twenty twenty-three — and the unit and publisher come back attached to it."
+    },
+    {
+      "at": 55.63,
+      "text": "That is the same number you found by hand in the first video. Nothing was remembered, nothing was guessed, and the citation arrived with the figure."
+    },
+    {
+      "at": 65.42,
+      "text": "Check it anyway. Match a few figures against the tool output, and confirm the unit survived into your prose."
+    },
+    {
+      "at": 73.89,
+      "text": "Connect it once, then ask what the numbers mean rather than what they are. That is the whole of using AI safely with official statistics."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "claude mcp add --transport http un-data https://unsd-datacommons.gcp.un-icc.cloud/mcp",
+      "note": "One line, once. It is named un-data so it does not clash with the undata package's connector. Any MCP client works; this is the shortest form."
+    },
+    {
+      "kind": "link",
+      "href": "https://projects.officialstatistics.org/undata2/undatacommons-mcp/",
+      "label": "The MCP server's own documentation"
+    }
+  ],
+  "tools": [
+    "ai"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/mcp/",
+      "label": "Connect an AI assistant: setup, real calls, and what breaks"
+    },
+    {
+      "href": "/guides/ai-prompts/",
+      "label": "Prompts that stop invented figures"
+    }
+  ],
+  "keep": "The habit: never ask an assistant what a statistic is. Give it the statistic, then ask what it means."
+}

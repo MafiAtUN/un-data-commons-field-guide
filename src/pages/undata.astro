@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+import CourseCard from '../components/lesson/CourseCard.astro';
+import { course } from '../content/courses';
+import { courseLessons, lessonHref, allLessons } from '../lib/lessons';
+import { url } from '../lib/paths';
+
+/**
+ * The Python package's front door inside the Field Guide.
+ *
+ * The package keeps its own site for what belongs to it: the API reference,
+ * built from the docstrings, and the use cases its CI reruns every night. This
+ * page is how to start, which two courses teach it, and the parts people reach
+ * for most, with links into that reference.
+ */
+const analyse = await courseLessons('analyse');
+const present = await courseLessons('present');
+const first = analyse[0]!;
+const ai = (await allLessons()).find((l) => l.id === 'analyse/ask-an-ai')!;
+
+const REF = 'https://nerd-factory.github.io/undata/reference/';
+const SITE = 'https://nerd-factory.github.io/undata/';
+const COLAB = 'https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/';
+
+const CHEAT = [
+  { code: 'un.search("words")', does: 'Find indicators by what they measure, with who publishes them', ref: 'finding.html#undata.search' },
+  { code: 'un.get(indicator, countries, years)', does: 'One row per country and year, with the unit and the source on each', ref: 'data.html#undata.get' },
+  { code: 'un.latest(indicator, countries)', does: "Each country's most recent value, and the year it is from", ref: 'data.html#undata.latest' },
+  { code: 'un.totals(indicator, ["World", "LDCs"])', does: 'The official figure for a region or UN group, as the agency published it', ref: 'data.html#undata.totals' },
+  { code: 'un.progress(indicator, countries, target=70)', does: "On track for 2030, by the UN Statistics Division's method", ref: 'analysis.html#undata.progress' },
+  { code: 'un.profile(country, indicators)', does: 'A country beside its region and the world, with its rank', ref: 'analysis.html#undata.profile' },
+  { code: 'un.gap(indicator, countries, by="sex")', does: 'The gap between two groups, in the same year', ref: 'analysis.html#undata.gap' },
+  { code: 'un.chart(table)', does: 'A publication-ready chart, chosen to fit the table, with its source line', ref: 'charts.html#undata.chart' },
+  { code: 'un.save(table, "file.xlsx")', does: 'An Excel file with the sources on their own sheet, or a CSV with the source on every row', ref: 'summaries.html#undata.save' },
+  { code: 'un.cite(table)', does: 'Citations that name the producing agency and the retrieval date', ref: 'summaries.html#undata.cite' },
+];
+
+const CASES = [
+  ['01_country_briefing', 'briefing', "Resident Coordinator's Office", 'A briefing note: Chad against its Sahel neighbours'],
+  ['02_sdg_progress', 'sdg-progress', 'SDG reporting', 'Maternal mortality in Southern Asia since 2015, against the Target 3.1 level'],
+  ['03_women_in_parliament', 'parliament', 'Gender focal point', 'Women in parliament in Eastern Africa: who has passed 30%, who reached parity'],
+  ['04_refugees', 'refugees', 'Humanitarian coordination', 'Refugees by country of origin, in number and per person'],
+  ['05_conflict_and_homicide', 'conflict', 'Peace and security', 'Conflict deaths against homicide, and who reports at all'],
+  ['06_agencies_disagree', 'sources', 'Statistics focal point', 'One statistic, three agencies, two numbers: what to cite'],
+  ['07_regional_data_pack', 'data-pack', 'Publications team', 'A regional data pack in Excel, with citations and gaps on their own sheets'],
+  ['08_dashboard_refresh', 'dashboard', 'Monitoring and evaluation', 'A dashboard file that refreshes itself on a schedule'],
+  ['09_check_the_search_box', 'search-box', 'Communications', "Checking what data.un.org's search box decided before sharing its chart"],
+  ['10_sdg_progress_ldcs', 'on-track', 'SDG reporting', 'Which least developed countries are on track for 2030, by the UN method'],
+  ['11_country_profile', 'profile', 'Country team', 'Chad against Middle Africa and the world, on one chart'],
+  ['12_rural_urban_gap', 'gap', 'Leave no one behind', 'The rural-urban gap in finishing primary school'],
+] as const;
+---
+<Base
+  title="undata, UN data in Python"
+  description="undata is a free, unofficial Python package for the UN System Data Commons: type a country's name and get a table with its source on every row. Start in Google Colab with nothing to install."
+  section="undata"
+  kind="Page"
+>
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+    <section class="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12">
+      <div>
+        <p class="text-meta font-semibold text-ink-muted">undata · the Python package</p>
+        <h1 class="mt-3 font-display text-h1 font-semibold text-ink-primary sm:text-display" data-pagefind-meta="title">UN data in Python, without the guessing.</h1>
+        <p class="mt-4 max-w-measure text-lead text-ink-secondary">
+          Type a country's name and get a table with its source on every row. It is made for colleagues who need numbers for a
+          report, with no API to learn first.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={`${COLAB}first_table.ipynb`} target="_blank" rel="noreferrer noopener" class="inline-flex h-12 items-center rounded-xl bg-volt px-5 text-body font-semibold text-on-volt">
+            Open in Colab, no install <span aria-hidden="true" class="ml-1.5">↗</span>
+          </a>
+          <a href={lessonHref(first)} class="inline-flex h-12 items-center gap-2 rounded-xl border border-field bg-surface-1 px-5 text-body font-semibold text-ink-primary hover:bg-surface-2">
+            <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+            Start the Analyse course
+          </a>
+        </div>
+        <div class="mt-4 flex max-w-md items-center justify-between gap-3 rounded-xl border border-hairline bg-code py-1.5 pl-4 pr-1.5">
+          <code class="font-mono text-meta text-ink-primary" data-copy-source>pip install undata</code>
+          <button type="button" data-copy-inline class="rounded-lg border border-field bg-surface-1 px-3 py-1.5 text-meta font-semibold text-ink-secondary hover:text-ink-primary">Copy<span class="sr-only"> the install command</span></button>
+        </div>
+        <p class="mt-3 text-meta text-ink-muted">
+          Unofficial · MIT licence · Python 3.11+ ·
+          <a class="link" href="https://doi.org/10.5281/zenodo.23426675" target="_blank" rel="noreferrer noopener">cite it with its DOI</a>
+        </p>
+      </div>
+      <figure class="overflow-hidden rounded-2xl border border-hairline bg-surface-1">
+        <pre tabindex="0" aria-label="Example code" class="overflow-x-auto bg-code px-5 py-4 font-mono text-meta leading-relaxed text-ink-primary focus-visible:outline-offset-[-2px]"><code><span class="text-accent-violet-ink">import</span> undata <span class="text-accent-violet-ink">as</span> un
+
+table = un.latest(<span class="text-accent-aqua-ink">"3.1.1"</span>, [<span class="text-accent-aqua-ink">"Bangladesh"</span>, <span class="text-accent-aqua-ink">"Viet Nam"</span>])
+un.save(table, <span class="text-accent-aqua-ink">"maternal-mortality.xlsx"</span>)</code></pre>
+        <div tabindex="0" role="region" aria-label="Example output" class="overflow-x-auto focus-visible:outline-offset-[-2px]">
+          <table class="w-full text-left text-meta">
+            <thead class="text-label font-semibold uppercase tracking-[0.06em] text-ink-muted">
+              <tr><th class="px-4 py-2">country</th><th class="px-4 py-2">year</th><th class="px-4 py-2 text-right">value</th><th class="hidden px-4 py-2 sm:table-cell">unit</th><th class="px-4 py-2">source</th></tr>
+            </thead>
+            <tbody class="text-ink-secondary">
+              <tr class="border-t border-hairline"><td class="px-4 py-2.5">Bangladesh</td><td class="px-4 py-2.5 tnum text-ink-primary">2023</td><td class="px-4 py-2.5 text-right font-semibold tnum text-ink-primary">115</td><td class="hidden px-4 py-2.5 sm:table-cell">Count per 100,000 live births</td><td class="px-4 py-2.5">SDG Global Database</td></tr>
+              <tr class="border-t border-hairline"><td class="px-4 py-2.5">Viet Nam</td><td class="px-4 py-2.5 tnum text-ink-primary">2023</td><td class="px-4 py-2.5 text-right font-semibold tnum text-ink-primary">47.6</td><td class="hidden px-4 py-2.5 sm:table-cell">Count per 100,000 live births</td><td class="px-4 py-2.5">SDG Global Database</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="border-t border-hairline px-4 py-2.5 text-meta text-ink-muted">
+          Real output, rounded: maternal mortality ratio (SDG 3.1.1), count per 100,000 live births, retrieved 26 October 2026
+          from the UN System Data Commons.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="courses" class="mt-14">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 id="courses" class="font-display text-h2 font-semibold text-ink-primary">Two courses</h2>
+        <a href={url('/videos/?q=undata')} class="link text-meta">All 11 undata videos</a>
+      </div>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2">
+        <CourseCard course={course('analyse')} lessons={analyse} />
+        <CourseCard course={course('present')} lessons={present} />
+      </div>
+    </section>
+
+    <section aria-labelledby="cheat" class="mt-14">
+      <div class="flex flex-wrap items-baseline justify-between gap-4">
+        <h2 id="cheat" class="font-display text-h2 font-semibold text-ink-primary">The functions you'll use most</h2>
+        <a href={REF} target="_blank" rel="noreferrer noopener" class="link text-meta">Full API reference ↗</a>
+      </div>
+      <p class="mt-2 max-w-measure text-body text-ink-secondary">
+        Countries go in the way you'd write them in an email ("Viet Nam", "Vietnam", "VNM"), or as a region or UN group: "Southern Asia", "LDCs", "SIDS". An SDG number such as "3.1.1" works wherever one series reports it.
+      </p>
+      <ul class="mt-5 grid border-t border-hairline md:grid-cols-2 md:gap-x-10">
+        {CHEAT.map((f) => (
+          <li class="border-b border-hairline py-3">
+            <a href={`${REF}${f.ref}`} target="_blank" rel="noreferrer noopener" class="group block">
+              <code class="block font-mono text-meta font-semibold text-ink-primary group-hover:underline group-hover:decoration-volt-line group-hover:underline-offset-4">{f.code}</code>
+              <span class="mt-0.5 block text-meta text-ink-muted">{f.does}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="claude" class="mt-14 grid gap-6 rounded-3xl bg-surface-2 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+      <div class="min-w-0">
+        <h2 id="claude" class="font-display text-h2 font-semibold text-ink-primary">Use it from an AI assistant</h2>
+        <p class="mt-2 max-w-measure text-body leading-relaxed text-ink-secondary">
+          undata is also a connector for AI assistants (an MCP server): an assistant such as Claude can search UN indicators, fetch data and run the analyses itself, with the sources, years and gaps in every answer. It needs <a class="link" href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noreferrer noopener">uv</a>.
+        </p>
+        <p class="mt-4 text-meta font-semibold text-ink-muted">Claude Code</p>
+        <pre tabindex="0" class="mt-1 overflow-x-auto rounded-xl border border-hairline bg-code px-4 py-3 font-mono text-meta text-ink-primary focus-visible:outline-offset-[-2px]"><code>claude mcp add undata -- uvx --from "undata[mcp]" undata-mcp</code></pre>
+        <p class="mt-3 text-meta font-semibold text-ink-muted">Claude Desktop: Settings › Developer › Edit Config</p>
+        <pre tabindex="0" class="mt-1 overflow-x-auto rounded-xl border border-hairline bg-code px-4 py-3 font-mono text-meta leading-relaxed text-ink-primary focus-visible:outline-offset-[-2px]"><code>{`{
+  "mcpServers": {
+    "undata": { "command": "uvx", "args": ["--from", "undata[mcp]", "undata-mcp"] }
+  }
+}`}</code></pre>
+      </div>
+      <a href={lessonHref(ai)} class="inline-flex min-h-11 items-center gap-2 self-start rounded-xl border border-field bg-surface-1 px-4 py-2 text-meta font-semibold text-ink-primary hover:bg-surface-0 lg:self-center">
+        <svg viewBox="0 0 24 24" class="size-3.5" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+        Watch: {ai.data.title}
+      </a>
+    </section>
+
+    <section aria-labelledby="cases" class="mt-14">
+      <div class="flex flex-wrap items-baseline justify-between gap-4">
+        <h2 id="cases" class="font-display text-h2 font-semibold text-ink-primary">12 requests from UN work</h2>
+        <a href={`${SITE}#use-cases`} target="_blank" rel="noreferrer noopener" class="link text-meta">See each with its output ↗</a>
+      </div>
+      <p class="mt-2 max-w-measure text-body text-ink-secondary">Each is a short script that ends with a sentence ready for the report. Every one runs in Google Colab, and runs against the live platform every night.</p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {CASES.map(([file, anchor, who, what]) => (
+          <li class="flex flex-col gap-2 rounded-2xl border border-hairline bg-surface-1 p-4">
+            <span class="text-meta font-semibold text-ink-muted">{who}</span>
+            <span class="text-body font-semibold leading-snug text-ink-primary">{what}</span>
+            <span class="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-1 text-meta">
+              <a class="link" href={`${COLAB}colab/${file}.ipynb`} target="_blank" rel="noreferrer noopener">Open in Colab<span class="sr-only">: {what}</span> <span aria-hidden="true">↗</span></a>
+              <a class="link" href={`${SITE}#${anchor}`} target="_blank" rel="noreferrer noopener">See the output<span class="sr-only">: {what}</span> <span aria-hidden="true">↗</span></a>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="more" class="mt-14 border-t border-hairline pt-8 text-body">
+      <h2 id="more" class="font-sans text-lead font-semibold text-ink-primary">More about undata</h2>
+      <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+        <li><a class="link" href={REF} target="_blank" rel="noreferrer noopener">API reference ↗</a></li>
+        <li><a class="link" href="https://pypi.org/project/undata/" target="_blank" rel="noreferrer noopener">PyPI ↗</a></li>
+        <li><a class="link" href="https://github.com/nerd-factory/undata" target="_blank" rel="noreferrer noopener">Source on GitHub ↗</a></li>
+        <li><a class="link" href={SITE} target="_blank" rel="noreferrer noopener">The package's own site ↗</a></li>
+      </ul>
+      <p class="mt-4 max-w-measure text-meta text-ink-muted">
+        undata is created and maintained by Mafizul Islam. It is unofficial: not affiliated with or endorsed by the United Nations. The data belongs to the agencies that publish it.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    import { announce } from '../scripts/announce';
+
+    document.querySelectorAll<HTMLButtonElement>('[data-copy-inline]').forEach((button) => {
+      const original = button.innerHTML;
+      button.addEventListener('click', async () => {
+        const text = button.parentElement?.querySelector('[data-copy-source]')?.textContent ?? '';
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = 'Copied';
+          announce('Install command copied.');
+        } catch {
+          button.textContent = 'Select and copy';
+        }
+        window.setTimeout(() => (button.innerHTML = original), 1600);
+      });
+    });
+  </script>
+</Base>

@@ -1,7 +1,7 @@
 import { PageHeader, Section } from '../components/Prose';
 import { DataFinder } from '../components/DataFinder';
 import { PageVideo } from '../components/PageVideo';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 
 export function Toolkit() {
   return (

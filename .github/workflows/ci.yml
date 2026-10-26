@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - run: npm ci
@@ -34,5 +34,10 @@ jobs:
       - name: Test
         run: npm test
 
+      # Astro builds every page as static HTML; Pagefind then indexes them for search.
       - name: Build
         run: npm run build
+
+      # The promises a reader can see: previews, privacy, old addresses, links.
+      - name: Check the built site
+        run: npm run test:site

@@ -1,3 +1,4 @@
+import { Link } from '../components/Link';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { SeriesPanel } from '../components/panels/SeriesPanel';
@@ -70,12 +71,12 @@ export function Development() {
                 HDI is a modelled composite published for all countries on one annual
                 cycle, so a <code>LATEST</code> query returns a single uniform year. Compare
                 that with the{' '}
-                <a
-                  href="/peace-and-security"
+                <Link
+                  to="/peace-and-security"
                   className="text-volt underline decoration-volt/30 underline-offset-2"
                 >
                   homicide ranking
-                </a>
+                </Link>
                 , built from national administrative reporting, which spanned fifteen
                 different years. The query is identical; the data generation process is not.
               </p>
@@ -214,9 +215,9 @@ curl -s -G \\
               <code className="text-volt">undata/g/ilo</code>,{' '}
               <code className="text-volt">undata/g/unicef</code> and the rest each open
               into their own indicator trees. The{' '}
-              <a href="/catalogue" className="text-volt underline decoration-volt/30 underline-offset-2">
+              <Link to="/catalogue" className="text-volt underline decoration-volt/30 underline-offset-2">
                 catalogue
-              </a>{' '}
+              </Link>{' '}
               lists all sixteen with their live counts.
             </p>
             <a

@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { PageHeader, Section } from '../components/Prose';
 import { Tutorial } from '../components/Tutorial';
 import { TUTORIALS } from '../content/tutorials';
-import { publishedVideos, seriesMinutes } from '../content/videos';
+import { LESSON_LINKS } from '../content/lesson-index';
 
 /** Shown before the list has to earn more of the reader's attention. */
 const SHOWN_BY_DEFAULT = 3;
+
+/** The Find course covers the same ground on video. */
+const FIND = LESSON_LINKS.filter((lesson) => lesson.course === 'find');
+const FIND_MINUTES = Math.round(FIND.reduce((total, lesson) => total + lesson.seconds, 0) / 60);
 
 export function Tutorials() {
   const [showAll, setShowAll] = useState(false);
@@ -16,29 +20,29 @@ export function Tutorials() {
   return (
     <>
       <PageHeader
-        eyebrow="Tutorials · 5 minutes each"
+        eyebrow="Walkthroughs · 4 to 8 minutes each"
         title="Six walkthroughs"
         lead={<>Each ends with something you can put in front of a manager. Open one and follow along in a second tab.</>}
       />
 
       <Link
-        to="/watch"
-        className="group mt-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-hairline bg-surface-1 p-5 transition-colors hover:border-volt/50"
+        to="/courses/find/"
+        className="group mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-hairline bg-surface-1 p-5 transition-colors hover:border-hairline-strong"
       >
         <div className="max-w-2xl">
-          <span className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-volt">
-            {publishedVideos().length} videos · {seriesMinutes()} minutes
+          <span className="text-meta font-semibold text-ink-muted">
+            {FIND.length} videos · {FIND_MINUTES} minutes
           </span>
-          <h2 className="mt-1.5 text-[1.05rem] font-semibold text-ink-primary">
+          <h2 className="mt-1.5 text-lead font-semibold text-ink-primary">
             Would you rather watch it done once first?
           </h2>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-secondary">
-            The same ground as these walkthroughs, recorded on the platform itself. Ninety seconds
-            each, one idea each, transcripts and a companion notebook included.
+          <p className="mt-1.5 text-body text-ink-secondary">
+            The same ground as these walkthroughs, recorded on data.un.org itself. About a minute
+            each, one idea each, each with a transcript.
           </p>
         </div>
-        <span className="text-[0.82rem] font-medium text-ink-secondary group-hover:text-ink-primary">
-          Watch the series →
+        <span className="text-meta font-semibold text-ink-primary group-hover:underline group-hover:decoration-volt-line group-hover:underline-offset-4">
+          Watch the Find course →
         </span>
       </Link>
 
@@ -53,7 +57,7 @@ export function Tutorials() {
           <button
             type="button"
             onClick={() => setShowAll(true)}
-            className="mt-3 w-full rounded-lg border border-dashed border-hairline py-2.5 text-[0.82rem] font-medium text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
+            className="mt-3 w-full rounded-lg border border-dashed border-hairline py-2.5 text-[0.82rem] font-medium text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary"
           >
             Show {hidden} more walkthroughs
           </button>

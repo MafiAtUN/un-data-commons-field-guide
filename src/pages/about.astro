@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { Timeline } from '../components/home/Timeline';
+import { SiteCredit } from '../components/SiteCredit';
+import { url } from '../lib/paths';
+---
+<Base
+  title="About this guide"
+  description="An independent guide to the UN System Data Commons and the undata Python package: who made it, how the videos are made, and what the site stores."
+  section="about"
+>
+  <div class="mx-auto max-w-3xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12">
+    <h1 class="font-display text-h1 font-semibold text-ink-primary sm:text-display" data-pagefind-meta="title">About this guide</h1>
+    <div class="mt-6 max-w-measure space-y-5 text-lead text-ink-secondary">
+      <p>
+        The UN System Data Commons at <a class="link" href="https://data.un.org" target="_blank" rel="noreferrer noopener">data.un.org</a>
+        went live on 17 September 2026. It joins the public statistics of 26 UN System entities into one knowledge graph, free to
+        use, with no login and no key. This guide teaches it in short videos: how to find a figure you can defend, and how to
+        take it into Python, Excel, PowerPoint or an AI assistant with its source attached.
+      </p>
+      <p>
+        It is an independent guide, not an official United Nations publication, and it is not endorsed by the United Nations or by
+        Google. Every statistic belongs to the agency that published it and carries that agency's terms of use.
+      </p>
+    </div>
+
+    <h2 class="mt-12 font-display text-h2 font-semibold text-ink-primary">How the videos are made</h2>
+    <ul class="mt-4 max-w-measure space-y-3 text-body text-ink-secondary">
+      <li><strong class="text-ink-primary">No figure on screen was typed in by hand.</strong> The data.un.org videos are built from real pages of the platform, captured in a browser on 18 September 2026. In the undata videos, every number was returned by the package from the live platform, on the date each lesson shows.</li>
+      <li><strong class="text-ink-primary">The tools are real too.</strong> In the "Present" lessons, Excel, PowerPoint and R draw the charts from the files undata saved. The Flourish race is a preview drawn from the same CSV, and the Copilot lesson shows a real reply from GPT-5.4, labelled with the model and the date.</li>
+      <li><strong class="text-ink-primary">The voice is synthetic</strong> (Azure AI Speech), and the music and sound were made for the series. Every video has its captions burned in, and its full transcript on its lesson page.</li>
+      <li><strong class="text-ink-primary">Each one lands one idea</strong> in under three minutes, so it can be watched before a meeting starts.</li>
+    </ul>
+
+    <h2 class="mt-12 font-display text-h2 font-semibold text-ink-primary">Privacy: what this site stores</h2>
+    <ul class="mt-4 max-w-measure space-y-3 text-body text-ink-secondary">
+      <li>This site sets no cookies, has no accounts and runs no tracking scripts.</li>
+      <li>Nothing loads from YouTube until you press play. The player is YouTube's privacy-enhanced one, which may then store its own data. Fonts and images are served by this site.</li>
+      <li>Your progress through the lessons is kept in your browser and never leaves it. <button type="button" data-progress-clear class="link">Clear my progress</button></li>
+      <li>The charts on the guide pages ask data.un.org for their figures directly from your browser. If it can't be reached, they show a snapshot stored with this site, and say so.</li>
+    </ul>
+
+    <h2 class="mt-12 font-display text-h2 font-semibold text-ink-primary">Who made it</h2>
+    <p class="mt-4 max-w-measure text-body text-ink-secondary">
+      Mafizul Islam designed, wrote and built the guide, the videos and the undata package, as a
+      <a class="link" href="https://nerd-factory.github.io/nerd-lab/" target="_blank" rel="noreferrer noopener">Nerd Lab</a> project. The source is
+      <a class="link" href="https://github.com/MafiAtUN/un-data-commons-field-guide" target="_blank" rel="noreferrer noopener">on GitHub</a>, and corrections are welcome as issues there.
+    </p>
+    <div class="mt-6"><SiteCredit /></div>
+  </div>
+
+  <div class="mx-auto mt-14 max-w-6xl px-4 sm:px-6 lg:px-8">
+    <h2 class="font-display text-h2 font-semibold text-ink-primary">How data.un.org came about</h2>
+    <p class="mt-2 max-w-measure text-body text-ink-secondary">
+      Two threads: what the UN decided, and what the technology it now runs on could do. They meet in September 2026. Every date links to where it came from.
+    </p>
+    <div class="mt-6">
+      <Timeline client:visible />
+    </div>
+    <p class="mt-8 text-body"><a class="link" href={url('/courses/')}>Back to the courses</a></p>
+  </div>
+</Base>

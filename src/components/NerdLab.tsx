@@ -91,7 +91,7 @@ export function NerdLabNavCredit() {
       className="group flex shrink-0 items-center gap-2 text-volt transition-opacity hover:opacity-80"
     >
       <NerdLabMark className="h-[0.95rem]" />
-      <span className="hidden font-mono text-[0.6rem] uppercase tracking-[0.22em] text-ink-muted transition-colors group-hover:text-ink-secondary lg:block">
+      <span className="hidden font-sans text-label uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-ink-secondary xl:block">
         presents
       </span>
     </a>
@@ -113,13 +113,13 @@ export function NerdLabStrip() {
         aria-label={`${NERD_LAB.name} presents. ${NERD_LAB.tagline}`}
         className="group flex flex-wrap items-center gap-x-5 gap-y-2"
       >
-        <span className="flex items-center gap-2.5 text-ink-secondary transition-colors group-hover:text-volt">
+        <span className="flex items-center gap-2.5 text-ink-secondary transition-colors group-hover:text-ink-primary">
           <NerdLabMark className="h-[1.15rem]" />
-          <span className="font-mono text-[0.66rem] uppercase tracking-[0.22em] text-ink-muted">
+          <span className="font-sans text-label uppercase tracking-[0.08em] text-ink-muted">
             presents
           </span>
         </span>
-        <span className="text-[0.75rem] italic text-ink-muted">{NERD_LAB.tagline}</span>
+        <span className="text-meta italic text-ink-muted">{NERD_LAB.tagline}</span>
       </a>
     </div>
   );

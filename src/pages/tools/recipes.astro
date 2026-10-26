@@ -1,0 +1,15 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import { PageHeader } from '../../components/Prose';
+import { RecipeBuilder } from '../../components/RecipeBuilder';
+---
+<GuideLayout path="/tools/recipes/">
+  <PageHeader
+    eyebrow="Recipe Builder"
+    title="From a question to the code that answers it"
+    lead="Search the platform's own resolver for an indicator, check how many places it really covers, then take the call in curl, Python, Power Query M, R, Julia or jq."
+  />
+  <div class="mt-8">
+    <RecipeBuilder client:load level={2} />
+  </div>
+</GuideLayout>

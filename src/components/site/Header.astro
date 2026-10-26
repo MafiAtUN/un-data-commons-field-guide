@@ -1,0 +1,119 @@
+---
+import { url } from '../../lib/paths';
+import BrandMark from './BrandMark.astro';
+import { NerdLabNavCredit } from '../NerdLab';
+
+/**
+ * One way to move around: four sections, a search, and the platform itself.
+ *
+ * Below `md` the four links fold into a menu built on <details>, so it opens
+ * without any script. The Nerd Lab credit sits at the left on wide screens;
+ * on a phone the header keeps its width for the controls, and the credit is
+ * in the footer.
+ */
+interface Props {
+  section?: string | undefined;
+}
+const { section } = Astro.props;
+const here = Astro.url.pathname;
+/** "page" on the section's own index; "true" anywhere inside the section. */
+const current = (key: string, href: string) => (here === href ? 'page' : section === key ? 'true' : undefined);
+
+const NAV = [
+  { key: 'courses', label: 'Courses', href: url('/courses/') },
+  { key: 'videos', label: 'Videos', href: url('/videos/') },
+  { key: 'undata', label: 'undata', href: url('/undata/') },
+  { key: 'guides', label: 'Guides', href: url('/guides/') },
+];
+---
+<header class="sticky top-0 z-40 border-b border-hairline bg-surface-1/90 backdrop-blur supports-[backdrop-filter]:bg-surface-1/80">
+  <div class="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4 sm:h-16 sm:gap-5 sm:px-6 lg:px-8">
+    <div class="hidden items-center gap-3 lg:flex">
+      <NerdLabNavCredit />
+      <span aria-hidden="true" class="h-6 w-px bg-hairline"></span>
+    </div>
+
+    <a href={url('/')} class="flex shrink-0 items-center gap-2.5 rounded-md text-ink-primary" aria-label="UN Data Commons Field Guide, home">
+      <BrandMark class="size-6 shrink-0" />
+      <span class="text-[0.95rem] font-semibold leading-none whitespace-nowrap">
+        <span class="hidden sm:inline">UN Data Commons</span>
+        <span class="font-medium text-ink-muted sm:ml-1">Field Guide</span>
+      </span>
+    </a>
+
+    <nav aria-label="Main" class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {NAV.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={current(item.key, item.href)}
+              class="inline-flex h-10 items-center rounded-lg px-3 text-[0.95rem] font-medium text-ink-secondary transition-colors hover:bg-surface-2 hover:text-ink-primary aria-[current]:text-ink-primary aria-[current]:underline aria-[current]:decoration-volt-line aria-[current]:decoration-2 aria-[current]:underline-offset-[10px]"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-1.5 sm:gap-2">
+      <button
+        type="button"
+        data-search-open
+        class="inline-flex h-10 items-center gap-2 rounded-lg border border-field bg-surface-0 px-2.5 text-meta text-ink-muted transition-colors hover:border-ink-muted hover:text-ink-primary xl:w-56 xl:px-3"
+        aria-label="Search lessons, transcripts and guides"
+        aria-keyshortcuts="Meta+K Control+K"
+      >
+        <svg viewBox="0 0 24 24" class="size-[1.05rem] shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span class="hidden whitespace-nowrap xl:inline">Search lessons</span>
+        <kbd class="ml-auto hidden rounded border border-hairline bg-surface-1 px-1.5 py-0.5 font-sans text-label text-ink-muted xl:inline" data-search-key>⌘K</kbd>
+      </button>
+
+      <a
+        href="https://data.un.org"
+        target="_blank"
+        rel="noreferrer noopener"
+        class="hidden h-10 items-center rounded-lg px-2.5 text-meta font-medium text-ink-secondary transition-colors hover:bg-surface-2 hover:text-ink-primary lg:inline-flex"
+      >
+        data.un.org <span aria-hidden="true" class="ml-1">↗</span>
+      </a>
+
+      <button
+        type="button"
+        data-theme-toggle
+        class="grid size-10 place-items-center rounded-lg border border-field text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary"
+        aria-label="Switch to the dark theme"
+      >
+        <svg data-icon="moon" viewBox="0 0 24 24" class="size-[1.1rem]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+        <svg data-icon="sun" viewBox="0 0 24 24" class="hidden size-[1.1rem]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      </button>
+
+      <details class="relative md:hidden" data-menu>
+        <summary class="grid size-10 cursor-pointer list-none place-items-center rounded-lg border border-field text-ink-secondary [&::-webkit-details-marker]:hidden" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="size-[1.15rem]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </summary>
+        <nav aria-label="Main" class="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border border-hairline bg-surface-1 p-2 shadow-card">
+          <ul class="grid gap-0.5">
+            {NAV.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={current(item.key, item.href)}
+                  class="flex h-11 items-center rounded-lg px-3 text-body font-medium text-ink-primary hover:bg-surface-2 aria-[current]:bg-volt-soft"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li class="mt-1 border-t border-hairline pt-1">
+              <a href="https://data.un.org" target="_blank" rel="noreferrer noopener" class="flex h-11 items-center rounded-lg px-3 text-body text-ink-secondary hover:bg-surface-2">
+                data.un.org <span aria-hidden="true" class="ml-1">↗</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

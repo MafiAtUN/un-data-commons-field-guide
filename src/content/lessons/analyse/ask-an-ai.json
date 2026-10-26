@@ -1,0 +1,108 @@
+{
+  "title": "Ask an AI assistant, with sources",
+  "idea": "An assistant that fetches UN figures and cites them.",
+  "summary": "Connect an AI assistant such as Claude to official UN statistics: undata's MCP connector lets it search indicators, fetch data and run UN analyses itself, with the source in every result.",
+  "course": "analyse",
+  "order": 6,
+  "series": {
+    "name": "undata",
+    "number": 6
+  },
+  "youtube": {
+    "id": "Ft1H8b2XhFI",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 90,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-06-ask-an-ai.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 12,
+      "label": "Setup · one entry"
+    },
+    {
+      "at": 25,
+      "label": "What the assistant can do"
+    },
+    {
+      "at": 38,
+      "label": "One question, one tool call"
+    },
+    {
+      "at": 56,
+      "label": "Safeguards, or paste it"
+    },
+    {
+      "at": 78,
+      "label": "Recap and links"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "A I assistants are quick with numbers. But where do those numbers come from? Connect undata, and the assistant fetches UN statistics itself, with the source in every answer."
+    },
+    {
+      "at": 11,
+      "text": "Setup is one entry in the assistant’s settings. In Claude Desktop, add undata as an MCP server. The uv tool fetches Python and the package the first time it runs. In Claude Code, it is a single command."
+    },
+    {
+      "at": 25,
+      "text": "The assistant gets fourteen tools. Search indicators, browse the SDG framework, fetch data, and run the same analyses you saw in this series. Every one only reads. None needs an account, or a key."
+    },
+    {
+      "at": 38,
+      "text": "Ask which least developed countries are on track to bring maternal mortality below seventy by 2030. The assistant calls undata’s progress tool, with the indicator, the group, and the target. What comes back is the whole table, a summary worked out from the numbers, and the sources, so the answer can cite them."
+    },
+    {
+      "at": 56,
+      "text": "And the safeguards travel with it. Ask about Bengal, and the tool refuses to guess, so the assistant has to come back and ask you, instead of answering about somewhere else."
+    },
+    {
+      "at": 65,
+      "text": "No connector where you work? un.for_ai turns a table into one message to paste, with its sources and caveats. un.ai_pack makes a zip to upload: the data, a data dictionary, and a prompt."
+    },
+    {
+      "at": 78,
+      "text": "That is the series. UN data, with its sources, wherever you work: in a notebook, a spreadsheet, a terminal, or an assistant."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "claude mcp add undata -- uvx --from \"undata[mcp]\" undata-mcp",
+      "note": "Claude Code. For Claude Desktop, see the undata page."
+    },
+    {
+      "kind": "code",
+      "value": "print(un.for_ai(table, task=\"brief\"))   # paste into any assistant\nun.ai_pack(table, \"pack.zip\")           # or upload this"
+    }
+  ],
+  "keep": "Give the assistant the data and its sources, then ask what the numbers mean.",
+  "tools": [
+    "python",
+    "ai"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/connector.html",
+      "label": "API reference: the connector's tools"
+    },
+    {
+      "href": "/guides/mcp/",
+      "label": "Connect the platform's own MCP server"
+    }
+  ],
+  "also": [
+    {
+      "course": "automate",
+      "order": 3
+    }
+  ]
+}

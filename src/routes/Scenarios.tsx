@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { RecipeBuilder } from '../components/RecipeBuilder';

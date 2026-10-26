@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import { GUIDES } from '../../content/guides';
+import { url } from '../../lib/paths';
+
+const GROUPS = ['Using the platform', 'For developers', 'Worked cases'] as const;
+const tools = GUIDES.filter((g) => g.group === 'Tools');
+---
+<Base title="Guides" description="Reference for the UN System Data Commons: five behaviours to know, charts, AI prompts, the REST API, Python, R and Julia, Power BI and Tableau, MCP, and worked cases." section="guides">
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+    <h1 class="font-display text-h1 font-semibold text-ink-primary sm:text-display">Guides</h1>
+    <p class="mt-3 max-w-measure text-lead text-ink-secondary">
+      The reference behind the videos: what to read when a lesson has shown you the idea and you need the detail.
+    </p>
+    {GROUPS.map((group) => (
+      <section class="mt-10" aria-label={group}>
+        <h2 class="font-display text-h2 font-semibold text-ink-primary">{group}</h2>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {GUIDES.filter((g) => g.group === group).map((g) => (
+            <li>
+              <a href={url(g.path)} class="flex h-full flex-col rounded-2xl border border-hairline bg-surface-1 p-4 hover:border-hairline-strong">
+                <span class="font-semibold text-ink-primary">{g.title}</span>
+                <span class="mt-1.5 flex-1 text-meta leading-relaxed text-ink-muted">{g.description}</span>
+                <span class="mt-3 text-label text-ink-muted tnum">{g.time}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <section class="mt-10" aria-label="Tools">
+      <h2 class="font-display text-h2 font-semibold text-ink-primary">Tools</h2>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {tools.map((g) => (
+          <li>
+            <a href={url(g.path)} class="flex h-full flex-col rounded-2xl border border-hairline bg-surface-1 p-4 hover:border-hairline-strong">
+              <span class="font-semibold text-ink-primary">{g.title}</span>
+              <span class="mt-1.5 text-meta leading-relaxed text-ink-muted">{g.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Base>

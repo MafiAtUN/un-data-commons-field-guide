@@ -24,13 +24,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - run: npm ci
 
+      # CI runs the same checks, but in parallel with this job: repeat them here
+      # so a commit that fails them is never published.
+      - name: Lint, typecheck and test
+        run: npm run lint && npm run typecheck && npm test
+
       - name: Build
         run: npm run build
+
+      - name: Check the built site
+        run: npm run test:site
 
       - uses: actions/configure-pages@v5
 

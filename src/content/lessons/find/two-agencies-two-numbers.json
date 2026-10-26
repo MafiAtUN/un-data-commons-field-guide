@@ -1,0 +1,92 @@
+{
+  "title": "Two agencies, two numbers",
+  "idea": "Afghanistan is 520.5 and 620.4 on the same page.",
+  "summary": "Search maternal mortality across Southern Asia and Afghanistan appears twice on the same page, with two different figures. Neither is a mistake.",
+  "course": "find",
+  "order": 5,
+  "series": {
+    "name": "data.un.org",
+    "number": 5
+  },
+  "youtube": {
+    "id": "qmeWC1bpLEY",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 62,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "05-two-agencies-two-numbers.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Same indicator, two numbers"
+    },
+    {
+      "at": 7,
+      "label": "Find the duplicate"
+    },
+    {
+      "at": 16,
+      "label": "Global SDG Database: 520.5"
+    },
+    {
+      "at": 26,
+      "label": "UNDP: 620.4"
+    },
+    {
+      "at": 36,
+      "label": "Why they differ"
+    },
+    {
+      "at": 49,
+      "label": "Pick one and name it"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "Two colleagues quote the same UN indicator and get different numbers. Neither of them is wrong."
+    },
+    {
+      "at": 7.12,
+      "text": "Search for maternal mortality across Southern Asia. Scroll down and you will notice something odd: the same measure appears more than once."
+    },
+    {
+      "at": 16.81,
+      "text": "Here is Afghanistan, from the Global S D G Database. Five hundred and twenty deaths per hundred thousand live births."
+    },
+    {
+      "at": 26.12,
+      "text": "And here is Afghanistan again, on the same page, from U N D P's Human Development Report Office. Six hundred and twenty."
+    },
+    {
+      "at": 36.08,
+      "text": "A hundred apart, and neither is a mistake. Agencies use different estimation methods, different model vintages, and revise at different times. They are genuinely different measurements."
+    },
+    {
+      "at": 49.71,
+      "text": "So pick one source, name it in your text, and never mix two in a single chart. If a reviewer finds a different figure, your named source is the answer."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Southern Asia"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/cite/",
+      "label": "Build a citation that names the agency"
+    },
+    {
+      "href": "/guides/api/",
+      "label": "Query cookbook: when two agencies are one source"
+    }
+  ],
+  "keep": "Afghanistan, same page, same indicator: 520.5 from the Global SDG Indicators Database and 620.4 from UNDP's Human Development Report Office."
+}

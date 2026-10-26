@@ -70,7 +70,11 @@ const SHAPES: readonly { value: Shape; label: string; hint: string }[] = [
 
 const DEFAULT_COUNTRIES = ['country/BGD', 'country/ETH', 'country/KEN'];
 
-export function RecipeBuilder() {
+/**
+ * `level` sets the step headings: 2 when the builder is the page's main
+ * content, 3 when it sits inside a section that already has an h2.
+ */
+export function RecipeBuilder({ level = 3 }: { level?: 2 | 3 }) {
   const [shape, setShape] = useState<Shape>('scatter');
   const [chosen, setChosen] = useState<string[]>([
     'undata/unicef/SPP_GDPPC',
@@ -195,7 +199,7 @@ export function RecipeBuilder() {
 
   return (
     <div className="rounded-lg border border-hairline bg-surface-1 p-5">
-      <Step number={1} title="Find the indicator" hint="Searches data.un.org as you would">
+      <Step level={level} number={1} title="Find the indicator" hint="Searches data.un.org as you would">
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -208,12 +212,12 @@ export function RecipeBuilder() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="maternal mortality, GDP per capita, access to electricity…"
             aria-label="Describe the indicator you need"
-            className="min-w-0 flex-1 rounded border border-hairline bg-surface-0 px-3 py-2 text-[0.85rem] text-ink-primary outline-none placeholder:text-ink-muted/70 focus:border-volt/60"
+            className="min-w-0 flex-1 rounded border border-hairline bg-surface-0 px-3 py-2 text-[0.85rem] text-ink-primary placeholder:text-ink-muted focus:border-ink-primary"
           />
           <button
             type="submit"
             disabled={search.state === 'loading' || !query.trim()}
-            className="min-h-10 rounded bg-volt px-4 text-[0.8rem] font-semibold text-surface-0 transition-opacity disabled:opacity-40"
+            className="min-h-10 rounded bg-volt px-4 text-[0.8rem] font-semibold text-on-volt transition-opacity disabled:opacity-40"
           >
             {search.state === 'loading' ? 'Searching…' : 'Search'}
           </button>
@@ -238,8 +242,8 @@ export function RecipeBuilder() {
                 aria-pressed={chosen.includes(indicator.dcid)}
                 className={`rounded border px-2.5 py-1 text-[0.74rem] transition-colors ${
                   chosen.includes(indicator.dcid)
-                    ? 'border-volt bg-volt/10 text-volt'
-                    : 'border-hairline text-ink-secondary hover:border-volt/50 hover:text-ink-primary'
+                    ? 'border-ink-primary bg-ink-primary text-surface-0'
+                    : 'border-hairline text-ink-secondary hover:border-ink-muted hover:text-ink-primary'
                 }`}
               >
                 {indicator.name}
@@ -275,7 +279,7 @@ export function RecipeBuilder() {
         )}
       </Step>
 
-      <Step number={2} title="Say what you are drawing" hint="This picks the endpoint for you">
+      <Step level={level} number={2} title="Say what you are drawing" hint="This picks the endpoint for you">
         <div className="flex flex-wrap gap-2">
           {SHAPES.map((option) => (
             <button
@@ -285,18 +289,24 @@ export function RecipeBuilder() {
               aria-pressed={shape === option.value}
               className={`rounded border px-3 py-2 text-left transition-colors ${
                 shape === option.value
-                  ? 'border-volt bg-volt/10'
-                  : 'border-hairline hover:border-volt/50'
+                  ? 'border-ink-primary bg-ink-primary'
+                  : 'border-hairline hover:border-ink-muted'
               }`}
             >
               <span
                 className={`block text-[0.82rem] font-medium ${
-                  shape === option.value ? 'text-volt' : 'text-ink-primary'
+                  shape === option.value ? 'text-surface-0' : 'text-ink-primary'
                 }`}
               >
                 {option.label}
               </span>
-              <span className="block text-[0.72rem] text-ink-muted">{option.hint}</span>
+              <span
+                className={`block text-[0.75rem] ${
+                  shape === option.value ? 'text-surface-0/80' : 'text-ink-muted'
+                }`}
+              >
+                {option.hint}
+              </span>
             </button>
           ))}
         </div>
@@ -346,7 +356,7 @@ export function RecipeBuilder() {
                   value={date}
                   onChange={(event) => setDate(event.target.value)}
                   placeholder="LATEST or 2024"
-                  className="mt-1 w-full rounded border border-hairline bg-surface-0 px-2 py-2 font-mono text-[0.8rem] text-ink-primary outline-none focus:border-volt/60"
+                  className="mt-1 w-full rounded border border-hairline bg-surface-0 px-2 py-2 font-mono text-[0.8rem] text-ink-primary placeholder:text-ink-muted focus:border-ink-primary"
                 />
               </label>
             </>
@@ -355,6 +365,7 @@ export function RecipeBuilder() {
       </Step>
 
       <Step
+        level={level}
         number={3}
         title="Check what it covers, before you build anything"
         hint="Runs the real call"
@@ -363,14 +374,14 @@ export function RecipeBuilder() {
           type="button"
           onClick={() => void runCoverage()}
           disabled={chosen.length === 0 || coverage.state === 'loading'}
-          className="min-h-10 rounded border border-volt/50 px-4 text-[0.8rem] font-semibold text-volt transition-colors hover:bg-volt/10 disabled:opacity-40"
+          className="min-h-10 rounded border border-field px-4 text-[0.8rem] font-semibold text-ink-primary transition-colors hover:bg-surface-2 disabled:opacity-40"
         >
           {coverage.state === 'loading' ? 'Measuring…' : 'Measure coverage'}
         </button>
         <CoverageReport status={coverage} names={names} shape={shape} />
       </Step>
 
-      <Step number={4} title="Take the code" hint="Same request, six tools">
+      <Step level={level} number={4} title="Take the code" hint="Same request, six tools">
         {problems.length > 0 ? (
           <ul className="space-y-1.5">
             {problems.map((problem) => (
@@ -391,23 +402,26 @@ export function RecipeBuilder() {
 }
 
 function Step({
+  level,
   number,
   title,
   hint,
   children,
 }: {
+  level: 2 | 3;
   number: number;
   title: string;
   hint: string;
   children: React.ReactNode;
 }) {
+  const Heading = level === 2 ? 'h2' : 'h3';
   return (
     <section className="border-t border-hairline py-5 first:border-t-0 first:pt-0 last:pb-0">
       <div className="flex items-baseline gap-3">
         <span className="tnum font-mono text-[0.76rem] font-semibold text-volt">
           {String(number).padStart(2, '0')}
         </span>
-        <h3 className="text-[0.95rem] font-semibold text-ink-primary">{title}</h3>
+        <Heading className="text-[0.95rem] font-semibold text-ink-primary">{title}</Heading>
         <span className="text-[0.72rem] text-ink-muted">{hint}</span>
       </div>
       <div className="mt-3">{children}</div>
@@ -472,16 +486,18 @@ function SearchResults({
                 aria-pressed={selected}
                 className={`w-full rounded border px-3 py-2 text-left transition-colors ${
                   selected
-                    ? 'border-volt bg-volt/10'
-                    : 'border-hairline hover:border-volt/50 hover:bg-surface-2/40'
+                    ? 'border-ink-primary bg-ink-primary'
+                    : 'border-hairline hover:border-ink-muted hover:bg-surface-2/40'
                 }`}
               >
-                <span className="block text-[0.82rem] text-ink-primary">{indicator.name}</span>
+                <span className={`block text-[0.82rem] ${selected ? 'text-surface-0' : 'text-ink-primary'}`}>
+                  {indicator.name}
+                </span>
                 <span className="mt-0.5 flex flex-wrap items-baseline gap-x-2">
-                  <code className="break-all font-mono text-[0.7rem] text-volt">
+                  <code className={`break-all font-mono text-[0.75rem] ${selected ? 'text-surface-0/80' : 'text-volt'}`}>
                     {indicator.dcid}
                   </code>
-                  <span className="text-[0.68rem] uppercase tracking-wide text-ink-muted">
+                  <span className={`text-[0.75rem] uppercase tracking-wide ${selected ? 'text-surface-0/80' : 'text-ink-muted'}`}>
                     {indicator.agency}
                   </span>
                 </span>

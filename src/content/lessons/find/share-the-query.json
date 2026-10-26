@@ -1,0 +1,88 @@
+{
+  "title": "Share the query, not a screenshot",
+  "idea": "A link stays current. A screenshot does not.",
+  "summary": "Every search on data.un.org has its own address, so you can send a colleague the live query instead of a picture of it.",
+  "course": "find",
+  "order": 8,
+  "series": {
+    "name": "data.un.org",
+    "number": 8
+  },
+  "youtube": {
+    "id": "RQgZQjsBLeU",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 67,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "08-share-the-query.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Screenshots go stale"
+    },
+    {
+      "at": 6,
+      "label": "Every search has an address"
+    },
+    {
+      "at": 16,
+      "label": "Copy a sharable link"
+    },
+    {
+      "at": 26,
+      "label": "What it really copies"
+    },
+    {
+      "at": 42,
+      "label": "Why links beat images"
+    },
+    {
+      "at": 57,
+      "label": "Recap"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "A screenshot of a statistic is dead the moment you paste it. A link is not."
+    },
+    {
+      "at": 6.21,
+      "text": "Every search you run has its own address. The question is right there in the URL, which means you can send a colleague the query itself instead of a picture of it."
+    },
+    {
+      "at": 16.6,
+      "text": "And you can go finer than the page. The three dots beside any result offer Copy sharable link, and View in S D Gs."
+    },
+    {
+      "at": 26,
+      "text": "Click it and this is what you get. Worth reading before you paste it, because it does not hand back your search. It deep-links into the S D G explorer at indicator three point one point one — the underlying indicator, not the question you asked."
+    },
+    {
+      "at": 42.77,
+      "text": "This matters more than it sounds. Agencies revise their figures. A link re-runs the query and shows whatever is true today, while a screenshot quietly preserves whatever was true the afternoon you took it."
+    },
+    {
+      "at": 57.09,
+      "text": "Send the query. If you truly need an image, write the access date beside it, because from that moment it is a historical document."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Bangladesh"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/finder/",
+      "label": "Data Finder: chart, CSV and citation in one go"
+    }
+  ],
+  "keep": "Watch what it copies: the SDG explorer at the indicator, not your search."
+}

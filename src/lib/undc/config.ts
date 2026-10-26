@@ -15,7 +15,7 @@
 
 /** Root of the Data Commons deployment that backs data.un.org. */
 export const API_ROOT: string =
-  import.meta.env.VITE_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
+  import.meta.env.PUBLIC_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
 
 /** The public-facing site, used to build deep links a reader can click through to. */
 export const SITE_ROOT = 'https://data.un.org';

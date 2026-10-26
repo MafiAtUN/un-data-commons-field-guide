@@ -1,0 +1,104 @@
+{
+  "title": "A first draft, with Copilot",
+  "idea": "A first draft from an assistant, every number checked.",
+  "summary": "Use Copilot, or any AI assistant, to draft a briefing paragraph from official UN data, and keep every number honest: the numbers go in with the question, and every number in the draft is checked against the table.",
+  "course": "present",
+  "order": 4,
+  "series": {
+    "name": "undata",
+    "number": 10
+  },
+  "youtube": {
+    "id": "I2vCQIEoajg",
+    "status": "private"
+  },
+  "seconds": 128,
+  "recorded": "2026-10-16",
+  "captions": "burned-in",
+  "poster": "undata-10-copilot-draft.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 12,
+      "label": "The one rule"
+    },
+    {
+      "at": 24,
+      "label": "un.change + un.for_ai"
+    },
+    {
+      "at": 50,
+      "label": "Paste it in"
+    },
+    {
+      "at": 72,
+      "label": "Ask for what a report needs"
+    },
+    {
+      "at": 93,
+      "label": "un.ai_pack · files to upload"
+    },
+    {
+      "at": 108,
+      "label": "The checklist"
+    },
+    {
+      "at": 118,
+      "label": "Recap and links"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "AI assistants write fluent paragraphs. The risk is a fluent paragraph with a number nobody can trace. Here is how to draft with Copilot, or any assistant, and keep every number honest."
+    },
+    {
+      "at": 12,
+      "text": "Ask an assistant what a statistic is, and it may answer from memory, with no source and no year. Give it the statistic and ask what it means, and it has nothing to invent."
+    },
+    {
+      "at": 23,
+      "text": "un.change compares 2015 with 2024 across the least developed countries, for safely managed drinking water, SDG 6.1.1. un.for_ai turns the table into a prompt. Rules first: use only these numbers, name the source and the year, a missing country is not zero. Then the table, the 20 countries with no data, by name, and the task: a briefing paragraph for a UN report."
+    },
+    {
+      "at": 50,
+      "text": "Paste it into Copilot Chat. Here it is sent to GPT-5.4, through Azure, on 16 October 2026; Copilot’s wording will differ. The draft follows the rules. It names the source and the year, and it lists the countries with no data instead of skipping them. But look at the numbers: eight decimal places. Correct, and unusable in a report."
+    },
+    {
+      "at": 71,
+      "text": "So ask for what a report needs: one decimal place, plain text, under a hundred and thirty words. That is a usable first draft. Now the step that matters: check every number against the table. Here, all 21 match, years included. If one does not, it goes, however good the sentence. The assistant drafts. You sign."
+    },
+    {
+      "at": 93,
+      "text": "For longer work, un.ai_pack writes three files to upload instead: the data, a note on units, sources and gaps, and the prompt. Attach them in Copilot, and it can calculate from the file rather than from pasted text."
+    },
+    {
+      "at": 107,
+      "text": "Numbers in, never from memory. A year and a source on every figure. No data is not zero. And every number checked, by you, before it goes out."
+    },
+    {
+      "at": 118,
+      "text": "The assistant writes the first draft; the table keeps it honest. Next: a publication figure, in Python and R."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "table = un.change(\"6.1.1\", \"LDCs\", 2015, 2024)     # safely managed drinking water\nprompt = un.for_ai(table, task=\"brief\")\nun.ai_pack(table, \"water-ldcs.zip\", task=\"brief\")"
+    }
+  ],
+  "keep": "Check every number in the draft against the table before it goes anywhere.",
+  "tools": [
+    "python",
+    "ai"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/ai-prompts/",
+      "label": "Prompts that stop invented figures"
+    }
+  ]
+}

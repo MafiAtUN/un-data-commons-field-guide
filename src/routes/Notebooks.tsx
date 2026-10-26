@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { PageHeader, Section, Takeaway } from '../components/Prose';
+import { Link } from '../components/Link';
+import { Inline, PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
 import { ScenarioBrief } from '../components/ScenarioBrief';
@@ -109,7 +109,7 @@ ax.set_xlabel("GDP per capita, current US$ (2024)")
 ax.set_ylabel("Conflict deaths per 100,000 (2022–2024)")
 
 # The sample belongs in the title, not in a footnote nobody screenshots.
-ax.set_title(f"Among the {len(points)} countries reporting conflict deaths\n"
+ax.set_title(f"Among the {len(points)} countries reporting conflict deaths\\n"
              f"({len(x)} countries have GDP per capita)")
 
 for _, row in points.iterrows():
@@ -150,7 +150,7 @@ fig.text(0.01, 0.01, "Source: UNICEF and SDG collections via data.un.org",
           ].map((item) => (
             <div key={item.title} className="rounded-lg border border-hairline bg-surface-1 p-4">
               <h3 className="text-[0.88rem] font-semibold text-ink-primary">{item.title}</h3>
-              <p className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-secondary">{item.body}</p>
+              <p className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-secondary"><Inline text={item.body} /></p>
             </div>
           ))}
         </div>

@@ -1,0 +1,109 @@
+{
+  "title": "One country, in context",
+  "idea": "One country beside its region and the world.",
+  "summary": "Put any country's statistics in context, beside its UN M49 region and the world and ranked within the region, with one Python call. Then chart it and write the paragraph.",
+  "course": "analyse",
+  "order": 3,
+  "series": {
+    "name": "undata",
+    "number": 3
+  },
+  "youtube": {
+    "id": "UdCLu_aFOIk",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 106,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-03-country-in-context.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 10,
+      "label": "un.profile · one call"
+    },
+    {
+      "at": 30,
+      "label": "Chad, beside Middle Africa and the world"
+    },
+    {
+      "at": 53,
+      "label": "Where there is no regional figure"
+    },
+    {
+      "at": 64,
+      "label": "un.chart · the briefing page"
+    },
+    {
+      "at": 75,
+      "label": "un.describe · the paragraph"
+    },
+    {
+      "at": 90,
+      "label": "Make it yours"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "Seven hundred and forty-eight. Is that high? A number on its own says very little. Here is how to put a country in context, in one call."
+    },
+    {
+      "at": 10,
+      "text": "un.profile takes a country and the indicators you care about. SDG numbers or full IDs, with a comment so the next person knows what each one is. It finds the country’s region in the UN’s M49 standard, Middle Africa for Chad, sets each value beside the region and the world, and ranks it within the region."
+    },
+    {
+      "at": 29,
+      "text": "Maternal mortality: 748, against 197 for the world, and the highest of nine countries in Middle Africa. Child deaths under five: also the highest. Fewer than three in ten children finish primary school. Thirteen percent of people have electricity, the lowest in the region. But women hold a third of the seats in parliament, ahead of the region and the world."
+    },
+    {
+      "at": 53,
+      "text": "Two rows have no Middle Africa marker. The agency publishes no regional figure there, so undata leaves it empty, rather than inventing an average from whichever countries happen to report."
+    },
+    {
+      "at": 64,
+      "text": "un.chart draws the same thing for your document: one row per indicator, each on its own scale, so a rate in the hundreds and a percentage can share a page, with the source line underneath."
+    },
+    {
+      "at": 75,
+      "text": "And un.describe writes it out: each value, its year, its rank, and the world figure. Notice the years. The school figure is from 2019, the parliament figure from 2026. The table never hides that."
+    },
+    {
+      "at": 90,
+      "text": "Swap Chad for any country. Swap the list for the indicators in your mandate. The same call makes the briefing page."
+    },
+    {
+      "at": 97,
+      "text": "Context in one call, with every year and source on the table. Next: who gets left behind."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "table = un.profile(\"Chad\", [\n    \"3.1.1\",                                              # maternal mortality\n    \"undata/sdg/SH_DYN_MORT.AGE--Y0T4\",                   # under-5 mortality\n    \"undata/sdg/SE_TOT_CPLR.EDUCATION_LEVEL--ISCED11_1\",  # primary completion\n    \"undata/sdg/EG_ACS_ELEC\",                             # electricity\n    \"undata/sdg/SG_GEN_PARL.SEX--F\",                      # women in parliament\n])\nun.chart(table, \"chad-profile.png\")\nprint(un.describe(table))"
+    },
+    {
+      "kind": "colab",
+      "href": "https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/colab/11_country_profile.ipynb",
+      "label": "Open the country profile use case in Colab"
+    }
+  ],
+  "keep": "Where no regional figure is published, the cell stays empty. Never an invented average.",
+  "tools": [
+    "python"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/analysis.html",
+      "label": "API reference: the analyses"
+    },
+    {
+      "href": "/undata/",
+      "label": "undata: install, cheat sheet and use cases"
+    }
+  ]
+}

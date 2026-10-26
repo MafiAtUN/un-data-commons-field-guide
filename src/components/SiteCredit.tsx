@@ -18,13 +18,13 @@ export function SiteCredit() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 border-t border-hairline pt-6">
       <div>
-        <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+        <p className="text-label font-semibold uppercase tracking-[0.08em] text-ink-muted">
           Created by
         </p>
         <p className="wordmark mt-1 text-[1.15rem] font-semibold text-ink-primary">
           {AUTHOR.name}
         </p>
-        <p className="mt-0.5 text-[0.76rem] text-ink-muted">
+        <p className="mt-0.5 text-meta text-ink-muted">
           Designed, written and built end to end.
         </p>
       </div>
@@ -61,13 +61,13 @@ function CreditLink({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="group relative flex items-center gap-2 overflow-hidden rounded border border-hairline px-3.5 py-2 text-[0.82rem] font-medium text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
+      className="group relative flex items-center gap-2 overflow-hidden rounded-lg border border-field px-3.5 py-2 text-meta font-medium text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary"
     >
       {children}
       {label}
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-volt transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-volt-line transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
       />
     </a>
   );

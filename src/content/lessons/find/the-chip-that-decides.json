@@ -1,0 +1,96 @@
+{
+  "title": "The chip that decides your answer",
+  "idea": "Name no place and the platform picks one for you.",
+  "summary": "Search data.un.org without naming a country and it picks one for you, silently. Every figure on the page is then about that place.",
+  "course": "find",
+  "order": 2,
+  "series": {
+    "name": "data.un.org",
+    "number": 2
+  },
+  "youtube": {
+    "id": "G-TOIJArZa4",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 52,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "02-the-place-chip.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Why it matters"
+    },
+    {
+      "at": 4,
+      "label": "Ask with no place"
+    },
+    {
+      "at": 13,
+      "label": "It picked the world"
+    },
+    {
+      "at": 25,
+      "label": "Add “in Kenya”"
+    },
+    {
+      "at": 34,
+      "label": "Switch from the chip"
+    },
+    {
+      "at": 41,
+      "label": "The habit"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "This is the single control that decides whether your answer is right."
+    },
+    {
+      "at": 4.77,
+      "text": "Ask for a homicide rate. Just that, with no country named. You get an answer straight away."
+    },
+    {
+      "at": 13.43,
+      "text": "But look here. The platform needed a place, your question did not give one, so it supplied its own. Everything on screen is now a world figure, whether you meant that or not."
+    },
+    {
+      "at": 25.86,
+      "text": "Add two words — in Kenya — and the chip changes. Now the platform is answering the question you actually asked."
+    },
+    {
+      "at": 34.78,
+      "text": "The chip is also a control. Click it and switch country without retyping a thing."
+    },
+    {
+      "at": 41.64,
+      "text": "So name the place every time, then check the chip agrees with you. It takes a second, and it is the most common way a briefing goes wrong."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "homicide rate"
+    },
+    {
+      "kind": "query",
+      "value": "homicide rate in Kenya"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/prompt-lab/",
+      "label": "Prompt Lab: see which place the search box chose"
+    },
+    {
+      "href": "/guides/five-behaviours/",
+      "label": "The five behaviours that cause corrections"
+    }
+  ],
+  "keep": "Before you quote, check the place chip to the right of the search box."
+}

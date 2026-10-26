@@ -1,0 +1,100 @@
+{
+  "title": "\"Latest\" is not a year",
+  "idea": "A ranking of recent figures can span 15 years.",
+  "summary": "A country ranking on data.un.org looks like a snapshot of one moment. Its footnote says “most recent date with highest coverage”, and those dates can be years apart.",
+  "course": "find",
+  "order": 4,
+  "series": {
+    "name": "data.un.org",
+    "number": 4
+  },
+  "youtube": {
+    "id": "Vly-PmWWpwU",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 72,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "04-latest-is-not-a-year.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "A mistake that survives review"
+    },
+    {
+      "at": 5,
+      "label": "The ranking"
+    },
+    {
+      "at": 13,
+      "label": "Read the footnote"
+    },
+    {
+      "at": 26,
+      "label": "Years apart"
+    },
+    {
+      "at": 37,
+      "label": "Countries left out"
+    },
+    {
+      "at": 47,
+      "label": "Two honest options"
+    },
+    {
+      "at": 62,
+      "label": "Recap"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "Here is a mistake that survives peer review, because nothing on screen looks wrong."
+    },
+    {
+      "at": 5.88,
+      "text": "Compare an indicator across a region and you get a ranking. It looks like a snapshot of one moment."
+    },
+    {
+      "at": 13.65,
+      "text": "It is not. Read the footnote. Most recent date with highest coverage. The platform took each country's latest figure, and those were not measured in the same year."
+    },
+    {
+      "at": 26.46,
+      "text": "In a single African ranking those years can stretch from around two thousand and nine to last year. One bar is fresh; the one beside it is fifteen years old."
+    },
+    {
+      "at": 37.83,
+      "text": "And some countries are not here at all, because they never reported. Leaving them out silently turns a data gap into a finding you did not make."
+    },
+    {
+      "at": 47.62,
+      "text": "You have two honest options. Pin one year for everyone, and accept that countries which did not report it drop out. Or keep the latest figures and label the chart as most recent available, showing each year."
+    },
+    {
+      "at": 62.02,
+      "text": "Latest is a per-country answer, not a date. Say which year every number comes from, and the ranking stops lying quietly."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "compare homicide rate across countries in Africa"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/cases/peace-and-security/",
+      "label": "Worked case: each country's year beside its bar"
+    },
+    {
+      "href": "/guides/five-behaviours/",
+      "label": "The five behaviours that cause corrections"
+    }
+  ],
+  "keep": "“Most recent date with highest coverage” means the years are mixed."
+}

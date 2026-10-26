@@ -1,0 +1,35 @@
+---
+import { MOVED, url } from '../lib/paths';
+
+/**
+ * Every address from before the redesign, as a page that forwards to where the
+ * content lives now. GitHub Pages cannot redirect on the server, so this is a
+ * tiny HTML page: a script that carries any #section across, then a plain
+ * meta refresh (for anyone without script, and for search engines, which may
+ * not run scripts on a noindex page), a canonical link, and a visible link.
+ */
+export function getStaticPaths() {
+  return Object.entries(MOVED).map(([from, to]) => ({
+    params: { old: from.replace(/^\//, '') },
+    props: { to },
+  }));
+}
+
+const target = url(Astro.props.to as string);
+const absolute = new URL(target, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moved · UN Data Commons Field Guide</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={absolute} />
+    <script is:inline define:vars={{ target }}>location.replace(target + location.search + location.hash);</script>
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body style="font-family: system-ui, sans-serif; padding: 2rem;">
+    <p>This page has moved to <a href={target}>{absolute}</a>.</p>
+  </body>
+</html>

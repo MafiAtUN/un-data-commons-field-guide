@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { fetchSeries } from '../lib/undc/client';
 import { toNamedSeries, type NamedSeries } from '../lib/undc/select';
 import { SNAPSHOT_KEYS } from '../lib/undc/snapshots';
@@ -108,6 +108,18 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
     return entries.filter(([, name]) => name.toLowerCase().includes(query)).slice(0, 8);
   }, [search]);
 
+  const searchRef = useRef<HTMLInputElement>(null);
+  const tagsRef = useRef<HTMLUListElement>(null);
+
+  /** Removing a tag keeps focus in the list: the next tag, else the search box. */
+  function removeCountry(code: string, index: number) {
+    toggleCountry(code);
+    requestAnimationFrame(() => {
+      const tags = tagsRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? [];
+      (tags[Math.min(index, tags.length - 1)] ?? searchRef.current)?.focus();
+    });
+  }
+
   function toggleCountry(code: string) {
     setSelected((current) =>
       current.includes(code)
@@ -187,7 +199,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
               key={preset.label}
               type="button"
               onClick={() => setSelected(preset.countries.slice(0, 8))}
-              className="rounded-full border border-hairline px-3 py-1.5 text-[0.75rem] text-ink-secondary transition-colors hover:border-volt/50 hover:text-ink-primary"
+              className="rounded-full border border-hairline px-3 py-1.5 text-[0.75rem] text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary"
             >
               {preset.label}
             </button>
@@ -197,6 +209,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
         <label className="mt-3 block max-w-sm">
           <span className="sr-only">Search for a country</span>
           <input
+            ref={searchRef}
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search for a country to add…"
@@ -211,7 +224,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
                 <button
                   type="button"
                   onClick={() => { toggleCountry(code); setSearch(''); }}
-                  className="rounded border border-hairline bg-surface-0 px-2.5 py-1 text-[0.75rem] text-ink-secondary hover:border-volt/50 hover:text-ink-primary"
+                  className="rounded border border-hairline bg-surface-0 px-2.5 py-1 text-[0.75rem] text-ink-secondary hover:border-ink-muted hover:text-ink-primary"
                 >
                   + {name}
                 </button>
@@ -220,13 +233,13 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
           </ul>
         )}
 
-        <ul className="mt-3 flex flex-wrap gap-2">
-          {selected.map((code) => (
+        <ul ref={tagsRef} className="mt-3 flex flex-wrap gap-2">
+          {selected.map((code, index) => (
             <li key={code}>
               <button
                 type="button"
-                onClick={() => toggleCountry(code)}
-                className="flex items-center gap-1.5 rounded-full border border-volt/40 bg-volt/10 px-3 py-1 text-[0.75rem] text-ink-primary"
+                onClick={() => removeCountry(code, index)}
+                className="flex items-center gap-1.5 rounded-full border border-field bg-surface-2 px-3 py-1 text-[0.75rem] text-ink-primary hover:border-ink-primary"
                 aria-label={`Remove ${COUNTRIES[code] ?? code}`}
               >
                 {COUNTRIES[code] ?? code}
@@ -251,7 +264,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
               aria-pressed={fromYear === year}
               className={`tnum rounded border px-3 py-1.5 text-[0.75rem] transition-colors ${
                 fromYear === year
-                  ? 'border-volt/60 bg-volt/10 text-ink-primary'
+                  ? 'border-ink-primary bg-ink-primary text-surface-0'
                   : 'border-hairline text-ink-secondary hover:text-ink-primary'
               }`}
             >
@@ -283,7 +296,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
                 onClick={() => setView(option)}
                 aria-pressed={view === option}
                 className={`px-2.5 py-1 text-[0.7rem] font-medium capitalize ${
-                  view === option ? 'bg-surface-3 text-ink-primary' : 'text-ink-muted hover:text-ink-secondary'
+                  view === option ? 'bg-ink-primary text-surface-0' : 'text-ink-muted hover:text-ink-secondary'
                 }`}
               >
                 {option}
@@ -317,7 +330,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
               <button
                 type="button"
                 onClick={state.refresh}
-                className="mt-4 rounded border border-hairline px-3 py-1.5 text-[0.78rem] font-medium text-ink-secondary hover:border-volt/50 hover:text-ink-primary"
+                className="mt-4 rounded border border-hairline px-3 py-1.5 text-[0.78rem] font-medium text-ink-secondary hover:border-ink-muted hover:text-ink-primary"
               >
                 Try again
               </button>
@@ -405,7 +418,7 @@ export function DataFinder({ showIntro = true }: { showIntro?: boolean } = {}) {
                     }),
                   )
                 }
-                className="rounded bg-volt px-3 py-1.5 text-[0.78rem] font-semibold text-surface-0 hover:opacity-90"
+                className="rounded bg-volt px-3 py-1.5 text-[0.78rem] font-semibold text-on-volt hover:opacity-90"
               >
                 Download CSV
               </button>
@@ -475,11 +488,12 @@ function Step({
   return (
     <div className={`${bare ? '' : 'border-b border-hairline'} p-5 ${className}`}>
       <h3 className="flex items-baseline gap-2.5 text-[0.9rem] font-semibold text-ink-primary">
-        <span className="tnum grid size-5 shrink-0 place-items-center rounded-full bg-volt text-[0.7rem] font-bold text-surface-0">
+        <span aria-hidden="true" className="tnum grid size-5 shrink-0 place-items-center rounded-full bg-volt text-[0.75rem] font-bold text-on-volt">
           {number}
         </span>
+        <span className="sr-only">Step {number}: </span>
         {title}
-        {hint && <span className="text-[0.75rem] font-normal text-ink-muted">{hint}</span>}
+        {hint && <span className="text-[0.75rem] font-normal text-ink-muted"> {hint}</span>}
       </h3>
       <div className="mt-2.5">{children}</div>
     </div>

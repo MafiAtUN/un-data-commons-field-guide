@@ -1,0 +1,110 @@
+{
+  "title": "The REST API, no key",
+  "idea": "One containment expression in place of 37 requests.",
+  "summary": "data.un.org has a public REST API with no registration and no key. Live requests, read on screen: one series, joined to its unit and publisher, and a whole region in one request.",
+  "course": "automate",
+  "order": 1,
+  "series": {
+    "name": "data.un.org",
+    "number": 11
+  },
+  "youtube": {
+    "id": "I1hYpOjeRsg",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 81,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "11-the-rest-api.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "The fast way in"
+    },
+    {
+      "at": 7,
+      "label": "No key needed"
+    },
+    {
+      "at": 16,
+      "label": "One POST, every year"
+    },
+    {
+      "at": 27,
+      "label": "Join the facets"
+    },
+    {
+      "at": 41,
+      "label": "A whole region, one request"
+    },
+    {
+      "at": 55,
+      "label": "Eleven reference years"
+    },
+    {
+      "at": 72,
+      "label": "Straight from the browser"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "If you write code, the search box is the slowest way in. Here is the fast one, run for real."
+    },
+    {
+      "at": 7.72,
+      "text": "The Connect page documents two surfaces. No registration, no key, and no licence to negotiate."
+    },
+    {
+      "at": 16.72,
+      "text": "When you know the indicator and the countries, one POST returns every year for all of them. And there is the same figure the interface gave you, straight out of the API."
+    },
+    {
+      "at": 27.68,
+      "text": "The catch is that the numbers and their meaning come back in separate objects. Each series carries a facet id; look it up and you get the unit and the publisher. Skip that step and you have shipped a bare number."
+    },
+    {
+      "at": 41.5,
+      "text": "And this is the expression worth memorising. Contained-in-place asks for every country inside a region. One request, thirty-seven countries, and no list of country codes to maintain."
+    },
+    {
+      "at": 55.13,
+      "text": "But read what actually came back. Mauritius is twenty twenty-four; Eritrea is twenty twelve. Eleven different reference years in one response. Sort that by value and you have built exactly the misleading ranking from video four."
+    },
+    {
+      "at": 72.07,
+      "text": "It answers cross-origin too, so a static page with no server behind it can query the UN knowledge graph directly."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "link",
+      "href": "https://data.un.org/undatacommons/docs/connect",
+      "label": "Connect: the platform's own API documentation"
+    },
+    {
+      "kind": "code",
+      "value": "africa<-containedInPlace+{typeOf:Country}",
+      "note": "The containment expression. One request returned 37 countries."
+    }
+  ],
+  "tools": [
+    "api"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/api/",
+      "label": "Query cookbook: the REST API in recipes"
+    },
+    {
+      "href": "/guides/python-r-julia/",
+      "label": "The same calls in Python, R and Julia"
+    },
+    {
+      "href": "/un-data-commons.ipynb",
+      "label": "Companion notebook (Jupyter, no dependencies)"
+    }
+  ],
+  "keep": "Do not skip: join each series to its facet, its unit and publisher, or you ship a number with no unit."
+}

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from './Link';
 import { RecipeTabs } from './RecipeTabs';
 import type { Scenario } from '../content/scenarios';
 import type { Tool } from '../lib/undc/recipes';

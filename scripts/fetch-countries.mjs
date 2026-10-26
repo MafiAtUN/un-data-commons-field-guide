@@ -17,7 +17,7 @@ import { writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const API_ROOT = process.env.VITE_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
+const API_ROOT = process.env.PUBLIC_UNDC_API_ROOT ?? process.env.VITE_UNDC_API_ROOT ?? 'https://unsd-datacommons.gcp.un-icc.cloud';
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../src/data/countries.json');
 
 /** Two indicators with near-universal coverage, from different agencies. */

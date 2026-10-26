@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { PageHeader, Section } from '../components/Prose';
+import { Link } from '../components/Link';
+import { Inline, PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { DcidExplainer } from '../components/DcidExplainer';
 import { PageVideo } from '../components/PageVideo';
@@ -268,7 +268,7 @@ curl -s -G \\
         title="Eight things that will trip you up"
         lead="Collected from working against this deployment; each one cost real debugging time."
       >
-        <ol className="space-y-3">
+        <ol className="grid gap-3 lg:grid-cols-2">
           {[
             {
               title: 'A line break in a POST body returns 403',
@@ -308,8 +308,8 @@ curl -s -G \\
                 {index + 1}
               </span>
               <div>
-                <h3 className="text-[0.9rem] font-semibold text-ink-primary">{item.title}</h3>
-                <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-secondary">{item.body}</p>
+                <h3 className="text-[0.9rem] font-semibold text-ink-primary"><Inline text={item.title} /></h3>
+                <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-secondary"><Inline text={item.body} /></p>
               </div>
             </li>
           ))}
@@ -400,7 +400,7 @@ function Recipe({
         {notes.map((note) => (
           <li key={note} className="flex gap-2.5">
             <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-volt" />
-            <span>{note}</span>
+            <span><Inline text={note} /></span>
           </li>
         ))}
       </ul>

@@ -1,0 +1,87 @@
+---
+import { isPlayable, posterOf, runtime, type Lesson } from '../../lib/lessons';
+import Poster from './Poster.astro';
+
+/**
+ * The player at rest: the lesson's still and a Play button, with nothing from
+ * YouTube until it is pressed. On a phone the button sits under the still, so
+ * it never covers what the still is showing; wider, it floats in the corner.
+ */
+interface Props {
+  lesson: Lesson;
+  next?: { href: string; title: string } | undefined;
+  /** How wide the still is drawn, for choosing the image size. */
+  sizes?: string;
+}
+const { lesson, next, sizes = '(min-width: 1024px) 46rem, calc(100vw - 2rem)' } = Astro.props;
+const d = lesson.data;
+const playable = isPlayable(lesson);
+const ends = [...d.chapters.map((c) => c.at).slice(1), d.seconds];
+---
+<fg-player
+  class="relative block"
+  data-pagefind-ignore
+  data-video={playable ? d.youtube.id : undefined}
+  data-title={d.title}
+  data-lesson-id={lesson.id}
+  data-seconds={d.seconds}
+  data-captions={d.captions}
+  data-next-href={next?.href}
+>
+  <div class="relative aspect-video overflow-hidden rounded-2xl bg-poster ring-1 ring-hairline" data-stage>
+    {playable ? (
+      <button type="button" class="group absolute inset-0 block size-full cursor-pointer" data-play>
+        <Poster src={posterOf(lesson)} sizes={sizes} eager class="size-full" />
+        <span class="absolute bottom-[9%] right-5 hidden h-12 items-center gap-2.5 rounded-full bg-volt px-5 text-body font-bold text-on-volt shadow-[0_8px_24px_rgb(0_0_0/0.35)] transition-transform group-hover:scale-105 sm:inline-flex">
+          <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+          <span data-play-text>Play</span>
+          <span class="text-meta opacity-70 tnum">{runtime(d.seconds)}</span>
+        </span>
+        <span class="sr-only">, {d.title}</span>
+      </button>
+    ) : (
+      <div class="absolute inset-0">
+        <Poster src={posterOf(lesson)} sizes={sizes} eager class="size-full opacity-80" />
+        <span class="absolute inset-x-0 bottom-0 bg-poster px-4 py-3 text-meta text-white">
+          <strong class="font-semibold">Coming soon.</strong> This video isn't public yet. Everything it says is in the transcript below.
+        </span>
+      </div>
+    )}
+    {playable && (
+      <span class="pointer-events-none absolute inset-x-0 bottom-0 flex h-1.5 gap-[3px]" aria-hidden="true" data-chapter-bar>
+        {d.chapters.map((c, i) => (
+          <span class="block h-full bg-white/45" style={`flex: ${ends[i]! - c.at} 1 0`}></span>
+        ))}
+      </span>
+    )}
+    {next && (
+      <div hidden data-up-next class="absolute inset-0 z-10 grid place-items-center bg-black/80 p-6 text-center text-white">
+        <div>
+          <p class="text-meta text-white/80">Up next</p>
+          <p class="mt-1 font-display text-title font-semibold">{next.title}</p>
+          <div class="mt-4 flex flex-wrap justify-center gap-2">
+            <a href={next.href} data-up-next-link class="inline-flex h-11 items-center rounded-xl bg-volt px-4 text-body font-semibold text-on-volt">Next lesson</a>
+            <button type="button" data-up-next-close class="inline-flex h-11 items-center rounded-xl border border-white/50 px-4 text-body">Stay here</button>
+          </div>
+          <p class="mt-3 text-meta text-white/80" data-countdown></p>
+        </div>
+      </div>
+    )}
+  </div>
+  {playable && (
+    <button
+      type="button"
+      data-play
+      class="mt-2 flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-volt text-body font-bold text-on-volt sm:hidden"
+    >
+      <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+      <span data-play-text>Play</span>
+      <span class="text-meta opacity-70 tnum">{runtime(d.seconds)}</span>
+      <span class="sr-only">, {d.title}</span>
+    </button>
+  )}
+</fg-player>
+
+<script>
+  import '../../scripts/player';
+</script>

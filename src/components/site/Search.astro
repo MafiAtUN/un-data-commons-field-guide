@@ -1,0 +1,195 @@
+---
+/**
+ * One search for the whole site: lessons (including every word said in them),
+ * guides and tools.
+ *
+ * The index is built by Pagefind after the site is built, and loads only when
+ * someone opens this dialog, so a reader who never searches downloads none of
+ * it. A match inside a lesson opens that lesson with the words highlighted in
+ * its transcript, and the player set to start where they are said.
+ *
+ * Keys: ⌘K or Ctrl+K opens it; ↓ moves from the box into the results and ↑/↓
+ * between them; Enter opens the first result, or the one in focus; Escape closes.
+ */
+---
+<dialog
+  id="fg-search"
+  aria-label="Search"
+  class="m-0 mx-auto mt-[8vh] w-[min(42rem,calc(100vw-2rem))] max-w-none rounded-2xl border border-hairline bg-surface-1 p-0 text-ink-secondary shadow-card backdrop:bg-black/40 backdrop:backdrop-blur-[2px]"
+>
+  <form class="flex items-center gap-3 border-b border-hairline px-4" role="search" data-search-form>
+    <svg viewBox="0 0 24 24" class="size-5 shrink-0 text-ink-muted" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+    <label for="fg-search-input" class="sr-only">Search lessons, transcripts and guides</label>
+    <input
+      id="fg-search-input"
+      type="search"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Search lessons, transcripts and guides"
+      class="h-14 min-w-0 flex-1 bg-transparent text-lead text-ink-primary placeholder:text-ink-muted focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
+    />
+    <button type="button" data-search-close class="rounded-md border border-field px-2 py-1 text-label text-ink-muted hover:text-ink-primary">Esc<span class="sr-only">: close search</span></button>
+  </form>
+  <div class="max-h-[60vh] overflow-y-auto" data-search-results></div>
+  <p id="fg-search-status" role="status" class="sr-only"></p>
+  <p class="border-t border-hairline px-4 py-2.5 text-label text-ink-muted" data-search-hint>
+    ↑ ↓ to move · Enter to open · A match inside a video opens the lesson at the moment the words are said.
+  </p>
+</dialog>
+
+<script>
+  import { BASE } from '../../lib/paths';
+
+  interface PagefindResult {
+    url: string;
+    excerpt: string;
+    meta: Record<string, string>;
+  }
+  interface Pagefind {
+    init: () => Promise<void>;
+    options: (o: Record<string, unknown>) => Promise<void>;
+    debouncedSearch: (q: string, o?: unknown, ms?: number) => Promise<{ results: { data: () => Promise<PagefindResult> }[] } | null>;
+  }
+
+  const dialog = document.getElementById('fg-search') as HTMLDialogElement | null;
+  const input = document.getElementById('fg-search-input') as HTMLInputElement | null;
+  const results = dialog?.querySelector<HTMLElement>('[data-search-results]');
+  const status = document.getElementById('fg-search-status');
+  let pagefind: Pagefind | null = null;
+  let failed = false;
+
+  async function load(): Promise<Pagefind | null> {
+    if (pagefind) return pagefind;
+    try {
+      const path = `${BASE}pagefind/pagefind.js`;
+      const module = (await import(/* @vite-ignore */ path)) as Pagefind;
+      await module.options({ excerptLength: 22 });
+      await module.init();
+      pagefind = module;
+      failed = false;
+    } catch {
+      failed = true;
+    }
+    return pagefind;
+  }
+
+  function open() {
+    if (!dialog || dialog.open) return;
+    dialog.showModal();
+    input?.focus();
+    input?.select();
+    void load();
+  }
+
+  const KIND_ORDER = ['Lesson', 'Guide', 'Tool', 'Page'];
+  const KIND_LABEL: Record<string, string> = { Lesson: 'Lessons', Guide: 'Guides', Tool: 'Tools', Page: 'Pages' };
+
+  function escapeHtml(text: string): string {
+    return text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  }
+
+  function links(): HTMLAnchorElement[] {
+    return Array.from(results?.querySelectorAll<HTMLAnchorElement>('a[data-result]') ?? []);
+  }
+
+  function render(items: PagefindResult[], query: string) {
+    if (!results) return;
+    if (!query) {
+      results.innerHTML = '';
+      if (status) status.textContent = '';
+      return;
+    }
+    if (failed) {
+      results.innerHTML = '<p class="px-4 py-6 text-meta text-ink-muted">Search isn’t available right now. Try again in a moment.</p>';
+      if (status) status.textContent = 'Search is not available right now.';
+      return;
+    }
+    if (items.length === 0) {
+      results.innerHTML = `<p class="px-4 py-6 text-meta text-ink-muted">Nothing here mentions “${escapeHtml(query)}”. Try fewer words, or <a class="link" href="https://data.un.org/search?q=${encodeURIComponent(query)}" target="_blank" rel="noreferrer noopener">ask data.un.org itself ↗</a>.</p>`;
+      if (status) status.textContent = `No results for ${query}.`;
+      return;
+    }
+    const groups = new Map<string, PagefindResult[]>();
+    for (const item of items) {
+      const kind = item.meta.kind ?? 'Page';
+      groups.set(kind, [...(groups.get(kind) ?? []), item]);
+    }
+    // The excerpt is HTML that Pagefind builds from this site's own pages, with
+    // the matched words in <mark>; it arrives escaped. Everything else is escaped here.
+    results.innerHTML = [...groups.entries()]
+      .sort(([a], [b]) => KIND_ORDER.indexOf(a) - KIND_ORDER.indexOf(b))
+      .map(([kind, list]) => `
+        <div class="border-b border-hairline py-2 last:border-b-0">
+          <p class="px-4 pb-1 pt-2 text-label font-semibold uppercase tracking-[0.08em] text-ink-muted">${KIND_LABEL[kind] ?? escapeHtml(kind)}</p>
+          <ul>${list
+            .map((item) => {
+              const href = kind === 'Lesson' ? `${item.url}?q=${encodeURIComponent(query)}` : item.url;
+              const where = item.meta.where ? `<span class="ml-2 text-meta font-normal text-ink-muted">${escapeHtml(item.meta.where)}</span>` : '';
+              return `<li><a data-result href="${escapeHtml(href)}" class="block px-4 py-2.5 hover:bg-surface-2 focus:bg-surface-2 focus-visible:outline-offset-[-2px]">
+                <span class="block text-body font-semibold text-ink-primary">${escapeHtml(item.meta.title ?? '')}${where}</span>
+                <span class="mt-0.5 block text-meta leading-relaxed text-ink-secondary [&_mark]:rounded-sm [&_mark]:bg-volt-soft [&_mark]:px-0.5 [&_mark]:text-ink-primary">${item.excerpt}</span>
+              </a></li>`;
+            })
+            .join('')}</ul>
+        </div>`)
+      .join('');
+    if (status) status.textContent = `${items.length} ${items.length === 1 ? 'result' : 'results'} for ${query}.`;
+  }
+
+  let latest = 0;
+  input?.addEventListener('input', async () => {
+    const query = input.value.trim();
+    const ticket = ++latest;
+    if (!query) return render([], '');
+    try {
+      const pf = await load();
+      if (!pf) return render([], query);
+      const search = await pf.debouncedSearch(query, {}, 120);
+      if (!search || ticket !== latest) return;
+      const items = await Promise.all(search.results.slice(0, 10).map((r) => r.data()));
+      if (ticket === latest) render(items, query);
+    } catch {
+      failed = true;
+      if (ticket === latest) render([], query);
+    }
+  });
+
+  // Enter opens the first result rather than closing the dialog.
+  dialog?.querySelector('[data-search-form]')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    links()[0]?.click();
+  });
+
+  dialog?.querySelector('[data-search-close]')?.addEventListener('click', () => dialog.close());
+
+  // Arrow keys move between the box and the results.
+  dialog?.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    const all = links();
+    if (!all.length) return;
+    const index = all.indexOf(document.activeElement as HTMLAnchorElement);
+    event.preventDefault();
+    if (event.key === 'ArrowDown') all[Math.min(all.length - 1, index + 1)]?.focus();
+    else if (index <= 0) input?.focus();
+    else all[index - 1]?.focus();
+  });
+
+  document.querySelectorAll('[data-search-open]').forEach((button) => button.addEventListener('click', open));
+
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      open();
+    }
+  });
+
+  // Close when the backdrop is clicked.
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  // Windows and Linux keyboards say Ctrl, not ⌘.
+  if (!/Mac|iPhone|iPad/.test(navigator.userAgent)) {
+    document.querySelectorAll('[data-search-key]').forEach((kbd) => (kbd.textContent = 'Ctrl K'));
+  }
+</script>

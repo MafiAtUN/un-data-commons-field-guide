@@ -1,0 +1,151 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Poster from '../../../components/lesson/Poster.astro';
+import { COURSES, type Course } from '../../../content/courses';
+import { courseLessons, isPlayable, lessonHref, positionIn, posterOf, runtime, totalMinutes } from '../../../lib/lessons';
+const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+import { url } from '../../../lib/paths';
+
+export function getStaticPaths() {
+  return COURSES.map((course) => ({ params: { course: course.slug }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: Course };
+const lessons = await courseLessons(course.slug);
+const first = lessons[0]!;
+
+/** Where to go once the videos are done. */
+const DEEPER: Record<Course['slug'], { href: string; label: string; note: string }[]> = {
+  find: [
+    { href: '/guides/five-behaviours/', label: 'The five behaviours', note: 'The habits behind lessons 2, 4 and 5, written out' },
+    { href: '/tools/finder/', label: 'Data Finder', note: 'A chart, a CSV with its sources and a citation, in one go' },
+    { href: '/tools/cite/', label: 'Citation Builder', note: 'Credit the agency, in four styles' },
+    { href: '/guides/walkthroughs/', label: 'Step-by-step walkthroughs', note: 'The same steps in writing, to follow beside data.un.org' },
+  ],
+  analyse: [
+    { href: '/undata/', label: 'undata', note: 'Install, cheat sheet, the AI assistant connector and 12 use cases' },
+    { href: 'https://nerd-factory.github.io/undata/reference/', label: 'API reference', note: 'Every function, its arguments and examples' },
+    { href: '/guides/python-r-julia/', label: 'Python, R and Julia', note: 'The REST calls underneath, by hand' },
+  ],
+  present: [
+    { href: '/guides/charts/', label: 'Make a chart', note: 'Which tool, and five rules that keep a chart honest' },
+    { href: '/guides/power-bi/', label: 'Power BI and Tableau', note: 'Power Query M, the model and a tidy extract' },
+    { href: '/guides/ai-prompts/', label: 'Use AI with UN data', note: 'Prompts that stop invented figures' },
+  ],
+  automate: [
+    { href: '/guides/api/', label: 'Query cookbook', note: 'The REST API in copy-paste recipes, and its traps' },
+    { href: '/guides/mcp/', label: 'Connect an AI assistant', note: 'Setup, a real call for each tool, and what breaks' },
+    { href: '/tools/recipes/', label: 'Recipe Builder', note: 'From a question to code in six languages' },
+    { href: '/guides/cases/scenarios/', label: 'Scenarios', note: 'Three real requests, worked end to end' },
+  ],
+};
+const deeper = DEEPER[course.slug];
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: course.title,
+  itemListElement: lessons.map((lesson, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: absolute(lessonHref(lesson)),
+    name: lesson.data.title,
+  })),
+};
+---
+<Base title={course.title} description={`${course.who} ${NUMBER_WORDS[lessons.length] ?? lessons.length} short video lessons. ${course.outcomes[0]}`} image={posterOf(first)} imageAlt={`Title card: ${course.title}`} section="courses" kind="Page" jsonLd={jsonLd}>
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-5 sm:px-6 sm:pt-7 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-5 text-meta text-ink-muted" data-pagefind-ignore>
+      <ol class="flex flex-wrap items-center gap-x-2">
+        <li><a href={url('/courses/')} class="hover:text-ink-primary">Courses</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="text-ink-primary">{course.title}</li>
+      </ol>
+    </nav>
+
+    <header
+      class="grid gap-6 rounded-3xl border border-hairline bg-surface-1 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10"
+      data-course-ids={lessons.map((l) => l.id).join(',')}
+      data-course-hrefs={lessons.map((l) => lessonHref(l)).join(',')}
+    >
+      <div>
+        <p class="text-meta font-semibold text-ink-muted">Course {course.number} of {COURSES.length} · {course.label}</p>
+        <h1 class="mt-2 font-display text-h1 font-semibold text-ink-primary sm:text-display" data-pagefind-meta="title">{course.title}</h1>
+        <p class="mt-3 max-w-measure text-lead text-ink-secondary">{course.who}</p>
+        {!lessons.some(isPlayable) && (
+          <p class="mt-3 inline-flex rounded-lg bg-surface-2 px-3 py-1.5 text-meta font-semibold text-ink-primary">Videos coming soon. Every lesson's transcript is ready now.</p>
+        )}
+        <ul class="mt-5 grid max-w-measure gap-2 text-body text-ink-secondary">
+          {course.outcomes.map((o) => (
+            <li class="grid grid-cols-[1.25rem_1fr] gap-2"><span aria-hidden="true" class="mt-[0.45rem] size-2 rounded-sm bg-volt ring-1 ring-hairline-strong"></span>{o}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="flex flex-col justify-between gap-5 rounded-2xl bg-surface-2 p-5">
+        <dl class="grid grid-cols-3 gap-3 text-center">
+          <div><dt class="text-label text-ink-muted">Lessons</dt><dd class="mt-1 text-title font-semibold text-ink-primary tnum">{lessons.length}</dd></div>
+          <div><dt class="text-label text-ink-muted">Minutes</dt><dd class="mt-1 text-title font-semibold text-ink-primary tnum">{totalMinutes(lessons)}</dd></div>
+          <div><dt class="text-label text-ink-muted">You need</dt><dd class="mt-1.5 text-label font-semibold leading-tight text-ink-primary">{course.needs.replace(/^Needs /, '').replace(/^./, (c) => c.toUpperCase())}</dd></div>
+        </dl>
+        <div>
+          <span class="block h-1.5 overflow-hidden rounded-full bg-surface-0 ring-1 ring-inset ring-hairline" aria-hidden="true">
+            <span class="block h-full w-0 rounded-full bg-progress" data-course-bar></span>
+          </span>
+          <p class="mt-2 text-meta text-ink-muted" data-course-count data-empty="Your progress is kept in this browser.">Your progress is kept in this browser.</p>
+        </div>
+        <a href={lessonHref(first)} data-course-next class="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-volt px-5 text-body font-semibold text-on-volt">
+          <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+          <span data-course-next-label>Start lesson 1</span>
+        </a>
+      </div>
+    </header>
+
+    <section aria-labelledby="lessons" class="mt-10" data-pagefind-ignore>
+      <h2 id="lessons" class="font-display text-h2 font-semibold text-ink-primary">The lessons</h2>
+      <ol class="mt-4 grid gap-3">
+        {lessons.map((lesson) => (
+          <li>
+            <a
+              href={lessonHref(lesson)}
+              class="group grid grid-cols-[7.5rem_1fr] items-center gap-4 rounded-2xl border border-hairline bg-surface-1 p-3 transition-colors hover:border-hairline-strong sm:grid-cols-[12rem_1fr_auto] sm:gap-5"
+              data-lesson-id={lesson.id}
+              data-seconds={lesson.data.seconds}
+            >
+              <span class="relative overflow-hidden rounded-xl bg-poster">
+                <Poster src={posterOf(lesson)} sizes="(min-width: 640px) 12rem, 7.5rem" />
+                <span class="absolute bottom-1.5 right-1.5 rounded bg-scrim px-1.5 py-0.5 text-label font-semibold text-white tnum">{runtime(lesson.data.seconds)}</span>
+                <span class="absolute inset-x-0 bottom-0 h-1 bg-white/25 opacity-0 group-data-[progress=started]:opacity-100 group-data-[progress=done]:opacity-100" aria-hidden="true"><span class="block h-full w-0 bg-volt" data-progress-bar></span></span>
+              </span>
+              <span class="min-w-0">
+                <span class="block text-meta text-ink-muted">Lesson {positionIn(lesson, course.slug)}{lesson.data.course !== course.slug ? ` · also in ${COURSES.find((c) => c.slug === lesson.data.course)!.short}` : ''}</span>
+                <span class="mt-0.5 block text-lead font-semibold leading-snug text-ink-primary group-hover:underline group-hover:decoration-volt-line group-hover:decoration-2 group-hover:underline-offset-4">{lesson.data.title}<span class="sr-only" data-progress-label></span></span>
+                <span class="mt-1 block text-meta leading-snug text-ink-muted">{lesson.data.idea}</span>
+              </span>
+              <span class="col-span-2 flex items-center gap-2 text-meta text-ink-muted sm:col-span-1 sm:justify-end" data-pagefind-ignore>
+                {!isPlayable(lesson) && <span class="rounded-full border border-hairline px-2.5 py-1">Coming soon</span>}
+                <span class="hidden rounded-full bg-volt px-2.5 py-1 font-semibold text-on-volt group-data-[progress=done]:inline">✓ Done</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section aria-labelledby="deeper" class="mt-12" data-pagefind-ignore>
+      <h2 id="deeper" class="font-display text-h2 font-semibold text-ink-primary">When you want more than the videos</h2>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+        {deeper.map((d) => {
+          const external = /^https?:/.test(d.href);
+          return (
+            <li>
+              <a href={url(d.href)} target={external ? '_blank' : undefined} rel={external ? 'noreferrer noopener' : undefined} class="block h-full rounded-2xl border border-hairline bg-surface-1 p-4 hover:border-hairline-strong">
+                <span class="block font-semibold text-ink-primary">{d.label}{external && <span aria-hidden="true"> ↗</span>}</span>
+                <span class="mt-1 block text-meta text-ink-muted">{d.note}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </div>
+</Base>

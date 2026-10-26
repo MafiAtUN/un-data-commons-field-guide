@@ -67,7 +67,7 @@ export function RecipeTabs({
               onClick={() => setTool(option)}
               className={`min-h-9 rounded px-3 text-[0.76rem] font-medium transition-colors ${
                 selected
-                  ? 'bg-volt text-surface-0'
+                  ? 'bg-ink-primary text-surface-0'
                   : 'text-ink-secondary hover:bg-surface-2 hover:text-ink-primary'
               }`}
             >

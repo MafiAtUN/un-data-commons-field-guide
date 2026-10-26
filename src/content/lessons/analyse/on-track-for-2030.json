@@ -1,0 +1,113 @@
+{
+  "title": "On track for 2030?",
+  "idea": "The UN Statistics Division's progress method, in one call.",
+  "summary": "Assess SDG progress with the UN Statistics Division's method (baseline, current pace, projection to 2030 and target) for all 44 least developed countries, in one Python call.",
+  "course": "analyse",
+  "order": 2,
+  "series": {
+    "name": "undata",
+    "number": 2
+  },
+  "youtube": {
+    "id": "Stx4w6P9tuU",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 119,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-02-on-track-2030.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 10,
+      "label": "un.progress · one call"
+    },
+    {
+      "at": 35,
+      "label": "How the method works"
+    },
+    {
+      "at": 56,
+      "label": "Fast is not always enough"
+    },
+    {
+      "at": 73,
+      "label": "All 44 least developed countries"
+    },
+    {
+      "at": 85,
+      "label": "un.chart · ready for the report"
+    },
+    {
+      "at": 98,
+      "label": "un.describe · the paragraph for the report"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "2030 is close. For every country in your report, someone will ask: are they on track? Here is how to answer it the way the UN does."
+    },
+    {
+      "at": 9,
+      "text": "Take SDG target three point one. Bring maternal mortality below seventy per hundred thousand live births by 2030. Will the least developed countries get there?"
+    },
+    {
+      "at": 19,
+      "text": "One call. LDCs means the UN’s current list of forty-four least developed countries. Say that lower is better, and give it the target. Each country comes back with a status, its 2015 baseline, its latest value, and where it is heading."
+    },
+    {
+      "at": 34,
+      "text": "How does it decide? Take Bangladesh. It starts from the 2015 baseline: 204 deaths per hundred thousand. By 2023, 115. The method takes that rate of decline, nearly seven percent a year, and carries it forward to 2030. Sixty-nine point nine. Against a target of seventy, that is on track. By a hair."
+    },
+    {
+      "at": 56,
+      "text": "Ethiopia cut its rate even faster, more than halving it since 2015. But it started at 401. Carry the same pace forward, and it reaches about 104 by 2030. Real progress, but not enough. The method calls that moderate progress: acceleration needed."
+    },
+    {
+      "at": 72,
+      "text": "Now run that for all forty-four. 4 are on track. 24 are making moderate progress, but need to speed up. 15 are moving too slowly to get there. And one, Tuvalu, is going backwards."
+    },
+    {
+      "at": 85,
+      "text": "un.chart turns the table into the chart a progress report would use. For each country, the baseline, the latest value, and the projection, against the target line. And underneath, the source and the method, cited."
+    },
+    {
+      "at": 98,
+      "text": "And un.describe writes the paragraph, worked out from the numbers, naming the countries on track, the one going backwards, and the method, so a reviewer can check it."
+    },
+    {
+      "at": 107,
+      "text": "Any indicator, any group of countries, the UN’s own method. Next: one country, set beside its region and the world."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "table = un.progress(\"3.1.1\", \"LDCs\", better=\"lower\", target=70)\nun.chart(table, \"ldc-progress.png\")\nprint(un.describe(table))"
+    },
+    {
+      "kind": "colab",
+      "href": "https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/colab/10_sdg_progress_ldcs.ipynb",
+      "label": "Open the LDC progress use case in Colab"
+    }
+  ],
+  "keep": "un.progress follows the UN Statistics Division's method. Name the method when you quote a status.",
+  "tools": [
+    "python"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/analysis.html",
+      "label": "API reference: the analyses"
+    },
+    {
+      "href": "/undata/",
+      "label": "undata: install, cheat sheet and use cases"
+    }
+  ]
+}

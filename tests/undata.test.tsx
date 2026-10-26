@@ -1,9 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter } from 'react-router-dom';
 import { Connect } from '../src/routes/Connect';
-import { Home } from '../src/routes/Home';
 import { Notebooks } from '../src/routes/Notebooks';
 
 /**
@@ -15,8 +13,8 @@ import { Notebooks } from '../src/routes/Notebooks';
  * against that claim coming back, and keep the routes to undata visible on the
  * pages a Python user or an agent builder lands on.
  */
-function render(page: React.ReactNode, at = '/'): string {
-  return renderToStaticMarkup(<MemoryRouter initialEntries={[at]}>{page}</MemoryRouter>);
+function render(page: React.ReactNode, _at = '/'): string {
+  return renderToStaticMarkup(page);
 }
 
 const notebooksSource = readFileSync('src/routes/Notebooks.tsx', 'utf8');
@@ -38,12 +36,6 @@ describe('the undata package', () => {
     expect(html).toContain('https://nerd-factory.github.io/undata/reference/');
   });
 
-  it('is announced on the home page, as unofficial', () => {
-    const html = render(<Home />);
-    expect(html).toContain('pip install undata');
-    expect(html).toContain('unofficial');
-    expect(html).toContain('href="/notebooks#undata"');
-  });
 
   it('has its connector set up on the Connect page beside the platform endpoint', () => {
     const html = render(<Connect />, '/connect');

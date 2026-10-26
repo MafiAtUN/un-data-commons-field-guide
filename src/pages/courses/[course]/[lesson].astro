@@ -1,0 +1,244 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import Player from '../../../components/lesson/Player.astro';
+import TryIt from '../../../components/lesson/TryIt.astro';
+import Transcript from '../../../components/lesson/Transcript.astro';
+import CourseList from '../../../components/lesson/CourseList.astro';
+import Poster from '../../../components/lesson/Poster.astro';
+import { course as courseOf, TOOLS } from '../../../content/courses';
+import {
+  allLessons,
+  courseLessons,
+  isPlayable,
+  isoDuration,
+  lessonHref,
+  positionIn,
+  posterOf,
+  runtime,
+  slugOf,
+  type Lesson,
+} from '../../../lib/lessons';
+import { url } from '../../../lib/paths';
+
+export async function getStaticPaths() {
+  const lessons = await allLessons();
+  return lessons.map((lesson) => ({
+    params: { course: lesson.data.course, lesson: slugOf(lesson) },
+    props: { lesson },
+  }));
+}
+
+const { lesson } = Astro.props as { lesson: Lesson };
+const d = lesson.data;
+const course = courseOf(d.course);
+const siblings = await courseLessons(d.course);
+const index = siblings.findIndex((l) => l.id === lesson.id);
+const next = siblings[index + 1];
+const previous = siblings[index - 1];
+const position = positionIn(lesson, d.course);
+const playable = isPlayable(lesson);
+const page = new URL(Astro.url.pathname, Astro.site).href;
+const recorded = new Date(`${d.recorded}T00:00:00Z`).toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const ends = [...d.chapters.map((c) => c.at).slice(1), d.seconds];
+const thumbnail = await getImage({ src: posterOf(lesson), width: 1280, format: 'jpg', quality: 82 });
+const absolute = (path: string) => new URL(path, Astro.site).href;
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Courses', item: absolute(url('/courses/')) },
+      { '@type': 'ListItem', position: 2, name: course.title, item: absolute(url(`/courses/${course.slug}/`)) },
+      { '@type': 'ListItem', position: 3, name: d.title, item: page },
+    ],
+  },
+];
+if (playable && d.youtube.published) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: d.title,
+    description: d.summary,
+    thumbnailUrl: [absolute(thumbnail.src)],
+    uploadDate: `${d.youtube.published}T12:00:00+00:00`,
+    duration: isoDuration(d.seconds),
+    embedUrl: `https://www.youtube-nocookie.com/embed/${d.youtube.id}`,
+    url: page,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    author: { '@type': 'Person', name: 'Mafizul Islam' },
+    transcript: d.transcript.map((t) => t.text).join(' '),
+    hasPart: d.chapters.map((c, i) => ({
+      '@type': 'Clip',
+      name: c.label,
+      startOffset: c.at,
+      endOffset: ends[i],
+      url: `${page}?t=${c.at}`,
+    })),
+  });
+}
+
+const facts = [runtime(d.seconds), 'Captions in the video', ...d.tools.map((t) => TOOLS[t]), `Recorded ${recorded}`];
+---
+<Base
+  title={d.title}
+  description={d.summary}
+  image={posterOf(lesson)}
+  imageAlt={`Title card: ${d.title}`}
+  section="courses"
+  kind="Lesson"
+  where={`${course.short} · lesson ${position}`}
+  ogType="video.other"
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-meta text-ink-muted" data-pagefind-ignore>
+      <a href={url(`/courses/${course.slug}/`)} class="hover:text-ink-primary sm:hidden">← {course.title}</a>
+      <ol class="hidden flex-wrap items-center gap-x-2 gap-y-1 sm:flex">
+        <li><a href={url('/courses/')} class="hover:text-ink-primary">Courses</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href={url(`/courses/${course.slug}/`)} class="hover:text-ink-primary">{course.title}</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="text-ink-primary">Lesson {position} of {siblings.length}</li>
+      </ol>
+    </nav>
+
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-10">
+      <article class="min-w-0">
+        <Player lesson={lesson} next={next ? { href: lessonHref(next), title: next.data.title } : undefined} />
+
+        {playable && (
+          <ol aria-label="Chapters" class="no-scrollbar -mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" data-pagefind-ignore>
+            {d.chapters.map((c) => (
+              <li class="shrink-0">
+                <button
+                  type="button"
+                  data-seek={c.at}
+                  data-chapter={c.at}
+                  class="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border border-hairline-strong bg-surface-1 px-3.5 text-meta text-ink-secondary transition-colors hover:border-ink-muted hover:text-ink-primary data-[now]:border-ink-primary data-[now]:text-ink-primary"
+                >
+                  <span class="text-ink-muted tnum">{runtime(c.at)}</span>
+                  {c.label}
+                </button>
+              </li>
+            ))}
+          </ol>
+        )}
+
+        <h1 class="mt-5 font-display text-h2 font-semibold text-ink-primary sm:text-h1" data-pagefind-meta="title">{d.title}</h1>
+        <p class="mt-2 text-lead text-ink-secondary">{d.idea}</p>
+        <p class="mt-3 text-meta text-ink-muted" data-pagefind-ignore>
+          {facts.map((fact, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <span class={i === 0 ? 'tnum' : ''}>{fact}</span>
+            </>
+          ))}
+        </p>
+
+        <div class="mt-4 flex flex-wrap gap-2" data-pagefind-ignore>
+          <button
+            type="button"
+            data-mark-done
+            aria-pressed="false"
+            class="inline-flex h-10 items-center gap-1.5 rounded-xl border border-field px-3.5 text-meta font-medium text-ink-primary hover:bg-surface-2 aria-pressed:border-transparent aria-pressed:bg-volt aria-pressed:text-on-volt"
+          >
+            <span aria-hidden="true">✓</span>
+            <span class="sm:hidden">Done</span>
+            <span class="hidden sm:inline">Mark as done</span>
+          </button>
+          {playable && (
+            <button type="button" data-share class="inline-flex h-10 items-center rounded-xl border border-field px-3.5 text-meta font-medium text-ink-primary hover:bg-surface-2">
+              <span class="sm:hidden">Share</span>
+              <span class="hidden sm:inline" data-label>Copy link</span>
+            </button>
+          )}
+          {playable && (
+            <a href={`https://www.youtube.com/watch?v=${d.youtube.id}`} target="_blank" rel="noreferrer noopener" class="inline-flex h-10 items-center rounded-xl border border-field px-3.5 text-meta font-medium text-ink-primary hover:bg-surface-2">
+              <span class="sm:hidden">YouTube</span><span class="hidden sm:inline">Watch on YouTube</span> <span aria-hidden="true" class="ml-1">↗</span>
+            </a>
+          )}
+        </div>
+
+        <details class="group mt-5 rounded-2xl border border-hairline bg-surface-1 lg:hidden" data-pagefind-ignore>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 [&::-webkit-details-marker]:hidden">
+            <span class="min-w-0">
+              <span class="block text-body font-semibold text-ink-primary">Lesson {position} of {siblings.length} · {course.title}</span>
+              <span class="block truncate text-meta text-ink-muted">{next ? `Next: ${next.data.title}` : 'The last lesson of this course'}</span>
+            </span>
+            <span aria-hidden="true" class="text-ink-muted transition-transform group-open:rotate-180">▾</span>
+          </summary>
+          <div class="border-t border-hairline">
+            <CourseList course={course} lessons={siblings} current={lesson} compact />
+          </div>
+        </details>
+
+        <div class="mt-6 grid gap-6">
+          <TryIt lesson={lesson} />
+          <Transcript lesson={lesson} seekable={playable} />
+
+          <nav aria-label="Next and previous lessons" class="grid gap-3 sm:grid-cols-[1fr_2fr]" data-pagefind-ignore>
+            {next ? (
+              <a href={lessonHref(next)} class="order-first grid grid-cols-[7.5rem_1fr] items-center gap-4 rounded-2xl border border-hairline bg-surface-1 p-3 hover:border-hairline-strong sm:order-last sm:grid-cols-[9rem_1fr]">
+                <span class="overflow-hidden rounded-lg bg-poster"><Poster src={posterOf(next)} sizes="9rem" /></span>
+                <span>
+                  <span class="block text-meta text-ink-muted">Next · lesson {position + 1} of {siblings.length}</span>
+                  <span class="mt-0.5 block text-body font-semibold leading-snug text-ink-primary">{next.data.title}</span>
+                  <span class="mt-2 inline-flex h-9 items-center gap-1.5 rounded-lg bg-volt px-3 text-meta font-semibold text-on-volt">
+                    <svg viewBox="0 0 24 24" class="size-3.5" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+                    Next lesson
+                  </span>
+                </span>
+              </a>
+            ) : (
+              <a href={url('/courses/')} class="order-first flex flex-col justify-center rounded-2xl border border-volt-line bg-volt-soft p-4 sm:order-last">
+                <span class="text-meta text-ink-muted">You've reached the end of this course</span>
+                <span class="mt-1 font-semibold text-ink-primary">Pick the next course →</span>
+              </a>
+            )}
+            {previous ? (
+              <a href={lessonHref(previous)} class="flex flex-col justify-center rounded-2xl border border-hairline bg-surface-1 p-4 hover:border-hairline-strong sm:order-first">
+                <span class="text-meta text-ink-muted">← Previous</span>
+                <span class="mt-1 font-semibold leading-snug text-ink-primary">{previous.data.title}</span>
+              </a>
+            ) : (
+              <a href={url(`/courses/${course.slug}/`)} class="flex flex-col justify-center rounded-2xl border border-hairline bg-surface-1 p-4 hover:border-hairline-strong sm:order-first">
+                <span class="text-meta text-ink-muted">← Course</span>
+                <span class="mt-1 font-semibold leading-snug text-ink-primary">{course.title}</span>
+              </a>
+            )}
+          </nav>
+
+          {d.deeper.length > 0 && (
+            <section aria-labelledby="deeper" data-pagefind-ignore>
+              <h2 id="deeper" class="font-sans text-body font-semibold text-ink-primary">Go deeper</h2>
+              <ul class="mt-2 grid gap-1.5 text-body">
+                {d.deeper.map((link) => {
+                  const external = /^https?:/.test(link.href);
+                  return (
+                    <li>
+                      <a class="link" href={url(link.href)} target={external ? '_blank' : undefined} rel={external ? 'noreferrer noopener' : undefined}>
+                        {link.label}{external && <span aria-hidden="true"> ↗</span>}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
+        </div>
+      </article>
+
+      <aside class="hidden lg:sticky lg:top-24 lg:block lg:self-start" aria-label="This course">
+        <CourseList course={course} lessons={siblings} current={lesson} />
+      </aside>
+    </div>
+  </div>
+</Base>

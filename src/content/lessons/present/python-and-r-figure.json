@@ -1,0 +1,100 @@
+{
+  "title": "A publication figure, in Python and R",
+  "idea": "Under-five mortality for every country, in Python and in R.",
+  "summary": "Build a report-grade figure of every country in Python with matplotlib, and the same figure in R with ggplot2, from one table with its source on every row.",
+  "course": "present",
+  "order": 5,
+  "series": {
+    "name": "undata",
+    "number": 11
+  },
+  "youtube": {
+    "id": "pVlyje0e_78",
+    "status": "private"
+  },
+  "seconds": 106,
+  "recorded": "2026-10-16",
+  "captions": "burned-in",
+  "poster": "undata-11-python-r-figure.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 11,
+      "label": "The product"
+    },
+    {
+      "at": 28,
+      "label": "Python · un.style + matplotlib"
+    },
+    {
+      "at": 55,
+      "label": "R · readr + ggplot2"
+    },
+    {
+      "at": 69,
+      "label": "Two languages, one answer"
+    },
+    {
+      "at": 84,
+      "label": "House style, every time"
+    },
+    {
+      "at": 95,
+      "label": "Recap and links"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "When a figure goes into a flagship report, it has to survive layout, translation and print. Here is how to build one in Python, and the same one in R, from a single table."
+    },
+    {
+      "at": 10,
+      "text": "Every country is a dot, grouped by region, a form the Atlas uses often. The dashed line is the SDG target: no more than twenty-five deaths before age five, per thousand live births. Orange marks the 66 countries above it, 45 of them in Africa."
+    },
+    {
+      "at": 27,
+      "text": "un.style gives matplotlib undata’s report defaults: the fonts, the light grid, the export settings. Get each country’s latest value since 2020, add its region from the UN’s M49 list, and save a CSV for colleagues who work in R or Stata. Then one short loop draws a row of dots per region, the target line, and a title that counts, rather than one you type. Saved as SVG, the text stays editable for the design team."
+    },
+    {
+      "at": 54,
+      "text": "Your team works in R? Read the same CSV with readr. ggbeeswarm spreads the dots so none sit on top of each other, and the title counts the same way. The source line comes from the file itself, because un.save put it on every row."
+    },
+    {
+      "at": 69,
+      "text": "Two languages, one table, and the same answer: 66 of 199. When both agree, you know the number came from the data, not from the code. Half the countries in Africa are above 48; in Europe, the middle country is under 4."
+    },
+    {
+      "at": 84,
+      "text": "Call un.style once at the top. Let the title count, so it is never out of date. Take the source from the data. And hand the designers an SVG, not a screenshot."
+    },
+    {
+      "at": 94,
+      "text": "Five products, five everyday tools, one habit: every number keeps its source. That is undata at work."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "un.style()\ntable = un.latest(\"undata/sdg/SH_DYN_MORT.AGE--Y0T4\", \"World\", since=2020)\ntable[\"region\"] = table.iso3.map(un.countries().set_index(\"iso3\").region)\nun.save(table, \"under5.csv\")                      # for R, Stata or Excel"
+    }
+  ],
+  "keep": "One house style for every figure, and a CSV for colleagues who work in R or Stata.",
+  "tools": [
+    "python",
+    "r"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/charts.html",
+      "label": "API reference: the chart catalogue"
+    },
+    {
+      "href": "/guides/python-r-julia/",
+      "label": "The REST calls in Python, R and Julia"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { PageHeader, Section } from '../components/Prose';
 import { Expander } from '../components/Expander';
 import { CodeBlock } from '../components/CodeBlock';

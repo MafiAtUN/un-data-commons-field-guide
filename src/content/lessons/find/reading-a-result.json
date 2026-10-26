@@ -1,0 +1,104 @@
+{
+  "title": "Reading a result block",
+  "idea": "Headline, trend, map, ranking. Then the small print.",
+  "summary": "A data.un.org result answers in layers: headline, trend, map and ranking. Learn the four once and every result page reads instantly.",
+  "course": "find",
+  "order": 3,
+  "series": {
+    "name": "data.un.org",
+    "number": 3
+  },
+  "youtube": {
+    "id": "084rYtPWq24",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 78,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "03-reading-a-result.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "One answer, four ways"
+    },
+    {
+      "at": 17,
+      "label": "The headline"
+    },
+    {
+      "at": 27,
+      "label": "The trend"
+    },
+    {
+      "at": 35,
+      "label": "The map"
+    },
+    {
+      "at": 45,
+      "label": "The ranking"
+    },
+    {
+      "at": 55,
+      "label": "Who is missing"
+    },
+    {
+      "at": 66,
+      "label": "Recap"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "A result on this platform is not one chart. It is the same answer, four ways."
+    },
+    {
+      "at": 6.81,
+      "text": "Ask about maternal mortality across Southern Asia, and the platform answers in layers. Learn the layers once and every result page afterwards reads instantly."
+    },
+    {
+      "at": 17.65,
+      "text": "First, the headline. One number for the whole region, with its unit and its year underneath. This is the figure you quote."
+    },
+    {
+      "at": 27.51,
+      "text": "Next to it, the trend. The same measure over time, which tells you whether that headline is good news or bad."
+    },
+    {
+      "at": 35.88,
+      "text": "Then the map, which shows you where the burden sits. Maps flatter large countries and hide small ones, so never publish one on its own."
+    },
+    {
+      "at": 45.98,
+      "text": "And the ranking, country by country, with the actual values. This is the one to download when you need the numbers rather than the picture."
+    },
+    {
+      "at": 55.72,
+      "text": "And read the line under the table. Some countries are missing because they did not report. That is not the same as zero, and your text should say so."
+    },
+    {
+      "at": 66.68,
+      "text": "Headline, trend, map, ranking. Quote the headline, download the ranking, and never let a map travel on its own."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Southern Asia"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/five-behaviours/",
+      "label": "The five behaviours that cause corrections"
+    },
+    {
+      "href": "/guides/charts/",
+      "label": "Make a chart that stays honest"
+    }
+  ],
+  "keep": "Four views of one answer: the headline, the trend, the map and the ranking."
+}

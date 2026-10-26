@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PageHeader, Section } from '../components/Prose';
 import { CopyButton } from '../components/CopyButton';
 import { PageVideo } from '../components/PageVideo';
@@ -23,14 +23,21 @@ export function Cite() {
     [dcid],
   );
 
-  const citation = formatCitation(style, {
-    indicator: indicator.name,
-    source: indicator.source,
-    dcid: indicator.dcid,
-    places: places.trim() || undefined,
-    period: period.trim() || undefined,
-    retrievedAt: new Date().toISOString(),
-  });
+  // The access date is the visitor's today, so it is set in the browser after
+  // the page loads. Rendering it at build time would freeze the build's date
+  // into the page, and React would then refuse the page for every later visitor.
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => setToday(new Date().toISOString()), []);
+  const citation = today
+    ? formatCitation(style, {
+        indicator: indicator.name,
+        source: indicator.source,
+        dcid: indicator.dcid,
+        places: places.trim() || undefined,
+        period: period.trim() || undefined,
+        retrievedAt: today,
+      })
+    : 'Preparing your citation…';
 
   return (
     <>

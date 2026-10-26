@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { GUIDES } from '../../content/guides';
+import { url } from '../../lib/paths';
+
+const tools = GUIDES.filter((g) => g.group === 'Tools');
+---
+<Base title="Tools" description="Four free tools for data.un.org: the Data Finder, the Citation Builder, the Prompt Lab and the Recipe Builder." section="guides">
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+    <h1 class="font-display text-h1 font-semibold text-ink-primary sm:text-display">Tools</h1>
+    <p class="mt-3 max-w-measure text-lead text-ink-secondary">
+      The Data Finder, the Prompt Lab and the Recipe Builder ask data.un.org directly from your browser. The Citation Builder
+      works without a connection. Nothing is stored, and nothing passes through a server of ours.
+    </p>
+    <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+      {tools.map((g) => (
+        <li>
+          <a href={url(g.path)} class="flex h-full flex-col rounded-2xl border border-hairline bg-surface-1 p-5 hover:border-hairline-strong">
+            <span class="text-lead font-semibold text-ink-primary">{g.title}</span>
+            <span class="mt-1.5 text-meta leading-relaxed text-ink-muted">{g.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

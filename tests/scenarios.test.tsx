@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter } from 'react-router-dom';
 import { SCENARIOS, findScenario } from '../src/content/scenarios';
 import { Scenarios } from '../src/routes/Scenarios';
 import { chooseEndpoint, specProblems } from '../src/lib/undc/recipes';
@@ -123,9 +122,7 @@ describe('the lead scenario keeps the number that stops the chart', () => {
 
 describe('the page renders', () => {
   const html = renderToStaticMarkup(
-    <MemoryRouter>
-      <Scenarios />
-    </MemoryRouter>,
+    <Scenarios />,
   );
 
   it('shows every scenario question', () => {

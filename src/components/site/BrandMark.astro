@@ -1,0 +1,11 @@
+---
+/** The site's mark: a volt tab with a play triangle. Decorative wherever it appears. */
+interface Props {
+  class?: string;
+}
+const { class: className = 'size-6' } = Astro.props;
+---
+<svg class={className} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <rect width="32" height="32" rx="9" fill="#c8f531"></rect>
+  <path d="M12.5 9.8v12.4l10-6.2z" fill="#141419"></path>
+</svg>

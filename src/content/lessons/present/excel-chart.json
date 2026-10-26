@@ -1,0 +1,125 @@
+{
+  "title": "A report chart, in Excel",
+  "idea": "A ranked bar chart in Excel that refreshes itself.",
+  "summary": "Turn official UN statistics into a chart fit for a report, in Excel, in about five minutes: fetch the data with two lines of Python, then five formatting moves, then a Power Query table that refreshes itself.",
+  "course": "present",
+  "order": 1,
+  "series": {
+    "name": "undata",
+    "number": 7
+  },
+  "youtube": {
+    "id": "KJaUd0l3hkA",
+    "status": "private"
+  },
+  "seconds": 155,
+  "recorded": "2026-10-16",
+  "captions": "burned-in",
+  "poster": "undata-07-excel-chart.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 11,
+      "label": "The product"
+    },
+    {
+      "at": 27,
+      "label": "un.latest + un.save"
+    },
+    {
+      "at": 43,
+      "label": "The file un.save wrote"
+    },
+    {
+      "at": 58,
+      "label": "Five moves in Excel"
+    },
+    {
+      "at": 91,
+      "label": "Before and after"
+    },
+    {
+      "at": 102,
+      "label": "un.powerquery · a table that refreshes"
+    },
+    {
+      "at": 120,
+      "label": "In Excel: paste it once"
+    },
+    {
+      "at": 139,
+      "label": "Make it yours"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "A chart in a report has two jobs: make one point, and let the reader check it. Here is how to build one in Excel, from official UN data, in about five minutes."
+    },
+    {
+      "at": 10,
+      "text": "This is where we are going: a ranked bar chart in the style of the World Bank’s Atlas of the SDGs. The title states the finding. One colour marks the country the report is about, Nigeria. And the source sits right underneath, with the one territory that has no data."
+    },
+    {
+      "at": 26,
+      "text": "Two lines of Python fetch the data. un.latest takes each country’s most recent value for electricity access, SDG seven point one point one, across Western Africa. un.save writes it to an Excel file, and tells you, in plain words, which place had no value."
+    },
+    {
+      "at": 43,
+      "text": "Open it, and the data is ready to chart: country, year, value and unit, with the source on every row. The sources sheet holds the full citation, ready to paste. And the no data sheet names Saint Helena, instead of showing a zero."
+    },
+    {
+      "at": 57,
+      "text": "Select the country and value columns, and insert a bar chart. This is Excel’s default. It is correct, and it says nothing. Move one: sort smallest to largest, so the longest bar sits on top. Two: delete the gridlines and the axis, and label the bars instead. Three: make every bar grey, then colour only the country you are writing about. Four: write the finding as the title, with the unit, the year and the benchmarks underneath. Five: paste the source line from the sources sheet."
+    },
+    {
+      "at": 91,
+      "text": "Same data, same software. The difference is five decisions, and every one of them is for the reader: what to look at first, what it means, and where it came from."
+    },
+    {
+      "at": 102,
+      "text": "Next quarter the numbers will change. Rather than start again, ask undata for Power Query code. It writes a query that fetches the same indicator for the same countries, and drops a place with no data instead of filling it with zero. We sent the query’s request to the live service, and it returned 391 values."
+    },
+    {
+      "at": 120,
+      "text": "In Excel, go to Data, Get Data, From Other Sources, Blank Query. Open the Advanced Editor and paste the code. Close and Load puts the values in a table. From then on, Refresh All brings in whatever the agencies have published since, with no Python involved."
+    },
+    {
+      "at": 138,
+      "text": "Swap Western Africa for your region. Swap electricity for the indicator in your mandate. The five moves stay the same."
+    },
+    {
+      "at": 145,
+      "text": "A chart that makes one point, and shows where it came from. Next: a chart that moves, in Flourish."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "table = un.latest(\"undata/sdg/EG_ACS_ELEC\", \"Western Africa\")\nun.save(table, \"electricity.xlsx\")"
+    },
+    {
+      "kind": "code",
+      "value": "print(un.powerquery(\"undata/sdg/EG_ACS_ELEC\", \"Western Africa\"))",
+      "note": "In Excel: Data › Get Data › From Other Sources › Blank Query. Open the Advanced Editor, paste the code, then Close & Load. Refresh All brings in new values."
+    }
+  ],
+  "keep": "Sort, declutter, one colour with a purpose, the finding as the title, the source underneath.",
+  "tools": [
+    "python",
+    "excel"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/charts/",
+      "label": "Make a chart that stays honest"
+    },
+    {
+      "href": "/guides/power-bi/",
+      "label": "Power BI, Power Query and Tableau"
+    }
+  ]
+}

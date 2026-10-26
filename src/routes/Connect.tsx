@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
+import { PageVideo } from '../components/PageVideo';
 
 const MCP_ENDPOINT = 'https://unsd-datacommons.gcp.un-icc.cloud/mcp';
 
@@ -25,7 +26,7 @@ export function Connect() {
   return (
     <>
       <PageHeader
-        eyebrow="Connect an agent · 9 minutes"
+        eyebrow="Connect an AI assistant · 9 minutes"
         title="Let an AI assistant look the statistics up itself"
         lead={
           <>
@@ -53,6 +54,8 @@ export function Connect() {
           </p>
         </div>
       </Section>
+
+      <PageVideo page="/connect" />
 
       <Section
         title="Set it up in the client you already use"
@@ -125,7 +128,7 @@ claude mcp list`}
               Most web chatbots do not. You are not stuck: fetch the numbers first and
               paste them in, which is what the{' '}
               <Link to="/ai" className="text-volt underline decoration-volt/30 underline-offset-2">
-                Use AI on it
+                Use AI with UN data
               </Link>{' '}
               page is about. Giving a model the statistic and asking what it means is safe;
               asking it what the statistic is, is not.
@@ -472,7 +475,7 @@ claude mcp list`}
         title="Four things that will bite you"
         lead="Each was found by calling the server, and none of them is in any documentation."
       >
-        <ol className="space-y-3">
+        <ol className="grid gap-3 lg:grid-cols-2">
           {[
             {
               title: 'A guessed dcid returns success with no data',

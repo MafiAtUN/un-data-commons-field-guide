@@ -1,7 +1,7 @@
 import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 
 interface Tool {
   name: string;
@@ -157,7 +157,7 @@ export function Visualise() {
       </Section>
 
       <Section title="Five rules that keep a chart honest" lead="Not style preferences. Each is a way a chart misleads by accident.">
-        <ol className="space-y-2.5">
+        <ol className="grid gap-2.5 lg:grid-cols-2">
           {[
             ['Start bars at zero.', 'A cut axis makes a small gap look huge. Lines may be cut; bars may not.'],
             ['Never use two vertical axes.', 'It invents a relationship. Use two charts side by side.'],

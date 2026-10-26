@@ -107,7 +107,7 @@ export function PromptLab() {
               aria-pressed={selected.question === preset.question && !isCustom}
               className={`rounded-full border px-3 py-1.5 text-[0.75rem] font-medium transition-colors ${
                 selected.question === preset.question && !isCustom
-                  ? 'border-volt/60 bg-volt/10 text-ink-primary'
+                  ? 'border-ink-primary bg-ink-primary text-surface-0'
                   : 'border-hairline text-ink-secondary hover:border-ink-muted hover:text-ink-primary'
               }`}
             >
@@ -134,7 +134,7 @@ export function PromptLab() {
           </label>
           <button
             type="submit"
-            className="rounded bg-volt px-4 py-2 text-[0.8rem] font-semibold text-surface-0 transition-opacity hover:opacity-90"
+            className="rounded bg-volt px-4 py-2 text-[0.8rem] font-semibold text-on-volt transition-opacity hover:opacity-90"
           >
             Resolve
           </button>

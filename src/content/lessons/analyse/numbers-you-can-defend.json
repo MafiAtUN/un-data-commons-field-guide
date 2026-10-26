@@ -1,0 +1,113 @@
+{
+  "title": "Numbers you can defend",
+  "idea": "No guessed places. No hidden gaps.",
+  "summary": "The safeguards that make a UN statistic defensible in a report: undata never guesses a place, names every missing country instead of showing zero, flags mixed years, and cites the agency.",
+  "course": "analyse",
+  "order": 5,
+  "series": {
+    "name": "undata",
+    "number": 5
+  },
+  "youtube": {
+    "id": "nXQnoLqgL38",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 114,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-05-numbers-you-can-defend.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 12,
+      "label": "Four safeguards"
+    },
+    {
+      "at": 22,
+      "label": "Safeguard 1 · It never guesses a place"
+    },
+    {
+      "at": 44,
+      "label": "Safeguards 2 and 3 · gaps and years"
+    },
+    {
+      "at": 72,
+      "label": "un.coverage · completeness in one line"
+    },
+    {
+      "at": 85,
+      "label": "Safeguard 4 · the citation"
+    },
+    {
+      "at": 103,
+      "label": "Install and links"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "A wrong number in a UN report is worse than no number at all. undata is built to fail loudly, never quietly. Here are the safeguards, and what they look like."
+    },
+    {
+      "at": 11,
+      "text": "It never guesses which place you meant. Missing data is named, never shown as zero. Values from different years are flagged. And every table carries its citation."
+    },
+    {
+      "at": 22,
+      "text": "Ask data.un.org’s search box about child mortality in Bengal, and it answers about the United States, a place you never named. un.ask shows you what the search box decided, and flags the guess. un.get refuses to guess at all. Bengal is not a country, so it stops, says so, and tells you how to see every name it knows."
+    },
+    {
+      "at": 43,
+      "text": "Now ask for each African country’s latest homicide rate, from the last ten years. 23 places have no data at all. They are left out of the table and named in a warning, so a chart can never show them as zero. 12 more only have old figures, like Eritrea from 2012. They are set aside, and named too. And the values that remain still span 2016 to 2024, so undata says that a ranking across them is not like for like."
+    },
+    {
+      "at": 71,
+      "text": "un.coverage puts it in one line. 60 places asked for, 25 with a recent value, 12 too old, 23 with nothing. Put that line under your chart, and nobody mistakes twenty-five countries for a continent."
+    },
+    {
+      "at": 84,
+      "text": "And every table knows where it came from. The citation names the agency that measured the figure, the exact series, and the date you retrieved it."
+    },
+    {
+      "at": 93,
+      "text": "The place you meant. The gaps in plain sight. The years on the table. And the agency that measured it. That is a number you can defend."
+    },
+    {
+      "at": 102,
+      "text": "Install undata with pip, and find twelve worked examples on the documentation site. Next: the same safeguards, inside an A I assistant."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "un.ask(\"child mortality in Bengal\")    # what the search box decided\nun.get(\"3.1.1\", \"Bengal\")              # undata refuses to guess"
+    },
+    {
+      "kind": "code",
+      "value": "table = un.latest(\"undata/sdg/VC_IHR_PSRC\", \"Africa\", within=10)\nun.coverage(table)\nprint(un.cite(table))"
+    },
+    {
+      "kind": "colab",
+      "href": "https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/colab/09_check_the_search_box.ipynb",
+      "label": "Open the search-box check in Colab"
+    }
+  ],
+  "keep": "undata never guesses a place and never turns a gap into a zero. Its warnings name what is missing.",
+  "tools": [
+    "python"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/finding.html",
+      "label": "API reference: finding indicators and places"
+    },
+    {
+      "href": "/tools/prompt-lab/",
+      "label": "Prompt Lab: the search box's guess, made visible"
+    }
+  ]
+}

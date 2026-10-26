@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { RankedValue } from '../../lib/undc/select';
 import { formatValue } from './scales';
 
@@ -28,8 +27,6 @@ export function RankingChart({
   showDates = false,
   valueLabel,
 }: RankingChartProps) {
-  const [hovered, setHovered] = useState<string | null>(null);
-
   const visible = rows.slice(0, limit);
   const hiddenCount = rows.length - visible.length;
   const max = Math.max(...visible.map((row) => row.value), 0) || 1;
@@ -43,19 +40,11 @@ export function RankingChart({
       >
         {visible.map((row) => {
           const isHighlighted = highlight.length === 0 || highlight.includes(row.key);
-          const isHovered = hovered === row.key;
 
           return (
             <li
               key={row.key}
-              // The row is the hit target, comfortably past the 24px minimum,
-              // rather than the bar itself.
-              className="group relative flex items-center gap-3 rounded py-0.5 transition-colors hover:bg-surface-2/60"
-              onPointerEnter={() => setHovered(row.key)}
-              onPointerLeave={() => setHovered(null)}
-              tabIndex={0}
-              onFocus={() => setHovered(row.key)}
-              onBlur={() => setHovered(null)}
+              className="relative flex items-center gap-3 rounded py-0.5 transition-colors hover:bg-surface-2/60"
             >
               <span className="w-32 shrink-0 truncate text-right text-[0.75rem] text-ink-secondary">
                 {row.label}
@@ -68,7 +57,6 @@ export function RankingChart({
                   style={{
                     width: `${Math.max(0.6, (row.value / max) * 100)}%`,
                     background: isHighlighted ? 'var(--color-series-1)' : 'var(--color-surface-3)',
-                    opacity: isHovered ? 1 : isHighlighted ? 0.92 : 1,
                   }}
                 />
               </span>

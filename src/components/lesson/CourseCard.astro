@@ -1,0 +1,53 @@
+---
+import type { Course } from '../../content/courses';
+import { isPlayable, lessonHref, posterOf, totalMinutes, type Lesson } from '../../lib/lessons';
+import { url } from '../../lib/paths';
+import Poster from './Poster.astro';
+
+/**
+ * A course: its first still, what it is for, and where you are in it. The
+ * whole card is one link to the course; the button goes straight to the next
+ * lesson to watch. Progress shows only once there is some.
+ */
+interface Props {
+  course: Course;
+  lessons: Lesson[];
+  /** Load the still at once: for cards near the top of a page. */
+  eager?: boolean;
+}
+const { course, lessons, eager = false } = Astro.props;
+const first = lessons[0]!;
+const anyPublic = lessons.some(isPlayable);
+---
+<article
+  class="group/card relative flex flex-col gap-3 rounded-2xl border border-hairline bg-surface-1 p-3.5 pb-4 transition-colors hover:border-hairline-strong"
+  data-course-ids={lessons.map((l) => l.id).join(',')}
+  data-course-hrefs={lessons.map((l) => lessonHref(l)).join(',')}
+  data-pagefind-ignore
+>
+  <span class="relative block overflow-hidden rounded-xl bg-poster" aria-hidden="true">
+    <Poster src={posterOf(first)} sizes="(min-width: 1024px) 17rem, (min-width: 640px) 45vw, calc(100vw - 2rem)" eager={eager} priority={false} />
+    {!anyPublic && (
+      <span class="absolute right-2 top-2 rounded-md bg-scrim px-2 py-1 text-label font-semibold text-white">Videos coming soon</span>
+    )}
+  </span>
+  <p class="text-label font-semibold text-ink-muted">Course {course.number} · {course.label}</p>
+  <h3 class="font-display text-title font-semibold text-ink-primary">
+    <a href={url(`/courses/${course.slug}/`)} class="after:absolute after:inset-0 after:rounded-2xl group-hover/card:underline group-hover/card:decoration-volt-line group-hover/card:decoration-2 group-hover/card:underline-offset-4">{course.title}</a>
+  </h3>
+  <p class="text-meta text-ink-muted">{course.blurb}</p>
+  <p class="text-meta text-ink-muted tnum">{lessons.length} lessons · {totalMinutes(lessons)} min</p>
+  <div class="mt-auto pt-1">
+    <p class="mb-2 hidden text-meta text-ink-secondary group-data-[progress=started]/card:block group-data-[progress=done]/card:block" data-course-count data-empty=""></p>
+    <span class="mb-3 hidden h-1.5 overflow-hidden rounded-full bg-surface-2 ring-1 ring-inset ring-hairline group-data-[progress=started]/card:block group-data-[progress=done]/card:block" aria-hidden="true">
+      <span class="block h-full w-0 rounded-full bg-progress" data-course-bar></span>
+    </span>
+    <a
+      href={anyPublic ? lessonHref(first) : url(`/courses/${course.slug}/`)}
+      data-course-next={anyPublic ? '' : undefined}
+      class="relative z-10 inline-flex h-10 items-center gap-2 rounded-xl border border-field px-3.5 text-meta font-semibold text-ink-primary hover:bg-surface-2"
+    >
+      <span data-course-next-label>{anyPublic ? 'Start lesson 1' : 'Read the lessons'}</span><span class="sr-only">: {course.title}</span>
+    </a>
+  </div>
+</article>

@@ -1,0 +1,67 @@
+---
+import type { Course } from '../../content/courses';
+import { lessonHref, posterOf, positionIn, runtime, totalMinutes, type Lesson } from '../../lib/lessons';
+import { url } from '../../lib/paths';
+import Poster from './Poster.astro';
+
+/** The course beside the video: where you are, what you've finished, what's next. */
+interface Props {
+  course: Course;
+  lessons: Lesson[];
+  current: Lesson;
+  /** The folded copy on a phone: no heading, no autoplay switch. */
+  compact?: boolean;
+}
+const { course, lessons, current, compact = false } = Astro.props;
+---
+<nav
+  aria-label={`Lessons in ${course.title}`}
+  class={compact ? '' : 'flex max-h-[calc(100dvh-7rem)] flex-col overflow-hidden rounded-2xl border border-hairline bg-surface-1'}
+  data-course-ids={lessons.map((l) => l.id).join(',')}
+  data-course-hrefs={lessons.map((l) => lessonHref(l)).join(',')}
+  data-pagefind-ignore
+>
+  {!compact && (
+    <div class="shrink-0 p-4">
+      <a href={url(`/courses/${course.slug}/`)} class="font-display text-title font-semibold text-ink-primary hover:underline hover:decoration-volt-line hover:decoration-2 hover:underline-offset-4">{course.title}</a>
+      <p class="mt-1 text-meta text-ink-muted">{lessons.length} lessons · {totalMinutes(lessons)} min</p>
+      <p class="text-meta text-ink-secondary" data-course-count data-empty=""></p>
+      <span class="mt-3 block h-1.5 overflow-hidden rounded-full bg-surface-2 ring-1 ring-inset ring-hairline" aria-hidden="true">
+        <span class="block h-full w-0 rounded-full bg-progress" data-course-bar></span>
+      </span>
+    </div>
+  )}
+  <ol class={compact ? '' : 'min-h-0 flex-1 overflow-y-auto'}>
+    {lessons.map((lesson) => {
+      const here = lesson.id === current.id;
+      return (
+        <li class="border-t border-hairline">
+          <a
+            href={lessonHref(lesson)}
+            aria-current={here ? 'page' : undefined}
+            class="group grid grid-cols-[1.5rem_4.5rem_1fr] items-center gap-2.5 px-3.5 py-2 hover:bg-surface-2 aria-[current=page]:bg-volt-soft aria-[current=page]:shadow-[inset_3px_0_0_var(--color-volt-line)]"
+            data-lesson-id={lesson.id}
+            data-seconds={lesson.data.seconds}
+          >
+            <span class="text-center text-meta text-ink-muted tnum group-data-[progress=done]:hidden">{positionIn(lesson, course.slug)}</span>
+            <span class="mx-auto hidden size-5 place-items-center rounded-full bg-volt text-label font-extrabold text-on-volt group-data-[progress=done]:grid" aria-hidden="true">✓</span>
+            <span class="overflow-hidden rounded-md bg-poster" aria-hidden="true"><Poster src={posterOf(lesson)} sizes="5rem" /></span>
+            <span class="min-w-0">
+              <span class="block text-meta font-medium leading-snug text-ink-primary">{lesson.data.title}<span class="sr-only" data-progress-label></span></span>
+              <span class="block text-label text-ink-muted tnum group-aria-[current=page]:text-ink-secondary">
+                {here ? 'Now · ' : ''}{runtime(lesson.data.seconds)}{lesson.data.youtube.status !== 'public' ? ' · coming soon' : ''}
+              </span>
+            </span>
+          </a>
+        </li>
+      );
+    })}
+  </ol>
+  {!compact && (
+    <label class="flex shrink-0 cursor-pointer items-center justify-between gap-3 border-t border-hairline px-4 py-3 text-meta text-ink-secondary">
+      Play the next lesson automatically
+      <input type="checkbox" role="switch" data-autoplay class="peer sr-only" />
+      <span class="relative h-6 w-10 shrink-0 rounded-full bg-surface-1 shadow-[inset_0_0_0_1.5px_var(--color-field)] transition-colors peer-checked:bg-ink-primary peer-checked:shadow-none after:absolute after:left-1 after:top-1 after:size-4 after:rounded-full after:bg-ink-muted after:transition-transform peer-checked:after:translate-x-4 peer-checked:after:bg-surface-1 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink-primary" aria-hidden="true"></span>
+    </label>
+  )}
+</nav>

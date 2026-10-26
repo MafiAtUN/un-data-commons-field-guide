@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import CourseCard from '../../components/lesson/CourseCard.astro';
+import { COURSES } from '../../content/courses';
+import { allLessons, courseLessons, totalMinutes } from '../../lib/lessons';
+import { url } from '../../lib/paths';
+
+const all = await allLessons();
+const byCourse = await Promise.all(COURSES.map(async (course) => ({ course, lessons: await courseLessons(course.slug) })));
+
+const CHOOSE = [
+  { need: 'I need a figure for a report', course: 'find' },
+  { need: 'I work in Python, or can use Google Colab', course: 'analyse' },
+  { need: 'I make the chart, the slide or the draft (uses Python)', course: 'present' },
+  { need: 'I build tools, or connect AI assistants', course: 'automate' },
+] as const;
+---
+<Base title="Courses" description={`Four short video courses on UN data: ${all.length} lessons and ${totalMinutes(all)} minutes in all, each lesson with chapters, a transcript and the steps to try.`} section="courses">
+  <div class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+    <h1 class="font-display text-h1 font-semibold text-ink-primary sm:text-display">Four short courses</h1>
+    <p class="mt-3 max-w-measure text-lead text-ink-secondary">
+      {all.length} lessons and {totalMinutes(all)} minutes in all; one lesson is in two courses. Start with the one that matches your work.
+    </p>
+
+    <section aria-labelledby="choose" class="mt-8 rounded-2xl border border-hairline bg-surface-1 p-4 sm:p-5">
+      <h2 id="choose" class="font-sans text-body font-semibold text-ink-primary">Not sure where to start?</h2>
+      <ul class="mt-3 grid gap-2 sm:grid-cols-2">
+        {CHOOSE.map((c) => {
+          const course = COURSES.find((x) => x.slug === c.course)!;
+          return (
+            <li>
+              <a href={url(`/courses/${course.slug}/`)} class="flex items-center justify-between gap-3 rounded-xl border border-hairline bg-surface-0 px-4 py-3 hover:border-hairline-strong">
+                <span class="text-body text-ink-secondary">{c.need}</span>
+                <span class="shrink-0 text-meta font-semibold text-ink-primary">{course.short} →</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <h2 class="mt-10 font-display text-h2 font-semibold text-ink-primary">All courses</h2>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {byCourse.map(({ course, lessons }, i) => <CourseCard course={course} lessons={lessons} eager={i < 2} />)}
+    </div>
+  </div>
+</Base>

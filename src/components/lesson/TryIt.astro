@@ -1,0 +1,95 @@
+---
+import type { Lesson } from '../../lib/lessons';
+import { searchUrl } from '../../lib/undc/config';
+
+/** The exact thing to try: a query to paste, code to copy, a notebook to open. */
+interface Props {
+  lesson: Lesson;
+}
+const { lesson } = Astro.props;
+const { tryIt, keep } = lesson.data;
+const queries = tryIt.filter((t) => t.kind === 'query');
+const rest = tryIt.filter((t) => t.kind !== 'query');
+// A block that calls undata without the import says so, so copied code runs.
+const imported = tryIt.some((t) => t.kind === 'code' && t.value.includes('import undata'));
+const needsImport = (code: string) => !imported && /\bun\./.test(code);
+---
+{(tryIt.length > 0 || keep) && (
+  <section aria-labelledby="try-it" class="rounded-2xl border border-hairline bg-surface-1 p-4 sm:p-5">
+    <h2 id="try-it" class="font-sans text-lead font-semibold text-ink-primary">Try it yourself</h2>
+    {queries.length > 0 && (
+      <>
+        <p class="mt-1 text-meta text-ink-muted">
+          {queries.length === 1
+            ? 'Opens data.un.org in a new tab with the question already asked.'
+            : 'Each opens data.un.org in a new tab with the question already asked.'}
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {queries.map((q) => (
+            <li>
+              <a
+                href={searchUrl(q.value)}
+                target="_blank"
+                rel="noreferrer noopener"
+                class="inline-flex min-h-11 items-center gap-2 rounded-xl border border-field bg-surface-0 px-3.5 py-1.5 text-body text-ink-primary hover:border-ink-muted"
+              >
+                “{q.value}” <span aria-hidden="true">↗</span><span class="sr-only">(opens data.un.org)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+    {rest.length > 0 && (
+      <ul class="mt-3 grid gap-3">
+        {rest.map((item) =>
+          item.kind === 'code' ? (
+            <li>
+              <div class="overflow-hidden rounded-xl border border-hairline bg-code">
+                <div class="flex items-center justify-between gap-3 border-b border-hairline py-1 pl-4 pr-2">
+                  <span class="text-label text-ink-muted">{needsImport(item.value) && <>Python, after <code class="font-mono">import undata as un</code></>}</span>
+                  <button type="button" data-copy class="rounded-md px-2.5 py-1 text-meta font-medium text-ink-secondary hover:bg-surface-2 hover:text-ink-primary">Copy code</button>
+                </div>
+                <pre tabindex="0" class="overflow-x-auto px-4 py-3 font-mono text-meta leading-relaxed text-ink-primary focus-visible:outline-offset-[-2px]"><code data-copy-source>{item.value}</code></pre>
+              </div>
+              {item.note && <p class="mt-1.5 text-meta text-ink-muted">{item.note}</p>}
+            </li>
+          ) : item.kind === 'colab' ? (
+            <li>
+              <a href={item.href} target="_blank" rel="noreferrer noopener" class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-volt px-4 py-2 text-body font-semibold text-on-volt">
+                {item.label} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ) : item.kind === 'link' ? (
+            <li>
+              <a href={item.href} target="_blank" rel="noreferrer noopener" class="link text-body">{item.label} <span aria-hidden="true">↗</span></a>
+            </li>
+          ) : null,
+        )}
+      </ul>
+    )}
+    {keep && (
+      <p class="mt-4 border-t border-hairline pt-3 text-body text-ink-secondary">
+        <strong class="font-semibold text-ink-primary">Remember:</strong> {keep}
+      </p>
+    )}
+  </section>
+)}
+
+<script>
+  import { announce } from '../../scripts/announce';
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const code = button.closest('div')?.parentElement?.querySelector('[data-copy-source]')?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+        button.textContent = 'Copied';
+        announce('Code copied.');
+      } catch {
+        button.textContent = 'Select and copy';
+      }
+      window.setTimeout(() => (button.textContent = 'Copy code'), 1600);
+    });
+  });
+</script>

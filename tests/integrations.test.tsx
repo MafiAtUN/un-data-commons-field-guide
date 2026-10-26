@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter } from 'react-router-dom';
 import { Dashboards } from '../src/routes/Dashboards';
 import { Notebooks } from '../src/routes/Notebooks';
 import { ENDPOINTS, API_ROOT } from '../src/lib/undc/config';
@@ -20,7 +19,7 @@ import { ENDPOINTS, API_ROOT } from '../src/lib/undc/config';
  * empty-series branch, or started recommending a wide table.
  */
 function render(page: React.ReactNode): string {
-  return renderToStaticMarkup(<MemoryRouter>{page}</MemoryRouter>);
+  return renderToStaticMarkup(page);
 }
 
 const dashboards = render(<Dashboards />);
@@ -103,13 +102,13 @@ describe('the integration pages carry the provenance through', () => {
 
 describe('the integration pages are reachable from each other', () => {
   it('links the BI page to the language page and back', () => {
-    expect(dashboards).toContain('href="/notebooks"');
-    expect(notebooks).toContain('href="/dashboards"');
+    expect(dashboards).toContain('href="/guides/python-r-julia/"');
+    expect(notebooks).toContain('href="/guides/power-bi/"');
   });
 
   it('sends a reader back to the cookbook for the API itself', () => {
     for (const [name, html] of both) {
-      expect(html, name).toContain('href="/cookbook"');
+      expect(html, name).toContain('href="/guides/api/"');
     }
   });
 });

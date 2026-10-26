@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { Expander } from '../components/Expander';
@@ -563,7 +563,7 @@ in
         title="Tableau — pick a route before you write anything"
         lead="Tableau has no native connector for an arbitrary REST endpoint, so the real decision is where the rectangle gets made. Four options, honestly ranked."
       >
-        <ol className="space-y-3">
+        <ol className="grid gap-3 lg:grid-cols-2">
           {[
             {
               title: 'A tidy CSV on a schedule — start here',
@@ -727,7 +727,7 @@ pantab.frame_to_hyper(
         title="Five things that will bite a dashboard specifically"
         lead="Distinct from the API traps in the cookbook. These are the ones that only show up once the data is inside a BI tool."
       >
-        <ol className="space-y-3">
+        <ol className="grid gap-3 lg:grid-cols-2">
           {[
             {
               title: 'A gap filled to zero by the visual, not by you',

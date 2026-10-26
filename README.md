@@ -3,97 +3,39 @@
 > A [**Nerd Lab**](https://nerd-factory.github.io/nerd-lab/) product.
 > *Unnecessarily clever. Occasionally useful.*
 
-A practical field guide and live query lab for the **[UN System Data Commons](https://data.un.org)** —
-the platform launched on 17 September 2026 that unifies public statistics from 26 UN
-System entities into a single knowledge graph.
+Short video lessons for the **[UN System Data Commons](https://data.un.org)**, the platform
+launched on 17 September 2026 that joins the public statistics of 26 UN System entities into one
+knowledge graph, and for **[undata](https://pypi.org/project/undata/)**, the Python package for it.
 
-**The front page is a door, not a tool.** It fetches nothing. Its job is to get a
-reporting officer onto data.un.org already knowing how to ask — what the platform is, the
-one way its search box will mislead them, and the three public surfaces they can walk
-through. The Data Finder still exists, on its own page, for when a figure is wanted
-without leaving.
-
-Everything else is depth: a **practical track** for reporting officers who want to get good
-at this, and a **developer track** covering the search resolver, the REST API and MCP.
+Every lesson is a video of one to two and a half minutes with its text twin beside it: chapters, a
+transcript that follows playback, and the exact query or code to try. Twenty-three lessons, about
+35 minutes, in four courses.
 
 **→ [mafiatun.github.io/un-data-commons-field-guide](https://mafiatun.github.io/un-data-commons-field-guide/)**
-
-The platform is genuinely open: no API key, no licence negotiation, no scraping. What it
-lacks is a guide to *asking well*. The difference between a vague query and a precise one
-is the difference between a chart about a country you never chose and the number you
-actually needed. This site is that guide.
 
 ---
 
 ## What's in it
 
-### The front page
+| Course | For | Lessons |
+|---|---|---|
+| **Find it on data.un.org** | Anyone who needs a figure for a report. No code. | 10 |
+| **Analyse it in Python** | Anyone who can open a notebook, including Colab with nothing to install. | 6 |
+| **Present it in the tools you use** | Whoever makes the chart, the slide or the first draft: Excel, Flourish, PowerPoint, Copilot, R. | 5 |
+| **Automate it** | Developers, and anyone connecting an AI assistant: the REST API and MCP. | 3 |
 
-A door. Four moves, in the order of a decision: what this platform is, the one way it will
-mislead you, the three ways in, and then everything else. It makes no network requests —
-`tests/landing.test.tsx` fails the build if an import ever reintroduces one — and its
-primary action goes out to data.un.org rather than inward.
+The header has four sections: **Courses**, **Videos** (every video, filtered by course or tool and
+searchable by what is said in them), **undata** (install, Colab, a cheat sheet, the Claude
+connector and twelve use cases) and **Guides** (the reference behind the videos, the worked cases
+and four live tools). One search, on ⌘K or `/`, covers every page and every transcript; a match
+inside a video opens the lesson at the moment the words are said.
 
-The one piece of motion is a re-enactment of the trap below, cut from the live resolver's
-actual responses. It waits to be scrolled to rather than playing to an empty room, sits in
-a fixed-height stage so nothing reflows, and cuts to its last frame on the first key,
-click or touch — and never starts under `prefers-reduced-motion`.
+A lesson page has six parts, in this order: the video, its chapters, *Try it yourself*, the
+transcript, the course list, and the way on. Progress (where you stopped, what you finished) is
+kept in the browser and nowhere else, and shows on the home page, the course pages and the cards.
 
-### Find data — the Data Finder
-
-On [`/toolkit`](src/routes/Toolkit.tsx). Three choices and you leave with a chart, a CSV
-carrying its own provenance, a citation in four styles, and a prompt that hands the real
-table to an AI assistant. No identifiers required, no reading required.
-
-### The navigation
-
-One full-screen table of contents, set in display type: sixteen numbered chapters grouped
-by track, each carrying what it is for and how long it takes, with the page you are on
-marked. It opens from a labelled **Contents** button in the header and from ⌘K, typing
-filters it, and the last row always offers the query to data.un.org itself — this guide
-has sixteen pages and the platform has about 85,000 indicators, so the honest answer is
-often "not here, out there".
-
-It is full-screen at every width, so the small-screen and large-screen navigation are the
-same object. Every row is a real link, so ⌘-click, middle-click and "copy link address"
-all work; an earlier version used buttons and a keyboard cursor, which broke all three for
-no gain over a link plus arrow keys.
-
-Three earlier attempts are worth recording as failures. Two dropdowns, which say what
-exists but not where you are. A rail of three-pixel ticks — information-dense, elegant,
-invisible. And the same full-screen list labelled "Index", which on a statistics site is
-the worst available word, because an index here is the Human Development Index.
-
-The manifest lives in [`src/content/navigation.ts`](src/content/navigation.ts) and feeds
-the overlay, the front page's chapter index and the header breadcrumb at once, so a new
-page is added in one place — and `tests/routes.test.ts` fails if a built route is missing
-from it.
-
-No animation library anywhere: CSS transitions and `IntersectionObserver`, nothing else.
-
-### Learn — no technical background assumed
-
-| Section | What it does |
-|---|---|
-| **Start here** | Five platform behaviours that cause corrections — the resolver substituting a place it did not recognise, "latest available" hiding a decade of vintage spread, a blank that is not a zero, two official figures that legitimately disagree, and revised history. Plus the dcid grammar, because the identifier is what makes a figure reproducible. Every claim checked against the live deployment. |
-| **Tutorials** | Six walkthroughs of about five minutes each. Find a defensible figure. Compare countries honestly. Make a chart. Draft a report section with AI. Every step states both the action and the expected result. |
-| **Make a chart** | Datawrapper, Flourish and the rest — which to use, how to get UN data in, five rules that keep a chart honest, and a GitHub Action recipe for a chart that refreshes itself. |
-| **Cite the data** | Credit the agency, not the website. A generator, and what each part of a citation is actually for. |
-| **Use AI on it** | Never ask a chatbot what a statistic is — give it the statistic and ask what it means. Four constrained prompts, free-tool comparison, and the schema in plain language. |
-
-### Developer track
-
-| Section | What it does |
-|---|---|
-| **Prompt Lab** | Sends your question to the platform's own natural-language resolver and shows its two hidden decisions — the place it locked onto and the variables it picked — *before* any chart is drawn over them. |
-| **Peace & security** | A worked case: how much of South Sudan's conflict mortality falls on children, using SDG 16, UNODC, UNHCR and IOM DTM. The wrong turns are left in. |
-| **Development** | A worked case on human development in Southern Asia, about the choices — baseline, axis, which "total" to trust — that make a chart honest or not. |
-| **Query cookbook** | Eight copy-paste REST recipes, the dcid grammar explained interactively, and eight documented ways the API will trip you up — including the 500-result cap on every graph walk, and two queries that succeed while returning something other than what they appear to. |
-| **Scenarios** | Three requests as they actually arrive, worked end to end — including the discovery trail with the dead ends left in. Plus a live builder: search the platform's own resolver for an indicator, measure what it really covers, and take the call in curl, Python, Power Query M, R, Julia or jq. |
-| **Power BI & Tableau** | The keyed JSON record turned into a rectangle: Power Query M for the call and the cleaning, the firewall rule that decides whether the name lookup gets its own query, a star schema, two DAX measures, and four honestly ranked routes into Tableau. |
-| **Python, R & Julia** | The two calls worth learning, written to one contract in three languages — a tidy frame, the facet joined onto every row, the empty-series branch written first, and the repeated-query-parameter trap that returns a bare 400 in all of them. |
-| **Catalogue** | All 16 contributing collections with indicator counts read live from the graph, so the page cannot go stale. |
-| **Connect** | The MCP endpoint: setup for Claude Code, Claude Desktop, VS Code and Cursor; one question traced through the server as JSON-RPC; a real call and response for each of the six tools; and the four failures found by calling it — including that five of the six tools work, that a place argument must be a plain name because a dcid falls through to a disabled geocoder and answers 500, and a paste-ready instruction block that steers an assistant around the one dead tool. |
+Every address from the previous version of the site still works: each one is a small page that
+forwards to where the content lives now, keeping any `#section`.
 
 ## The finding that started it
 
@@ -116,8 +58,8 @@ Both return charts titled "Total Child Mortality, by Age". Nothing on the first 
 it is about the United States. Screenshot it into a brief and the error is yours, and
 invisible.
 
-The front page re-enacts this, and the Prompt Lab makes both hidden decisions visible on
-any query you like. [`tests/resolution.test.ts`](tests/resolution.test.ts) pins the
+The home page gives this as its one warning, lesson 2 of *Find* shows it on screen, and the
+Prompt Lab makes both hidden decisions visible on any query you like. [`tests/resolution.test.ts`](tests/resolution.test.ts) pins the
 behaviour against a recorded response — the bare word `violence`, which resolves to
 `country/USA` the same way.
 
@@ -209,53 +151,60 @@ curl -s -G 'https://unsd-datacommons.gcp.un-icc.cloud/core/api/v2/observation' \
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173/un-data-commons-field-guide/
-npm run verify     # lint + typecheck + test + build
-npm run snapshots  # re-record the offline fallback from data.un.org
-npm run countries  # re-bake the country picker list from the platform
+npm run dev          # http://localhost:4321/un-data-commons-field-guide/
+npm run build        # static site in dist/, then the Pagefind search index
+npm run preview      # serve dist/ as GitHub Pages will
+npm run verify       # lint + typecheck + unit tests + build + checks on the built site
+npm run snapshots    # re-record the offline fallback from data.un.org
+npm run countries    # re-bake the country picker list from the platform
+npm run posters      # re-render the data.un.org title cards (needs Playwright)
 ```
 
-Node 20 or newer. No environment variables are needed; `.env.example` documents the two
-optional overrides.
+Node 22.23 or newer (CI uses 24). No environment variables are needed; `.env.example` documents the
+two optional overrides.
 
 ## How it's built
 
-React 19 · TypeScript (strict) · Vite · Tailwind CSS v4 · hand-built SVG charts · zero
-runtime dependencies beyond React and the router.
+Astro 7 · React 19 for the interactive tools · TypeScript (strict) · Tailwind CSS 4 · Pagefind ·
+hand-built SVG charts · no server, no database, no cookies.
 
-### Designed for someone in a hurry
+Every address is its own static HTML page with its own title, description, preview image and
+canonical link, so a lesson pasted into LinkedIn, Teams or Slack shows what it points to. Pages
+ship JavaScript only where something on them is interactive: a lesson page loads a few kilobytes
+for its player, and React loads only on the guide pages and tools that use it.
 
-The first version of this track was measured and found wanting: **6,246 words across seven
-pages — 28 minutes of reading before you could produce anything.** One page ran to 5.6
-screens with a single interactive element above the fold, and the navigation offered
-thirteen destinations to a reader who did not yet know which was theirs.
+### Lessons are files
 
-It was rebuilt around the person it is for — a reporting officer who needs a defensible
-figure before a meeting, not a reader who would admire the prose:
+Each lesson is one JSON file, `src/content/lessons/<course>/<slug>.json`: title, the one idea,
+course and position, the YouTube id and whether the video is public, length, chapters, the timed
+transcript, what to try, where to go deeper. A schema in `src/content.config.ts` checks every file
+at build time: a lesson with no transcript, a chapter that does not start at 0:00, or a public video
+with no id fails the build rather than reaching a reader.
 
-| | Before | After |
-|---|---|---|
-| Words across the track | 6,246 (~28 min) | **3,639 (~17 min)** |
-| Top-level navigation choices | 13 | **3** |
-| Time to a number on screen | 2 clicks + 4 min reading | **0.5s, zero clicks** |
-| Actions above the fold, homepage | 8 (below 2.9 screens of prose) | **19** |
-| Is the chart above the fold? | no, 1.19 screens down | **yes, 0.88** |
-| Longest page | 5.6 screens, 1 action | **2.7 screens** |
-| `/ai` | 1,573 words | **534** |
+The chapters and transcripts come from the video pipelines, which know every spoken word and its
+time; nothing in them is typed by hand. When a private video goes public, its file changes in one
+place: `"status": "private"` becomes `"public"`, with the upload date. Until then the lesson shows
+its still, a *Coming soon* label and its full transcript, never a broken player.
 
-Reference material — prompt bodies, workflow files, the reasoning behind each rule — is
-kept but placed behind the question a reader would ask, so the page is short for someone in
-a hurry and complete for someone who is not. Copy buttons stay outside the expanders:
-most people need to *use* a prompt, not read it.
+The data.un.org series has designed title cards like the undata series, rendered from HTML by
+`npm run posters` into `src/assets/posters/`. Astro serves them as AVIF and WebP at the size each
+place needs. The same files are the YouTube thumbnails.
 
-### Brand
+### Video, without handing the reader to Google
 
-Surfaces, ink and the accent are the [Nerd Lab](https://github.com/nerd-factory) identity:
-ink `#141419`, off-white `#F4F1EA`, and one accent — volt `#C8F531`. Volt is **chrome only**.
-At OKLCH L 0.907 it sits far outside the band a categorical palette needs, which the
-validator confirms, so it never becomes a series colour. Nerd Lab sets Futura throughout;
-here the geometric face carries headings and the wordmark while a humanist sans carries
-body copy, because this is a reading-heavy product rather than a landing page.
+At rest a lesson shows a still served by this site, its length and a play button. Nothing is
+requested from YouTube until somebody presses play; then the privacy-enhanced player
+(`youtube-nocookie.com`) is mounted, already playing. There is no `preconnect` warm-up on hover,
+because hovering is not consent. The built-site tests fail if an `<iframe>`, or any script, image or
+stylesheet from YouTube or Google, appears in any page as served.
+
+The player is a small custom element, `src/scripts/player.ts`, not a YouTube script. It reads the
+current time from the embed over `postMessage`, the message format YouTube's own IFrame API uses,
+which drives the follow-along transcript, the current chapter, saved progress and *Copy link at
+0:42*. That format is not a documented public contract, so it lives in that one file; if it ever
+stops answering, the video still plays and only the follow-along goes quiet. Every video already
+has its captions burned in, so the player switches YouTube's own caption track off rather than
+print the same words twice; the CC button brings it back.
 
 ### Live data, with a disclosed fallback
 
@@ -324,83 +273,66 @@ Enforced throughout:
 - **Caveats are computed, not written.** The ranking panel inspects the vintage spread of
   its own result and raises the mixed-year warning itself.
 
-### Video, without handing the reader to Google
+### Brand
 
-Walkthroughs can carry a recording. The player is not an embed until somebody
-asks for one: at rest a tutorial shows a still, a title, a runtime and a play
-button, and the `<iframe>` is mounted on the click. A stock YouTube embed ships
-well over a megabyte of third-party script and sets cookies before anyone has
-decided to watch, which would quietly undo what the front page is careful
-about. When it does load it points at `youtube-nocookie.com`, and there is no
-`preconnect` warm-up on hover, because hovering is not consent.
-`tests/video.test.tsx` fails the build if a player, or that domain, ever appears
-in the resting markup.
-
-Recordings are uploaded by hand and the eleven-character id pasted into
-`src/content/videos.ts` (and `src/content/tutorials.ts` for a walkthrough's own
-clip). An unpublished entry carries `id: ''`, which renders as a still and a
-transcript rather than a broken player. That is not laziness about automation: videos
-uploaded through an unaudited YouTube Data API project are
-[forced to private on arrival](https://developers.google.com/youtube/v3/revision_history),
-so the API would buy a locked video and a quota ceiling of about six uploads a
-day in exchange for an OAuth client to maintain.
+Surfaces, ink and the accent are the [Nerd Lab](https://github.com/nerd-factory) identity: ink
+`#141419`, off-white `#F4F1EA`, and one accent, volt `#C8F531`. The site follows the visitor's
+device into a light or a dark theme, and remembers a choice. Volt is chrome only, and only ever a
+fill with dark text on it (13.4:1); as text on a light page it becomes a dark olive. Headings are set
+in Jost, an open Futura-style face, so Windows shows the same headings as a Mac; reading text in
+Inter; code, times and lengths in JetBrains Mono. All three are served by this site.
 
 ### Layout
 
 ```
 src/
-├── lib/undc/          the platform: config, typed client, dcid grammar,
-│                      response selectors, resolver summary, live/snapshot hook
+├── pages/             one file per address: home, courses, lessons, videos, undata,
+│                      guides, tools, about, and the forwarding pages for old addresses
+├── content/
+│   ├── lessons/       one JSON file per lesson, checked by content.config.ts
+│   ├── courses.ts     the four courses
+│   └── guides.ts      the reference pages and tools, for the index pages
+├── layouts/           the page shell (head, header, footer, search) and the guide shell
 ├── components/
+│   ├── site/          header, footer, search dialog
+│   ├── lesson/        player, chapters, transcript, try-it, course list, cards
 │   ├── charts/        scales, line chart, ranking, stat tile, table twins, frame
 │   └── panels/        a chart wired to one request
-├── content/           the editorial layer the API does not carry —
-│                      curated indicators in plain language, tutorials, country presets
-├── routes/            one file per page
-└── data/              snapshot-data.json — the committed fallback
-scripts/               snapshot recorder, Pages postbuild
-tests/                 240 tests, no network
+├── routes/            the guide pages, rendered by Astro and hydrated where interactive
+├── scripts/           the player and the progress store (plain TypeScript)
+├── lib/undc/          the platform: config, typed client, dcid grammar, selectors
+└── data/              snapshot-data.json, the committed fallback
+scripts/               snapshot recorder, country list, title cards
+tests/                 unit tests (no network); tests/site/ checks the built site
 ```
 
 ## Tests
 
-240 tests across 19 files, no network access, run against the committed payloads.
+188 unit tests across 17 files, with no network access, run against the committed payloads, and 8
+checks on the built site.
 
 ```
-tests/dcid.test.ts        the identifier grammar, including round-tripping
-tests/select.test.ts      response → chart shapes; empty ≠ zero; vintage spread
-tests/scales.test.ts      axis domains, tick rounding, entity-stable colour binding
-tests/resolution.test.ts  the resolver's inferred-place behaviour
-tests/snapshots.test.ts   the script ↔ app key contract, checked across runtimes
-tests/routes.test.ts      router ↔ navigation ↔ build manifest agree
-tests/navigation.test.ts  the depth axis: contiguous tracks, findable by the obvious word
-tests/landing.test.tsx    the front page rendered, and that it fetches nothing
-tests/content.test.ts     every curated indicator and preset country actually exists
-tests/export.test.ts      CSV quoting and provenance; citations name the agency first
-tests/curl-samples.test.ts  no line break in any POST body on the site — that is a 403
-tests/cookbook.test.tsx   the REST claims: the 500-result cap, resolve, the two lying queries
-tests/mcp.test.tsx        which MCP tools work, and that the old wrong wording cannot return
-tests/recipes.test.ts     every generator × shape emits runnable code with nothing undefined
-tests/video.test.tsx      no player, and no youtube domain, in the resting markup
-tests/scenarios.test.tsx  the worked scenarios and their discovery trails
-tests/integrations.test.tsx  the Power BI / Tableau / notebook contract
-tests/timeline.test.ts    the platform history entries
-tests/sectionrail.test.ts the in-page section rail
+tests/dcid.test.ts            the identifier grammar, including round-tripping
+tests/select.test.ts          response → chart shapes; empty ≠ zero; vintage spread
+tests/scales.test.ts          axis domains, tick rounding, entity-stable colour binding
+tests/resolution.test.ts      the resolver's inferred-place behaviour
+tests/snapshots.test.ts       the script ↔ app key contract, checked across runtimes
+tests/content.test.ts         every curated indicator and preset country actually exists
+tests/export.test.ts          CSV quoting and provenance; citations name the agency first
+tests/curl-samples.test.ts    no line break in any POST body on the site; that is a 403
+tests/cookbook.test.tsx       the REST claims: the 500-result cap, resolve, the two lying queries
+tests/mcp.test.tsx            which MCP tools work, and that the old wrong wording cannot return
+tests/recipes.test.ts         every generator × shape emits runnable code with nothing undefined
+tests/scenarios.test.tsx      the worked scenarios and their discovery trails
+tests/integrations.test.tsx   the Power BI / Tableau / notebook contract
+tests/undata.test.tsx         the Python client claim, and where undata is offered
+tests/timeline.test.ts        the platform history entries
+tests/lessons.test.ts         the lesson files: 23, numbered without gaps, posters on disk
+tests/paths.test.ts           addresses, and every old address forwarding to a real page
+tests/site/built.test.ts      on dist/: unique titles and previews, nothing from YouTube or
+                              Google before play, video data on every public lesson,
+                              old addresses, and no broken internal link
 ```
-
-`snapshots.test.ts` matters because the recorder is plain Node and the app is TypeScript,
-so nothing at compile time stops a key being renamed in one and not the other. The test is
-that check.
-
-`landing.test.tsx` is the only suite that mounts components rather than reading their
-source. It renders with `react-dom/server`, in plain Node, with no jsdom — and because
-effects do not run in a server render, what it sees is exactly the front page's *first*
-frame: before the film has played a beat, before anything has scrolled into view, before
-any data has arrived. That frame has to already contain the Data Finder, the resolver
-finding in plain text, and a working link to the Prompt Lab, because it is also what a
-crawler and a reader on a slow connection get. It additionally pins the markup contracts
-that are otherwise only checkable by eye: one tab stop on the rail, `aria-current` on the
-page you are on, and the animated stage hidden from assistive technology.
 
 ## A note on courtesy
 

@@ -1,0 +1,93 @@
+{
+  "title": "Cite the agency, not the website",
+  "idea": "data.un.org is the route, not the source.",
+  "summary": "The most common citation error with data.un.org is citing data.un.org. Cite the agency that produced the figure, and name the platform as the route.",
+  "course": "find",
+  "order": 7,
+  "series": {
+    "name": "data.un.org",
+    "number": 7
+  },
+  "youtube": {
+    "id": "SoQQWY8uF2w",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 54,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "07-cite-the-agency.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "A one-word fix"
+    },
+    {
+      "at": 5,
+      "label": "Writing the footnote"
+    },
+    {
+      "at": 10,
+      "label": "The source line"
+    },
+    {
+      "at": 22,
+      "label": "Follow it to the agency"
+    },
+    {
+      "at": 31,
+      "label": "Cite the agency"
+    },
+    {
+      "at": 42,
+      "label": "The five parts"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "This is the most common mistake made with the platform, and it is a one-word fix."
+    },
+    {
+      "at": 5.59,
+      "text": "You searched, you found your number, and now you are writing the footnote."
+    },
+    {
+      "at": 10.96,
+      "text": "Under every chart and every headline figure is a source line. On this one it reads Global S D G Database. That is the body that produced the number."
+    },
+    {
+      "at": 22.45,
+      "text": "And it is a live link. Follow it and you land on the producing agency, where the methodology and the terms of use live."
+    },
+    {
+      "at": 31.11,
+      "text": "So do not cite data dot U N dot org. That is the route you took, not the authority. Cite the agency, and mention the platform as where you accessed it."
+    },
+    {
+      "at": 42.67,
+      "text": "Producer, indicator, place, year, then the platform as the route. Five parts, and nobody can take the figure apart."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Bangladesh"
+    },
+    {
+      "kind": "link",
+      "href": "https://unstats.un.org/sdgs/dataportal",
+      "label": "Global SDG Indicators Database"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/cite/",
+      "label": "Build a citation in four styles"
+    }
+  ],
+  "keep": "Citation pattern: Agency, Indicator, Place, Year. Accessed via data.un.org."
+}

@@ -1,0 +1,199 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Player from '../components/lesson/Player.astro';
+import CourseCard from '../components/lesson/CourseCard.astro';
+import LessonCard from '../components/lesson/LessonCard.astro';
+import { COURSES, course as courseOf } from '../content/courses';
+import { allLessons, courseLessons, isPlayable, lessonHref, positionIn, posterOf, runtime, totalMinutes } from '../lib/lessons';
+import { url } from '../lib/paths';
+
+/**
+ * The front door: a video, four courses, and the one warning worth giving
+ * before anyone quotes a number. Until the sixty-second welcome video exists,
+ * lesson 1 of Find is the one that plays here.
+ */
+const all = await allLessons();
+const byId = (id: string) => all.find((l) => l.id === id)!;
+const hero = byId('find/your-first-number');
+const heroNext = byId('find/the-chip-that-decides');
+const starters = ['find/your-first-number', 'find/the-chip-that-decides', 'find/cite-the-agency', 'analyse/three-lines'].map(byId);
+const byCourse = await Promise.all(COURSES.map(async (course) => ({ course, lessons: await courseLessons(course.slug) })));
+const waiting = all.filter((l) => !isPlayable(l)).length;
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+
+// What the Continue row needs to describe any lesson, read by the inline script below.
+const meta = Object.fromEntries(
+  await Promise.all(
+    all.map(async (l) => {
+      const thumb = await getImage({ src: posterOf(l), width: 320, format: 'webp' });
+      return [l.id, { title: l.data.title, href: lessonHref(l), seconds: l.data.seconds, where: `${courseOf(l.data.course).title} · lesson ${positionIn(l, l.data.course)}`, poster: thumb.src }];
+    }),
+  ),
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'UN Data Commons Field Guide',
+  url: new URL(url('/'), Astro.site).href,
+  description: 'Short video lessons for data.un.org and the undata Python package.',
+  author: { '@type': 'Person', name: 'Mafizul Islam' },
+};
+---
+<Base
+  title="UN Data Commons Field Guide: learn to use UN data in two-minute videos"
+  description={`Free, unofficial video lessons for data.un.org and the undata Python package: ${all.length} lessons, ${totalMinutes(all)} minutes, each with chapters, a transcript and the steps to try.`}
+  section="home"
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section hidden data-continue aria-label="Continue where you left off" class="pt-6">
+      <a href="#" data-continue-link class="grid grid-cols-[6.5rem_1fr] items-center gap-4 rounded-2xl border border-hairline bg-surface-1 p-3 hover:border-hairline-strong sm:grid-cols-[8rem_1fr_14rem_auto] sm:gap-5">
+        <span class="overflow-hidden rounded-lg bg-poster"><img data-continue-poster alt="" width="320" height="180" class="block aspect-video w-full object-cover" /></span>
+        <span class="min-w-0">
+          <span class="block text-meta text-ink-muted">Continue · <span data-continue-where></span></span>
+          <span class="mt-0.5 block font-semibold text-ink-primary" data-continue-title></span>
+        </span>
+        <span class="col-span-2 sm:col-span-1">
+          <span class="block h-1.5 overflow-hidden rounded-full bg-surface-2 ring-1 ring-inset ring-hairline"><span class="block h-full rounded-full bg-progress" data-continue-bar></span></span>
+          <span class="mt-1.5 block text-meta text-ink-muted tnum" data-continue-time></span>
+        </span>
+        <span class="hidden h-10 items-center rounded-xl bg-volt px-4 text-meta font-semibold text-on-volt sm:inline-flex">Resume</span>
+      </a>
+    </section>
+    <script type="application/json" id="fg-lessons" set:html={JSON.stringify(meta).replace(/</g, '\\u003c')} />
+    <script is:inline>
+      // Inline so the row is in place before the page first paints: nothing
+      // below it moves. Same rule as the player's Resume: started, not finished.
+      (() => {
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem('fg-progress-v1') || '{}') || {}; } catch (e) { return; }
+        const meta = JSON.parse(document.getElementById('fg-lessons').textContent || '{}');
+        const found = Object.entries(store)
+          .filter(([id, e]) => meta[id] && e && !e.done && e.t > 5 && e.t < meta[id].seconds - 5)
+          .sort((a, b) => b[1].at - a[1].at)[0];
+        const row = document.querySelector('[data-continue]');
+        if (!found || !row) return;
+        const lesson = meta[found[0]];
+        const at = Math.floor(found[1].t);
+        const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+        row.querySelector('[data-continue-link]').href = lesson.href;
+        row.querySelector('[data-continue-poster]').src = lesson.poster;
+        row.querySelector('[data-continue-where]').textContent = lesson.where;
+        row.querySelector('[data-continue-title]').textContent = lesson.title;
+        row.querySelector('[data-continue-bar]').style.width = `${Math.min(100, (at / lesson.seconds) * 100)}%`;
+        row.querySelector('[data-continue-time]').textContent = `${clock(at)} of ${clock(lesson.seconds)}`;
+        row.hidden = false;
+      })();
+    </script>
+
+    <section class="grid gap-x-12 gap-y-6 pb-8 pt-8 sm:pt-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:pb-12">
+      <div class="lg:col-start-1 lg:row-start-1 lg:self-end">
+        <p class="text-meta font-semibold text-ink-muted">Free · unofficial · no sign-up</p>
+        <h1 class="mt-3 font-display text-h1 font-semibold text-ink-primary sm:text-display xl:text-hero">
+          Learn to use UN data in two-minute videos.
+        </h1>
+        <p class="mt-4 max-w-xl text-lead text-ink-secondary">
+          Short lessons for <a class="link" href="https://data.un.org" target="_blank" rel="noreferrer noopener">data.un.org</a> and the
+          <a class="link" href={url('/undata/')}>undata</a> Python package. Every lesson has chapters, a transcript and the exact steps to try.
+        </p>
+      </div>
+      <div class="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <Player lesson={hero} next={{ href: lessonHref(heroNext), title: heroNext.data.title }} sizes="(min-width: 1152px) 36rem, (min-width: 1024px) 49vw, calc(100vw - 2rem)" />
+        <ol aria-label="Chapters" class="no-scrollbar -mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" data-pagefind-ignore>
+          {hero.data.chapters.map((c) => (
+            <li class="shrink-0">
+              <button type="button" data-seek={c.at} data-chapter={c.at} class="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border border-hairline-strong bg-surface-1 px-3.5 text-meta text-ink-secondary hover:border-ink-muted hover:text-ink-primary data-[now]:border-ink-primary data-[now]:text-ink-primary">
+                <span class="text-ink-muted tnum">{runtime(c.at)}</span>{c.label}
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="lg:col-start-1 lg:row-start-2 lg:self-start">
+        <div class="grid gap-3 sm:flex sm:flex-wrap">
+          <a href={lessonHref(hero)} class="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-volt px-5 text-body font-semibold text-on-volt">
+            <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+            Start lesson 1
+          </a>
+          <a href={url('/videos/')} class="inline-flex h-12 items-center justify-center rounded-xl border border-field bg-surface-1 px-5 text-body font-semibold text-ink-primary hover:bg-surface-2">
+            Browse all {all.length} videos
+          </a>
+        </div>
+        <p class="mt-4 text-meta text-ink-muted tnum">{all.length} videos · {totalMinutes(all)} minutes · captions in every video</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="courses" class="py-6" data-pagefind-ignore>
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 id="courses" class="font-display text-h2 font-semibold text-ink-primary">Choose a course</h2>
+        <a href={url('/courses/')} class="link text-meta">All courses</a>
+      </div>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {byCourse.map(({ course, lessons }) => <CourseCard course={course} lessons={lessons} />)}
+      </div>
+    </section>
+
+    <section aria-labelledby="starters" class="py-8" data-pagefind-ignore>
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 id="starters" class="font-display text-h2 font-semibold text-ink-primary">Start with these</h2>
+        <a href={url('/videos/')} class="link text-meta">Every video</a>
+      </div>
+      <div class="mt-5 grid gap-x-5 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
+        {starters.map((lesson) => <LessonCard lesson={lesson} />)}
+      </div>
+    </section>
+
+    <section aria-labelledby="trap" class="my-8 grid items-center gap-6 rounded-3xl bg-surface-2 p-6 sm:p-8 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+      <div>
+        <p class="text-meta font-semibold text-ink-muted">Before you quote any number</p>
+        <h2 id="trap" class="mt-2 font-display text-h2 font-semibold text-ink-primary">The search box always picks a place.</h2>
+        <p class="mt-3 max-w-measure text-body text-ink-secondary">
+          Ask data.un.org about child mortality in Bengal and it answers for the United States, and nothing on the chart
+          says so. Name the place, then check the place it chose.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a href={lessonHref(heroNext)} class="inline-flex min-h-11 items-center gap-2 rounded-xl border border-field bg-surface-1 px-4 py-2 text-meta font-semibold text-ink-primary hover:bg-surface-0">
+            <svg viewBox="0 0 24 24" class="size-3.5 shrink-0" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"></path></svg>
+            Watch: {heroNext.data.title} · {runtime(heroNext.data.seconds)}
+          </a>
+          <a href={url('/tools/prompt-lab/')} class="inline-flex min-h-11 items-center px-1 text-meta font-medium text-ink-secondary underline decoration-volt-line decoration-2 underline-offset-4 hover:text-ink-primary">Check any question in the Prompt Lab</a>
+        </div>
+      </div>
+      <div aria-hidden="true">
+        <div class="flex flex-wrap items-center gap-3 rounded-3xl border border-field bg-surface-1 py-2.5 pl-5 pr-2.5 sm:flex-nowrap sm:rounded-full sm:py-2">
+          <span class="text-body text-ink-primary">child mortality in Bengal</span>
+          <span class="ml-auto inline-flex h-10 shrink-0 items-center rounded-full border-2 border-status-critical bg-surface-0 px-4 text-meta font-semibold text-ink-primary">United States</span>
+        </div>
+        <p class="mt-2.5 text-right text-meta text-ink-muted">The place it chose. You named a different one.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="tools" class="py-8">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 id="tools" class="font-display text-h2 font-semibold text-ink-primary">Tools you can use now</h2>
+        <a href={url('/tools/')} class="link text-meta">All tools</a>
+      </div>
+      <ul class="mt-5 grid gap-3 md:grid-cols-3" data-pagefind-ignore>
+        {[
+          { href: '/tools/finder/', title: 'Data Finder', body: 'Pick an indicator and countries. Leave with a chart, a CSV that carries its sources, and a citation.' },
+          { href: '/tools/cite/', title: 'Citation Builder', body: 'Credit the agency that produced a figure, in four styles.' },
+          { href: '/tools/prompt-lab/', title: 'Prompt Lab', body: 'See which place and indicator the search box chose, before you trust its chart.' },
+        ].map((tool) => (
+          <li>
+            <a href={url(tool.href)} class="block h-full rounded-2xl border border-hairline bg-surface-1 p-5 hover:border-hairline-strong">
+              <span class="block text-body font-semibold text-ink-primary">{tool.title}</span>
+              <span class="mt-1.5 block text-meta leading-relaxed text-ink-muted">{tool.body}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      {waiting > 0 && (
+        <p class="mt-6 text-meta text-ink-muted">
+          {WORDS[waiting] ?? waiting} {waiting === 1 ? 'video isn’t' : 'videos aren’t'} on YouTube yet. Their lesson pages already have the full transcript.
+        </p>
+      )}
+    </section>
+  </div>
+</Base>

@@ -38,7 +38,7 @@ export function DcidExplainer() {
             aria-pressed={input === example}
             className={`rounded border px-2.5 py-1 font-mono text-[0.7rem] transition-colors ${
               input === example
-                ? 'border-volt/60 bg-volt/10 text-ink-primary'
+                ? 'border-ink-primary bg-ink-primary text-surface-0'
                 : 'border-hairline text-ink-muted hover:text-ink-secondary'
             }`}
           >
@@ -133,10 +133,8 @@ function Part({ label, value, color }: { label: string; value: string; color: st
       >
         {value}
       </span>
-      <span
-        className="mt-1 font-sans text-[0.62rem] uppercase tracking-wide"
-        style={{ color }}
-      >
+      <span className="mt-1 flex items-center gap-1 font-sans text-[0.75rem] text-ink-secondary">
+        <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ background: color }} />
         {label}
       </span>
     </span>

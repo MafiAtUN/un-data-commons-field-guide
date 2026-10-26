@@ -1,0 +1,108 @@
+{
+  "title": "Your first number",
+  "idea": "Figure, year, producer: a sentence you can defend.",
+  "summary": "Anyone can find a number on data.un.org. Making it hold up in a report takes three more seconds: the unit, the year, and the agency that measured it.",
+  "course": "find",
+  "order": 1,
+  "series": {
+    "name": "data.un.org",
+    "number": 1
+  },
+  "youtube": {
+    "id": "8CMmvQ3Lrj0",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 80,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "01-your-first-number.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "The task"
+    },
+    {
+      "at": 13,
+      "label": "Ask in plain words"
+    },
+    {
+      "at": 23,
+      "label": "Check the place"
+    },
+    {
+      "at": 34,
+      "label": "Read the number"
+    },
+    {
+      "at": 55,
+      "label": "Find the producer"
+    },
+    {
+      "at": 66,
+      "label": "The trend, and the sentence"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "You have been asked for a figure, and it has to hold up."
+    },
+    {
+      "at": 4,
+      "text": "Everything starts at one address: data dot U N dot org. One search box over eighty-five thousand official statistics."
+    },
+    {
+      "at": 13.48,
+      "text": "Type it the way you would say it out loud. Name the measure, and name the country."
+    },
+    {
+      "at": 20.03,
+      "text": "A couple of seconds later, you have an answer."
+    },
+    {
+      "at": 23.84,
+      "text": "First, check this chip. It is the place the platform decided you meant. Leave the country out of your question, and it still picks one."
+    },
+    {
+      "at": 34.44,
+      "text": "Now the number. One hundred and fifteen. On its own, that is not evidence. It is just a number on a screen."
+    },
+    {
+      "at": 44.56,
+      "text": "So read the two lines underneath it. The unit: count per one hundred thousand live births. And the year: twenty twenty-three."
+    },
+    {
+      "at": 55.26,
+      "text": "Then the part most people miss: the source. The Global S D G Database measured this. Data dot U N dot org is only how you found it."
+    },
+    {
+      "at": 66.27,
+      "text": "And the chart on the left gives you the trend behind that single figure."
+    },
+    {
+      "at": 71.02,
+      "text": "The figure, the year, the producer. Three things, every time, and you have a sentence you can defend."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Bangladesh"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/cite/",
+      "label": "Build a citation for your figure"
+    },
+    {
+      "href": "/guides/five-behaviours/",
+      "label": "The five behaviours that cause corrections"
+    }
+  ],
+  "keep": "A defensible sentence names the figure, the year and the agency that produced it."
+}

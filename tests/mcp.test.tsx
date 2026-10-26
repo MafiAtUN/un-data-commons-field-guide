@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter } from 'react-router-dom';
 import { Connect } from '../src/routes/Connect';
 import { ENDPOINTS } from '../src/lib/undc/config';
 
@@ -24,9 +23,7 @@ import { ENDPOINTS } from '../src/lib/undc/config';
  * someone re-running the calls.
  */
 const html = renderToStaticMarkup(
-  <MemoryRouter>
-    <Connect />
-  </MemoryRouter>,
+  <Connect />,
 );
 
 describe('setup instructions', () => {
@@ -49,7 +46,8 @@ describe('setup instructions', () => {
   });
 
   it('has somewhere to send a reader whose assistant has no MCP', () => {
-    expect(html).toContain('href="/ai"');
+    // The old /ai page is now the AI prompts guide; the link follows it there.
+    expect(html).toContain('href="/guides/ai-prompts/"');
   });
 });
 

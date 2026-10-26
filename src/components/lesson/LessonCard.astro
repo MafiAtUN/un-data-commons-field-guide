@@ -1,0 +1,64 @@
+---
+import { course as courseOf, TOOLS } from '../../content/courses';
+import { isPlayable, lessonHref, positionIn, posterOf, runtime, type Lesson } from '../../lib/lessons';
+import Poster from './Poster.astro';
+
+/**
+ * One lesson as a card: still, length, title, idea. The whole card is the link.
+ * Progress is painted in by script from what this browser remembers; without
+ * it the card is simply unwatched.
+ */
+interface Props {
+  lesson: Lesson;
+  /** Show it as part of this course (cross-listed lessons keep their home course). */
+  in?: Lesson['data']['course'];
+  sizes?: string;
+  /** Carry the words said in the video, for the library's filter. */
+  searchable?: boolean;
+  /** Load the still at once: for the first cards on a page. */
+  eager?: boolean;
+  /** The one card whose still is the page's largest image on first screen. */
+  priority?: boolean;
+}
+const {
+  lesson,
+  in: inCourse = lesson.data.course,
+  sizes = '(min-width: 1024px) 17rem, (min-width: 640px) 45vw, calc(100vw - 2rem)',
+  searchable = false,
+  eager = false,
+  priority = false,
+} = Astro.props;
+const d = lesson.data;
+const c = courseOf(inCourse);
+const playable = isPlayable(lesson);
+const text = searchable
+  ? [d.title, d.idea, d.summary, ...d.transcript.map((t) => t.text), ...d.tools.map((t) => TOOLS[t])].join(' ').toLowerCase()
+  : undefined;
+---
+<a
+  href={lessonHref(lesson)}
+  class="group flex flex-col gap-2.5 rounded-xl outline-offset-4"
+  data-lesson-id={lesson.id}
+  data-seconds={d.seconds}
+  data-card
+  data-course={[d.course, ...d.also.map((a) => a.course)].join(' ')}
+  data-tools={d.tools.join(' ')}
+  data-text={text}
+>
+  <span class="relative block overflow-hidden rounded-xl bg-poster ring-1 ring-hairline" data-pagefind-ignore>
+    <Poster src={posterOf(lesson)} sizes={sizes} eager={eager} priority={priority} class="transition-transform duration-300 group-hover:scale-[1.02]" />
+    <span class="absolute bottom-2 right-2 rounded-md bg-scrim px-1.5 py-0.5 text-label font-semibold text-white tnum">{runtime(d.seconds)}</span>
+    {!playable && (
+      <span class="absolute right-2 top-2 rounded-md bg-scrim px-2 py-1 text-label font-semibold text-white">Coming soon</span>
+    )}
+    <span class="absolute right-2 top-2 hidden size-6 place-items-center rounded-full bg-volt text-meta font-extrabold text-on-volt group-data-[progress=done]:grid" aria-hidden="true">✓</span>
+    <span class="absolute inset-x-0 bottom-0 h-1 bg-white/25 opacity-0 group-data-[progress=started]:opacity-100 group-data-[progress=done]:opacity-100" aria-hidden="true">
+      <span class="block h-full w-0 bg-volt" data-progress-bar></span>
+    </span>
+  </span>
+  <span class="block">
+    <span class="block text-label font-semibold text-ink-muted" data-pagefind-ignore>{c.short} · lesson {positionIn(lesson, inCourse)}</span>
+    <span class="mt-0.5 block text-body font-semibold leading-snug text-ink-primary group-hover:underline group-hover:decoration-volt-line group-hover:decoration-2 group-hover:underline-offset-4">{d.title}<span class="sr-only" data-progress-label></span>{!playable && <span class="sr-only"> (video coming soon)</span>}</span>
+    <span class="mt-1 block text-meta leading-snug text-ink-muted">{d.idea}</span>
+  </span>
+</a>

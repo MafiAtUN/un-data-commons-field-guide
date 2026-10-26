@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+  { ignores: ['dist', 'node_modules', '.astro'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -29,7 +29,7 @@ export default tseslint.config(
   },
   {
     // Build tooling runs in Node and legitimately logs.
-    files: ['scripts/**/*.mjs', '*.config.ts'],
+    files: ['scripts/**/*.mjs', '*.config.ts', '*.config.mjs'],
     languageOptions: { globals: globals.node },
     rules: { 'no-console': 'off' },
   },

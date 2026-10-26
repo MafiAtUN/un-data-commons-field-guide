@@ -2,7 +2,7 @@ import { PageHeader, Section } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
 import { CopyButton } from '../components/CopyButton';
 import { Expander } from '../components/Expander';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 
 interface VibeTool {
   name: string;
@@ -139,7 +139,7 @@ export function AiTools() {
   return (
     <>
       <PageHeader
-        eyebrow="Use AI on it · 5 minutes"
+        eyebrow="Use AI with UN data · 5 minutes"
         title="Let AI do the analysis, not the remembering"
         lead={<>One rule, four prompts. That is the whole page.</>}
       />

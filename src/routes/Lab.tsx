@@ -1,3 +1,4 @@
+import { Link } from '../components/Link';
 import { PromptLab } from '../components/PromptLab';
 import { PageHeader, Section, Takeaway } from '../components/Prose';
 import { CodeBlock } from '../components/CodeBlock';
@@ -134,7 +135,7 @@ export function Lab() {
           <Takeaway>
             Use natural language to <em>discover</em> the indicator, then switch to its dcid
             to <em>retrieve</em> it. Prompting is a search strategy; identifiers are a data
-            strategy. The <a href="/cookbook" className="text-volt underline decoration-volt/30 underline-offset-2">query cookbook</a> picks up from here.
+            strategy. The <Link to="/cookbook" className="text-volt underline decoration-volt/30 underline-offset-2">query cookbook</Link> picks up from here.
           </Takeaway>
         </div>
       </Section>

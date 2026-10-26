@@ -1,0 +1,40 @@
+---
+import { runtime, type Lesson } from '../../lib/lessons';
+
+/**
+ * Everything said in the video, as real text: it can be read instead of
+ * watched, searched, copied, and read aloud by a screen reader. While the
+ * video plays, the line being spoken is highlighted and kept in view.
+ */
+interface Props {
+  lesson: Lesson;
+  seekable: boolean;
+}
+const { lesson, seekable } = Astro.props;
+---
+<section aria-labelledby="transcript" class="rounded-2xl border border-hairline bg-surface-1">
+  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-4 py-3 sm:px-5" data-pagefind-ignore>
+    <h2 id="transcript" class="font-sans text-lead font-semibold text-ink-primary">Transcript</h2>
+    {seekable && (
+      <label class="inline-flex cursor-pointer items-center gap-2.5 text-meta text-ink-secondary">
+        <input type="checkbox" role="switch" data-follow class="peer sr-only" checked />
+        <span class="relative h-6 w-10 shrink-0 rounded-full bg-surface-1 shadow-[inset_0_0_0_1.5px_var(--color-field)] transition-colors peer-checked:bg-ink-primary peer-checked:shadow-none after:absolute after:left-1 after:top-1 after:size-4 after:rounded-full after:bg-ink-muted after:transition-transform peer-checked:after:translate-x-4 peer-checked:after:bg-surface-1 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink-primary" aria-hidden="true"></span>
+        Follow along
+      </label>
+    )}
+  </div>
+  <ol class="max-h-[26rem] overflow-y-auto px-2 py-2 sm:px-3" data-transcript tabindex="0" aria-labelledby="transcript">
+    {lesson.data.transcript.map((line) => (
+      <li class="grid grid-cols-[3.25rem_1fr] gap-2 rounded-lg px-2 py-1.5 data-[now]:bg-volt-soft data-[now]:text-ink-primary data-[now]:shadow-[inset_3px_0_0_var(--color-volt-line)]" data-at={line.at}>
+        {seekable ? (
+          <button type="button" data-pagefind-ignore data-seek={Math.floor(line.at)} class="self-start rounded px-1 py-0.5 text-left text-meta text-ink-muted tnum hover:text-ink-primary" aria-label={`Play from ${runtime(line.at)}`}>
+            {runtime(line.at)}
+          </button>
+        ) : (
+          <span data-pagefind-ignore class="px-1 py-0.5 text-meta text-ink-muted tnum">{runtime(line.at)}</span>
+        )}
+        <span class="text-body [&_mark]:rounded-sm [&_mark]:bg-volt [&_mark]:px-0.5 [&_mark]:text-on-volt" data-line-text>{line.text}</span>
+      </li>
+    ))}
+  </ol>
+</section>

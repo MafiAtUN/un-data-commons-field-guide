@@ -1,0 +1,100 @@
+{
+  "title": "Download, and the metadata",
+  "idea": "Keep the indicator ID and the source link with the numbers.",
+  "summary": "There is a Download link under every chart on data.un.org. What it gives you carries the identifiers and the provenance that a screenshot loses.",
+  "course": "find",
+  "order": 6,
+  "series": {
+    "name": "data.un.org",
+    "number": 6
+  },
+  "youtube": {
+    "id": "9NzZO66rJMA",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 79,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "06-download-and-metadata.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Getting the data out"
+    },
+    {
+      "at": 6,
+      "label": "The Download link"
+    },
+    {
+      "at": 14,
+      "label": "The table"
+    },
+    {
+      "at": 21,
+      "label": "The identifiers"
+    },
+    {
+      "at": 35,
+      "label": "The provenance"
+    },
+    {
+      "at": 47,
+      "label": "Copy to a spreadsheet"
+    },
+    {
+      "at": 69,
+      "label": "What to keep"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "Getting the data out takes one click. What comes with it is the useful part."
+    },
+    {
+      "at": 6.24,
+      "text": "Under every chart on the platform there is a Download link. It is easy to miss, and it is on all of them."
+    },
+    {
+      "at": 14.01,
+      "text": "Click it and you get the chart's underlying table, ready to copy straight into Excel, Datawrapper or Flourish."
+    },
+    {
+      "at": 21.54,
+      "text": "Notice these columns. Entity D C I D and Variable D C I D are the platform's permanent identifiers for the place and the measure. Record them and anyone can reproduce your exact figure."
+    },
+    {
+      "at": 35.77,
+      "text": "And these carry the provenance: the unit, and the URL of the agency that published it. This is what makes the file still attributable after it has been forwarded three times."
+    },
+    {
+      "at": 47.36,
+      "text": "Copy takes the whole table to your clipboard. Paste it into a spreadsheet and the provenance travels with the numbers."
+    },
+    {
+      "at": 55.49,
+      "text": "And here is what actually lands in your spreadsheet. Every single row carries the place, the variable identifier and the year beside the value, so a stray copy-paste cannot separate a number from what it measures."
+    },
+    {
+      "at": 69.43,
+      "text": "Keep the identifier and keep the provenance URL. Those two columns are the difference between a spreadsheet and evidence."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "query",
+      "value": "maternal mortality in Southern Asia"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/tools/finder/",
+      "label": "Data Finder: a CSV that carries its sources"
+    }
+  ],
+  "keep": "Keep two columns: Variable DCID (the indicator's permanent ID) and provenanceUrl (the agency's page)."
+}

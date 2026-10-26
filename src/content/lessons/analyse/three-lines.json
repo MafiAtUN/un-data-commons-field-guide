@@ -1,0 +1,135 @@
+{
+  "title": "Three lines to a spreadsheet",
+  "idea": "Search, get, save: an Excel file with its sources.",
+  "summary": "Get official UN statistics into Python and Excel in three lines: search an indicator in plain words, fetch it for any country, and save a spreadsheet that carries its own citations.",
+  "course": "analyse",
+  "order": 1,
+  "series": {
+    "name": "undata",
+    "number": 1
+  },
+  "youtube": {
+    "id": "EXbtG4AMQIY",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 120,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-01-three-lines.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 7,
+      "label": "Why this exists"
+    },
+    {
+      "at": 17,
+      "label": "Install, then search in plain words"
+    },
+    {
+      "at": 42,
+      "label": "Get the numbers, by country name"
+    },
+    {
+      "at": 58,
+      "label": "The trend, plotted"
+    },
+    {
+      "at": 73,
+      "label": "Save to Excel, with sources"
+    },
+    {
+      "at": 94,
+      "label": "No Python? The terminal, and a recap"
+    },
+    {
+      "at": 109,
+      "label": "Install and links"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "You need a UN figure for a report, and it has to hold up. Here is how to get it in three lines of Python."
+    },
+    {
+      "at": 6,
+      "text": "The UN System Data Commons holds statistics from twenty-six UN System entities. undata puts all of it one import away, in plain words, with nothing to register for."
+    },
+    {
+      "at": 16,
+      "text": "Install it once, from the Python Package Index. It works in Jupyter, in Google Colab, or in a plain script."
+    },
+    {
+      "at": 24,
+      "text": "Start with what you want to measure, in your own words. un.search lists every matching indicator, with who publishes it, how many places have data, and for which years. This one is the SDG series, from the Global SDG Indicators Database. Copy its ID from the first column."
+    },
+    {
+      "at": 42,
+      "text": "Then ask for the numbers. Where an SDG number points to one series, the number is enough. Countries go in the way you would write them in an email. What comes back is an ordinary pandas table, one row per country and year, with the unit and the source on every row."
+    },
+    {
+      "at": 58,
+      "text": "Plotted, it tells a story. In Bangladesh, maternal deaths fell from 523 per hundred thousand live births in 2000, to 115 in 2023. In Viet Nam, from 83 to 48."
+    },
+    {
+      "at": 72,
+      "text": "Now the line that makes it usable. un.save writes an Excel file, ready to send."
+    },
+    {
+      "at": 78,
+      "text": "The data sits on the first sheet. The second holds the sources: the publisher, the link, and a citation you can paste straight into a footnote. It names the agency that measured the figure, not just the website you found it on. A third sheet says how complete the table is."
+    },
+    {
+      "at": 94,
+      "text": "Prefer not to write Python at all? The same steps work from a terminal. One command, and the spreadsheet is saved."
+    },
+    {
+      "at": 101,
+      "text": "Search. Get. Save. Three lines, and every number arrives with its unit, its year, and its source."
+    },
+    {
+      "at": 109,
+      "text": "Install it with pip. Twelve worked examples are on the documentation site. Next: are countries on track for 2030?"
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "colab",
+      "href": "https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/first_table.ipynb",
+      "label": "Run it in Colab, with nothing to install"
+    },
+    {
+      "kind": "code",
+      "value": "pip install undata"
+    },
+    {
+      "kind": "code",
+      "value": "import undata as un\n\nun.search(\"maternal mortality\")"
+    },
+    {
+      "kind": "code",
+      "value": "table = un.get(\"3.1.1\", [\"Bangladesh\", \"Viet Nam\"])\nun.save(table, \"maternal-mortality.xlsx\")",
+      "note": "Data on the first sheet, sources and a citation on the second."
+    }
+  ],
+  "keep": "Three lines: un.search to find it, un.get to fetch it, un.save to send it with its sources.",
+  "tools": [
+    "python",
+    "excel"
+  ],
+  "deeper": [
+    {
+      "href": "/undata/",
+      "label": "undata: install, cheat sheet and use cases"
+    },
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/data.html",
+      "label": "API reference: getting data"
+    }
+  ]
+}

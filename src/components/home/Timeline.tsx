@@ -57,13 +57,7 @@ export function Timeline() {
   return (
     <div>
       {/* ---------- The rail ---------- */}
-      <div
-        ref={railRef}
-        role="tablist"
-        aria-label="History of the UN System Data Commons"
-        onKeyDown={onKeyDown}
-        className="relative"
-      >
+      <div ref={railRef} onKeyDown={onKeyDown} className="relative">
         {/* The connecting rule belongs to the single-row layout only. Below
             `lg` the years wrap onto three rows, where one line across the top
             would join the first row to nothing. */}
@@ -74,13 +68,17 @@ export function Timeline() {
           aria-hidden="true"
         />
 
-        <ol className="relative grid grid-cols-3 gap-y-5 sm:grid-cols-5 lg:flex lg:justify-between">
+        <ol
+          role="tablist"
+          aria-label="History of the UN System Data Commons"
+          className="relative grid grid-cols-3 gap-y-5 sm:grid-cols-5 lg:flex lg:justify-between"
+        >
           {entries.map((item, index) => {
             const isActive = index === active;
             const isPast = index < active;
 
             return (
-              <li key={item.sort} className="flex flex-col items-center lg:flex-1">
+              <li key={item.sort} role="presentation" className="flex flex-col items-center lg:flex-1">
                 <button
                   ref={(node) => { buttonsRef.current[index] = node; }}
                   type="button"
@@ -154,16 +152,16 @@ export function Timeline() {
           )}
         </div>
 
-        <h3 className="mt-3 text-balance text-[1.35rem] font-semibold leading-tight tracking-tight text-ink-primary sm:text-[1.6rem]">
+        <h3 className="mt-3 text-balance font-display text-title font-semibold text-ink-primary">
           {entry.title}
         </h3>
 
-        <p className="mt-3 max-w-3xl text-[0.93rem] leading-relaxed text-ink-secondary">
+        <p className="mt-3 max-w-measure text-body text-ink-secondary">
           {entry.body}
         </p>
 
         {entry.note && (
-          <p className="mt-3 max-w-3xl border-l-2 border-volt/50 pl-3 text-[0.86rem] leading-relaxed text-ink-secondary">
+          <p className="mt-3 max-w-measure border-l-2 border-volt-line pl-3 text-meta text-ink-secondary">
             {entry.note}
           </p>
         )}
@@ -174,7 +172,7 @@ export function Timeline() {
             href={entry.source.href}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:text-volt hover:decoration-volt"
+            className="text-ink-secondary underline decoration-volt-line underline-offset-2 hover:text-ink-primary hover:decoration-ink-primary"
           >
             Source: {entry.source.label} ↗
           </a>

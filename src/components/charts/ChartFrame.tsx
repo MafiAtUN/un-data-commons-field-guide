@@ -67,9 +67,9 @@ export function ChartFrame({
                 onClick={() => setView(option)}
                 aria-pressed={view === option}
                 aria-controls={panelId}
-                className={`px-2.5 py-1 text-[0.7rem] font-medium capitalize transition-colors ${
+                className={`px-2.5 py-1 text-[0.75rem] font-medium capitalize transition-colors ${
                   view === option
-                    ? 'bg-surface-3 text-ink-primary'
+                    ? 'bg-ink-primary text-surface-0'
                     : 'text-ink-muted hover:text-ink-secondary'
                 }`}
               >
@@ -104,7 +104,7 @@ export function ChartFrame({
               href={facet.provenanceUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
+              className="text-ink-secondary underline decoration-volt-line underline-offset-2 hover:decoration-ink-primary"
             >
               Source: {facet.provenanceId ?? facet.provenanceUrl}
             </a>
@@ -117,7 +117,7 @@ export function ChartFrame({
             <button
               type="button"
               onClick={() => setShowRequest((open) => !open)}
-              className="text-ink-secondary underline decoration-hairline underline-offset-2 hover:decoration-volt"
+              className="text-ink-secondary underline decoration-volt-line underline-offset-2 hover:decoration-ink-primary"
               aria-expanded={showRequest}
             >
               {showRequest ? 'Hide request' : 'Show request'}

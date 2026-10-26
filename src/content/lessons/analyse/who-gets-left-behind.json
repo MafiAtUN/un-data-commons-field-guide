@@ -1,0 +1,105 @@
+{
+  "title": "Who gets left behind?",
+  "idea": "Rural against urban, women against men, in the same year.",
+  "summary": "Measure who is left behind: compare rural and urban, women and men, or the poorest and richest fifth, in the same year for each country, with one Python call.",
+  "course": "analyse",
+  "order": 4,
+  "series": {
+    "name": "undata",
+    "number": 4
+  },
+  "youtube": {
+    "id": "l1Sgx0g1eFw",
+    "status": "public",
+    "published": "2026-10-14"
+  },
+  "seconds": 97,
+  "recorded": "2026-10-14",
+  "captions": "burned-in",
+  "poster": "undata-04-left-behind.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "Introduction"
+    },
+    {
+      "at": 12,
+      "label": "un.breakdowns · what can be split"
+    },
+    {
+      "at": 26,
+      "label": "un.gap · two groups, same year"
+    },
+    {
+      "at": 43,
+      "label": "Primary completion, rural against urban"
+    },
+    {
+      "at": 62,
+      "label": "un.chart · the gap chart"
+    },
+    {
+      "at": 73,
+      "label": "The finding, and other gaps"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0,
+      "text": "National averages hide people. Leaving no one behind means looking at the gaps: between towns and villages, women and men, the poorest and the richest. Here is how to measure one, properly."
+    },
+    {
+      "at": 12,
+      "text": "Start by asking what an indicator can be split by. Here, primary school completion. un.breakdowns lists every breakdown the agency publishes: by sex, by rural and urban area, and by wealth, in fifths."
+    },
+    {
+      "at": 26,
+      "text": "un.gap compares two groups across countries. Choose the breakdown, here urbanization. For each country it takes the latest year in which both groups have a value, so the gap is never one survey against another. You get both values, the ratio, and the difference."
+    },
+    {
+      "at": 42,
+      "text": "In Chad, 19 percent of rural children finish primary school, against 55 percent in towns. A rural child is about a third as likely to finish. Niger and Mali show the same pattern. But in Bangladesh, rural children are slightly ahead, and Nepal is close to parity. So a gap like Chad’s is not inevitable."
+    },
+    {
+      "at": 62,
+      "text": "un.chart sorts the countries by the gap, and prints the ratio and the year beside each one. Chad’s figure is from 2019; the others are more recent, and the chart says so."
+    },
+    {
+      "at": 72,
+      "text": "And the summary states the finding: where the gap is widest, and which countries are at parity. The sentence in your report comes straight from the data."
+    },
+    {
+      "at": 80,
+      "text": "Change one word to compare girls and boys, or the poorest fifth with the richest, wherever the agency publishes that breakdown."
+    },
+    {
+      "at": 87,
+      "text": "Gaps measured like with like, in the same year. Next: the safeguards that make these numbers defensible."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "code",
+      "value": "COMPLETION = \"undata/sdg/SE_TOT_CPLR.EDUCATION_LEVEL--ISCED11_1\"\nun.breakdowns(COMPLETION)\ngap = un.gap(COMPLETION,\n             [\"Chad\", \"Niger\", \"Mali\", \"Nigeria\", \"Ghana\", \"Bangladesh\", \"Nepal\"],\n             by=\"urbanization\")\nun.chart(gap, \"rural-urban-gap.png\")"
+    },
+    {
+      "kind": "colab",
+      "href": "https://colab.research.google.com/github/nerd-factory/undata/blob/main/examples/colab/12_rural_urban_gap.ipynb",
+      "label": "Open the rural-urban gap use case in Colab"
+    }
+  ],
+  "keep": "Compare two groups within the same year, or the gap is one survey against another.",
+  "tools": [
+    "python"
+  ],
+  "deeper": [
+    {
+      "href": "https://nerd-factory.github.io/undata/reference/analysis.html",
+      "label": "API reference: the analyses"
+    },
+    {
+      "href": "/undata/",
+      "label": "undata: install, cheat sheet and use cases"
+    }
+  ]
+}

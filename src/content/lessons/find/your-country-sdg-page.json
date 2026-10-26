@@ -1,0 +1,109 @@
+{
+  "title": "Your country's SDG page",
+  "idea": "Goal plus country is a shareable profile, in two clicks.",
+  "summary": "Pick an SDG goal, pick a country, and every indicator on the page re-scopes: a shareable country profile in two clicks.",
+  "course": "find",
+  "order": 10,
+  "series": {
+    "name": "data.un.org",
+    "number": 10
+  },
+  "youtube": {
+    "id": "o1dsVaQDIg8",
+    "status": "public",
+    "published": "2026-09-18"
+  },
+  "seconds": 71,
+  "recorded": "2026-09-18",
+  "captions": "burned-in",
+  "poster": "10-your-country-sdg-page.jpg",
+  "chapters": [
+    {
+      "at": 0,
+      "label": "An afternoon saved"
+    },
+    {
+      "at": 6,
+      "label": "Seventeen goals"
+    },
+    {
+      "at": 16,
+      "label": "Open a goal"
+    },
+    {
+      "at": 26,
+      "label": "The place chip again"
+    },
+    {
+      "at": 34,
+      "label": "Pick a country"
+    },
+    {
+      "at": 39,
+      "label": "A shareable profile"
+    },
+    {
+      "at": 51,
+      "label": "ABAS, for small islands"
+    },
+    {
+      "at": 63,
+      "label": "Recap"
+    }
+  ],
+  "transcript": [
+    {
+      "at": 0.18,
+      "text": "If you report against the Sustainable Development Goals, this page saves you an afternoon."
+    },
+    {
+      "at": 6.12,
+      "text": "Under Data Insights, the S D G catalogue lays out all seventeen goals, each one backed by the Global S D G Indicators Database."
+    },
+    {
+      "at": 16.1,
+      "text": "Open one and you get more than charts. There is a written assessment of where the world stands, which is quotable in its own right, and then the indicators underneath it."
+    },
+    {
+      "at": 26.99,
+      "text": "By default all of it describes the world. But this chip works the same way it does in search."
+    },
+    {
+      "at": 34.11,
+      "text": "Click it, pick a country, and every indicator on the page re-scopes."
+    },
+    {
+      "at": 39.58,
+      "text": "What you now have is a country profile for that goal, built from official figures, with a URL you can send to a colleague. That is a piece of work you would otherwise have assembled by hand."
+    },
+    {
+      "at": 51.5,
+      "text": "The same machinery runs a second framework. A B A S tracks the Antigua and Barbuda Agenda across seven priorities for Small Island Developing States."
+    },
+    {
+      "at": 63.04,
+      "text": "Pick the goal, pick the country, send the link. Two clicks instead of an afternoon."
+    }
+  ],
+  "tryIt": [
+    {
+      "kind": "link",
+      "href": "https://data.un.org/undatacommons/goals",
+      "label": "All 17 goals"
+    },
+    {
+      "kind": "link",
+      "href": "https://data.un.org/undatacommons/abas",
+      "label": "ABAS: the Antigua and Barbuda Agenda for Small Island Developing States"
+    }
+  ],
+  "tools": [
+    "browser"
+  ],
+  "deeper": [
+    {
+      "href": "/guides/catalogue/",
+      "label": "The catalogue: all 16 collections, counted live"
+    }
+  ]
+}
