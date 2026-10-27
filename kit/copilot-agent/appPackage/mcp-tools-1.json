@@ -1,0 +1,266 @@
+{
+    "tools": [
+        {
+            "name": "search_indicators",
+            "description": "CRITICAL: Before calling this tool for the first time in a session, you MUST read the playbook resource by calling your platform's standard MCP resource-reading capability for the URI 'skill://data-commons-researcher/SKILL.md'.\n\nSearch the Data Commons Knowledge Graph for topics and statistical variables (indicators) matching a natural language query. Returns candidate indicator DCIDs, names, and data availability mappings. Can be optionally scoped to a list of target places to verify data presence. \n",
+            "inputSchema": {
+                "additionalProperties": false,
+                "properties": {
+                    "query": {
+                        "type": "string"
+                    },
+                    "places": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "per_search_limit": {
+                        "default": 10,
+                        "type": "integer"
+                    },
+                    "include_topics": {
+                        "default": true,
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "query"
+                ],
+                "type": "object"
+            },
+            "outputSchema": {
+                "additionalProperties": true,
+                "type": "object"
+            },
+            "_meta": {
+                "fastmcp": {
+                    "tags": []
+                }
+            }
+        },
+        {
+            "name": "search_child_indicators",
+            "description": "CRITICAL: Before calling this tool for the first time in a session, you MUST read the playbook resource by calling your platform's standard MCP resource-reading capability for the URI 'skill://data-commons-child-places-researcher/SKILL.md'.\n\nSearch the Data Commons Knowledge Graph for statistical indicators available at the child-place level within a parent geographic entity. Returns candidate indicator DCIDs and child place data availability mappings. Requires providing a parent place and a diverse sample list of its child places to verify sub-national coverage.\n",
+            "inputSchema": {
+                "additionalProperties": false,
+                "properties": {
+                    "query": {
+                        "type": "string"
+                    },
+                    "parent_place": {
+                        "type": "string"
+                    },
+                    "sample_child_places": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "per_search_limit": {
+                        "default": 10,
+                        "type": "integer"
+                    },
+                    "include_topics": {
+                        "default": true,
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "query",
+                    "parent_place",
+                    "sample_child_places"
+                ],
+                "type": "object"
+            },
+            "outputSchema": {
+                "additionalProperties": true,
+                "type": "object"
+            },
+            "_meta": {
+                "fastmcp": {
+                    "tags": []
+                }
+            }
+        },
+        {
+            "name": "get_variable_metadata",
+            "description": "Retrieve detailed structural metadata, including definitions, temporal coverage, and provenances, for a list of statistical variables. Returns a dictionary mapping variables to their source facets and entity coverages. Use this to assess and qualify variables before fetching heavy observation data.\n",
+            "inputSchema": {
+                "additionalProperties": false,
+                "properties": {
+                    "variable_dcids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "entity_dcids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "variable_dcids",
+                    "entity_dcids"
+                ],
+                "type": "object"
+            },
+            "outputSchema": {
+                "additionalProperties": true,
+                "type": "object"
+            },
+            "_meta": {
+                "fastmcp": {
+                    "tags": []
+                }
+            }
+        },
+        {
+            "name": "get_observations",
+            "description": "Retrieve time-series numerical observations for a specific statistical variable at a target place. Returns an array of dated observation values and their source metadata. Operates in single-place mode; for child-level containment data, use get_child_observations.\n",
+            "inputSchema": {
+                "additionalProperties": false,
+                "properties": {
+                    "variable_dcid": {
+                        "type": "string"
+                    },
+                    "place_dcid": {
+                        "type": "string"
+                    },
+                    "source_override": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "date": {
+                        "default": "latest",
+                        "type": "string"
+                    },
+                    "date_range_start": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "date_range_end": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    }
+                },
+                "required": [
+                    "variable_dcid",
+                    "place_dcid"
+                ],
+                "type": "object"
+            },
+            "outputSchema": {
+                "additionalProperties": true,
+                "type": "object"
+            },
+            "_meta": {
+                "fastmcp": {
+                    "tags": []
+                }
+            }
+        },
+        {
+            "name": "get_child_observations",
+            "description": "Retrieve time-series numerical observations for a statistical variable across all child places of a specific type within a parent geographic entity. Returns an array of dated observation values for each child place and their source metadata. Requires specifying the child place type (e.g., 'County' or 'State') and a bounded date range or 'latest' filter to prevent payload saturation.\n",
+            "inputSchema": {
+                "additionalProperties": false,
+                "properties": {
+                    "variable_dcid": {
+                        "type": "string"
+                    },
+                    "parent_place_dcid": {
+                        "type": "string"
+                    },
+                    "child_place_type": {
+                        "type": "string"
+                    },
+                    "source_override": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "date": {
+                        "default": "latest",
+                        "type": "string"
+                    },
+                    "date_range_start": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "date_range_end": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    }
+                },
+                "required": [
+                    "variable_dcid",
+                    "parent_place_dcid",
+                    "child_place_type"
+                ],
+                "type": "object"
+            },
+            "outputSchema": {
+                "additionalProperties": true,
+                "type": "object"
+            },
+            "_meta": {
+                "fastmcp": {
+                    "tags": []
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
+    "version": "v1.8",
+    "name": "UN Data Commons${{APP_NAME_SUFFIX}}",
+    "description": "Answers questions with official UN statistics from the UN System Data Commons, with the year and source of every number.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "One number, with its source",
+            "text": "What share of women aged 20–24 in Niger were married before 18? Give the year and the source."
+        },
+        {
+            "title": "Which indicator?",
+            "text": "Which indicators measure child marriage, and which should I use for SDG reporting?"
+        },
+        {
+            "title": "Ten countries, one table",
+            "text": "Latest lower-secondary completion for girls in Burkina Faso, Chad, Mali, Niger and Senegal, with the year beside each."
+        },
+        {
+            "title": "Check before you trust",
+            "text": "Audit this table before I use it and give me a QC log."
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ],
+    "capabilities": [
+        {
+            "name": "CodeInterpreter"
+        }
+    ]
+}

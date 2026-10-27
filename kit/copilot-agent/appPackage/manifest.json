@@ -1,0 +1,40 @@
+{
+ "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.30/MicrosoftTeams.schema.json",
+ "manifestVersion": "1.30",
+ "version": "1.0.0",
+ "id": "${{TEAMS_APP_ID}}",
+ "developer": {
+  "name": "Mafizul Islam",
+  "websiteUrl": "https://github.com/MafiAtUN/un-data-commons-field-guide",
+  "privacyUrl": "https://github.com/MafiAtUN/un-data-commons-field-guide",
+  "termsOfUseUrl": "https://github.com/MafiAtUN/un-data-commons-field-guide"
+ },
+ "icons": {
+  "color": "color.png",
+  "outline": "outline.png"
+ },
+ "name": {
+  "short": "UN Data Commons${{APP_NAME_SUFFIX}}",
+  "full": "UN Data Commons: official UN statistics"
+ },
+ "description": {
+  "short": "Official UN statistics, with the year and source of every number.",
+  "full": "Answers questions with official UN statistics from the UN System Data Commons (data.un.org) through its public, read-only MCP server. Every number comes with its year, unit and source. Unofficial agent, built for training videos."
+ },
+ "accentColor": "#FFFFFF",
+ "supportsChannelFeatures": "tier1",
+ "composeExtensions": [],
+ "copilotAgents": {
+  "declarativeAgents": [
+   {
+    "id": "declarativeAgent",
+    "file": "declarativeAgent.json"
+   }
+  ]
+ },
+ "permissions": [
+  "identity",
+  "messageTeamMembers"
+ ],
+ "validDomains": []
+}

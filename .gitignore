@@ -13,3 +13,7 @@ coverage/
 
 # Astro generates its content types here.
 .astro/
+
+# The starter kit ships its built skill zips and the Agents Toolkit's empty env file.
+!kit/dist/
+!kit/copilot-agent/env/.env.dev
